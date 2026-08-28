@@ -4,6 +4,7 @@
   assign transit_min_key = settings.transit_min_field | default: 'transit_min_days' | strip
   assign transit_max_key = settings.transit_max_field | default: 'transit_max_days' | strip
   assign note_key = settings.note_field | default: 'note' | strip
+  assign country_name_key = settings.country_name_field | default: 'country_name' | strip
   assign region_key = settings.region_field | default: 'region' | strip
   assign flag_key = settings.flag_field | default: 'flag' | strip
 
@@ -11,6 +12,7 @@
   assign processing_max_days = blank
   assign transit_min_days = blank
   assign transit_max_days = blank
+  assign country_name = blank
   assign region = blank
   assign flag = blank
   assign note_field = blank
@@ -40,6 +42,11 @@
     if region_key != blank
       assign region_field = eta[region_key]
       assign region = region_field.value | default: region_field
+    endif
+
+    if country_name_key != blank
+      assign country_name_field = eta[country_name_key]
+      assign country_name = country_name_field.value | default: country_name_field
     endif
 
     if flag_key != blank
@@ -100,7 +107,7 @@
     assign arrival_range = arrival_range | append: ' - ' | append: arrival_end_date
   endif
 
-  assign region_label = region | default: settings.region_fallback_label | default: 'Region'
+  assign region_label = country_name | default: region | default: settings.region_fallback_label | default: 'Region'
 -%}
 
 {%- if has_eta -%}

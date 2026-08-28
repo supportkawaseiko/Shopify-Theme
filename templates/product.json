@@ -385,6 +385,7 @@
               "settings": {
                 "metafield_namespace": "custom",
                 "metafield_key": "shipping_eta",
+                "country_name_field": "country_name",
                 "region_field": "region",
                 "flag_field": "flag",
                 "processing_min_field": "processing_min_days",
