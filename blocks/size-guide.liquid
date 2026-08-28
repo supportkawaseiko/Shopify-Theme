@@ -1,0 +1,636 @@
+{%- liquid
+  assign block_settings = block.settings
+  assign metafield_namespace = block_settings.metafield_namespace | strip
+  assign metafield_key = block_settings.metafield_key | strip
+  assign size_guide_metafield = blank
+  assign size_guide = blank
+
+  if metafield_namespace != blank and metafield_key != blank
+    assign size_guide_metafield = closest.product.metafields[metafield_namespace][metafield_key]
+    assign size_guide = size_guide_metafield.value
+  endif
+
+  assign title = block_settings.heading
+  if size_guide != blank and block_settings.title_field != blank
+    assign title_field_key = block_settings.title_field | strip
+    assign title_field = size_guide[title_field_key]
+    assign title = title_field.value | default: title_field | default: title
+  endif
+
+  assign note = blank
+  if size_guide != blank and block_settings.note_field != blank
+    assign note_field_key = block_settings.note_field | strip
+    assign note_field = size_guide[note_field_key]
+    assign note = note_field.value | default: note_field
+  endif
+
+  assign image = blank
+  if size_guide != blank and block_settings.image_field != blank
+    assign image_field_key = block_settings.image_field | strip
+    assign image_field = size_guide[image_field_key]
+    assign image = image_field.value | default: image_field
+  endif
+
+  assign inches_table = blank
+  if size_guide != blank and block_settings.inches_table_field != blank
+    assign inches_table_field_key = block_settings.inches_table_field | strip
+    assign inches_table_field = size_guide[inches_table_field_key]
+    assign inches_table = inches_table_field.value | default: inches_table_field
+  endif
+
+  assign cm_table = blank
+  if size_guide != blank and block_settings.cm_table_field != blank
+    assign cm_table_field_key = block_settings.cm_table_field | strip
+    assign cm_table_field = size_guide[cm_table_field_key]
+    assign cm_table = cm_table_field.value | default: cm_table_field
+  endif
+
+  assign has_inches_table = false
+  if inches_table != blank
+    assign has_inches_table = true
+  endif
+
+  assign has_cm_table = false
+  if cm_table != blank
+    assign has_cm_table = true
+  endif
+
+  assign has_content = false
+  if size_guide != blank and image != blank
+    assign has_content = true
+  elsif size_guide != blank and note != blank
+    assign has_content = true
+  elsif has_inches_table or has_cm_table
+    assign has_content = true
+  endif
+
+  assign dialog_id = 'SizeGuideDialog-' | append: block.id
+  assign heading_id = 'SizeGuideHeading-' | append: block.id
+  assign inches_input_id = 'SizeGuideInches-' | append: block.id
+  assign cm_input_id = 'SizeGuideCm-' | append: block.id
+-%}
+
+{%- if has_content -%}
+  <script
+    src="{{ 'dialog.js' | asset_url }}"
+    type="module"
+  ></script>
+
+  <dialog-component
+    class="size-guide spacing-style"
+    style="{% render 'spacing-style', settings: block_settings %}"
+    {{ block.shopify_attributes }}
+  >
+    <button
+      type="button"
+      class="button button-unstyled size-guide__button"
+      on:click="/showDialog"
+      aria-haspopup="dialog"
+      aria-controls="{{ dialog_id }}"
+    >
+      <span class="size-guide__button-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24">
+          <path d="M4 7h16v10H4z"></path>
+          <path d="M7 7v4"></path>
+          <path d="M10 7v2"></path>
+          <path d="M13 7v4"></path>
+          <path d="M16 7v2"></path>
+        </svg>
+      </span>
+      <span>{{ block_settings.button_label | default: 'Size guide' | escape }}</span>
+    </button>
+
+    <dialog
+      id="{{ dialog_id }}"
+      ref="dialog"
+      class="size-guide__dialog dialog-modal color-custom-popover"
+      scroll-lock
+      aria-labelledby="{{ heading_id }}"
+    >
+      <button
+        ref="closeButton"
+        type="button"
+        class="button button-unstyled close-button size-guide__close"
+        on:click="/closeDialog"
+        aria-label="{{ 'accessibility.close_dialog' | t }}"
+      >
+        {{- 'icon-close.svg' | inline_asset_content -}}
+      </button>
+
+      <div class="size-guide__inner">
+        <div class="size-guide__header">
+          <h2 id="{{ heading_id }}" class="size-guide__heading">{{ title | escape }}</h2>
+
+          {%- if note != blank -%}
+            <div class="size-guide__note">
+              {%- if note_field.type contains 'rich_text' -%}
+                {{ note_field | metafield_tag }}
+              {%- else -%}
+                {{ note | escape | newline_to_br }}
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
+
+        {%- if image != blank -%}
+          <div class="size-guide__media">
+            {{
+              image
+              | image_url: width: 1000
+              | image_tag:
+                widths: '320, 480, 640, 800, 1000',
+                sizes: '(min-width: 750px) 420px, 100vw',
+                loading: 'lazy',
+                class: 'size-guide__image'
+            }}
+          </div>
+        {%- endif -%}
+
+        {%- if has_inches_table or has_cm_table -%}
+          <div class="size-guide__tables{% if has_inches_table and has_cm_table %} size-guide__tables--toggle{% endif %}">
+            {%- if has_inches_table and has_cm_table -%}
+              <div class="size-guide__unit-toggle" role="radiogroup" aria-label="{{ block_settings.unit_toggle_label | escape }}">
+                <input
+                  id="{{ inches_input_id }}"
+                  class="size-guide__unit-input"
+                  type="radio"
+                  name="size-guide-unit-{{ block.id }}"
+                  checked
+                >
+                <label class="size-guide__unit-label" for="{{ inches_input_id }}">
+                  {{ block_settings.inches_label | default: 'Inches' | escape }}
+                </label>
+
+                <input
+                  id="{{ cm_input_id }}"
+                  class="size-guide__unit-input size-guide__unit-input--cm"
+                  type="radio"
+                  name="size-guide-unit-{{ block.id }}"
+                >
+                <label class="size-guide__unit-label" for="{{ cm_input_id }}">
+                  {{ block_settings.cm_label | default: 'Cm' | escape }}
+                </label>
+              </div>
+            {%- endif -%}
+
+            {%- if has_inches_table -%}
+              <div class="size-guide__table-panel size-guide__table-panel--inches">
+                {%- assign table_title = block_settings.inches_table_title | default: title -%}
+                {%- if table_title != blank -%}
+                  <h3 class="size-guide__table-title">{{ table_title | escape }}</h3>
+                {%- endif -%}
+
+                <div class="size-guide__table-wrap">
+                  <table class="size-guide__table">
+                    {%- assign shown_table = inches_table | newline_to_br | strip_newlines -%}
+                    {%- assign table_rows = shown_table | split: '<br />' -%}
+                    <thead>
+                      {%- for row in table_rows limit: 1 -%}
+                        {%- assign clean_row = row | strip -%}
+                        {%- assign cells = clean_row | split: '|' -%}
+                        <tr>
+                          {%- for cell in cells -%}
+                            <th scope="col">{{ cell | strip | escape }}</th>
+                          {%- endfor -%}
+                        </tr>
+                      {%- endfor -%}
+                    </thead>
+                    <tbody>
+                    {%- for row in table_rows -%}
+                      {%- assign clean_row = row | strip -%}
+                      {%- unless forloop.first -%}
+                        {%- assign cells = clean_row | split: '|' -%}
+                        {%- if clean_row != blank -%}
+                          <tr>
+                            {%- for cell in cells -%}
+                              <td>{{ cell | strip | escape }}</td>
+                            {%- endfor -%}
+                          </tr>
+                        {%- endif -%}
+                      {%- endunless -%}
+                    {%- endfor -%}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            {%- endif -%}
+
+            {%- if has_cm_table -%}
+              <div class="size-guide__table-panel size-guide__table-panel--cm">
+                {%- assign table_title = block_settings.cm_table_title | default: title -%}
+                {%- if table_title != blank -%}
+                  <h3 class="size-guide__table-title">{{ table_title | escape }}</h3>
+                {%- endif -%}
+
+                <div class="size-guide__table-wrap">
+                  <table class="size-guide__table">
+                    {%- assign shown_table = cm_table | newline_to_br | strip_newlines -%}
+                    {%- assign table_rows = shown_table | split: '<br />' -%}
+                    <thead>
+                      {%- for row in table_rows limit: 1 -%}
+                        {%- assign clean_row = row | strip -%}
+                        {%- assign cells = clean_row | split: '|' -%}
+                        <tr>
+                          {%- for cell in cells -%}
+                            <th scope="col">{{ cell | strip | escape }}</th>
+                          {%- endfor -%}
+                        </tr>
+                      {%- endfor -%}
+                    </thead>
+                    <tbody>
+                    {%- for row in table_rows -%}
+                      {%- assign clean_row = row | strip -%}
+                      {%- unless forloop.first -%}
+                        {%- assign cells = clean_row | split: '|' -%}
+                        {%- if clean_row != blank -%}
+                          <tr>
+                            {%- for cell in cells -%}
+                              <td>{{ cell | strip | escape }}</td>
+                            {%- endfor -%}
+                          </tr>
+                        {%- endif -%}
+                      {%- endunless -%}
+                    {%- endfor -%}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </dialog>
+  </dialog-component>
+{%- endif -%}
+
+{% stylesheet %}
+  .size-guide {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .size-guide__button {
+    align-items: center;
+    color: rgb(var(--color-foreground-rgb));
+    display: inline-flex;
+    font-size: var(--font-paragraph-small--size);
+    gap: var(--gap-3xs);
+    line-height: var(--font-paragraph--line-height);
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+  }
+
+  .size-guide__button-icon {
+    display: inline-flex;
+    height: 1.1em;
+    width: 1.1em;
+  }
+
+  .size-guide__button-icon svg {
+    display: block;
+    fill: none;
+    height: 100%;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2;
+    width: 100%;
+  }
+
+  .size-guide__dialog {
+    background-color: var(--color-background);
+    border: var(--style-border-popover);
+    border-radius: min(var(--style-border-radius-popover), 8px);
+    box-shadow: var(--shadow-popover);
+    max-height: min(var(--modal-max-height), calc(100dvh - var(--padding-xl)));
+    max-width: min(34rem, calc(100vw - var(--padding-xl)));
+    padding: var(--padding-xl);
+    width: 100%;
+  }
+
+  .size-guide__dialog[open] {
+    animation: modalSlideInTop var(--animation-speed) var(--animation-easing) forwards;
+  }
+
+  .size-guide__dialog.dialog-closing {
+    animation: modalSlideOutTop var(--animation-speed) var(--animation-easing) forwards;
+  }
+
+  .size-guide__close {
+    opacity: 0.88;
+    right: var(--margin-2xs);
+    top: var(--margin-2xs);
+  }
+
+  .size-guide__inner {
+    display: grid;
+    gap: var(--gap-lg);
+  }
+
+  .size-guide__header {
+    display: grid;
+    gap: var(--gap-xs);
+    padding-inline: var(--padding-lg);
+    text-align: center;
+  }
+
+  .size-guide__heading {
+    font-family: var(--font-heading--family);
+    font-size: var(--font-h3--size);
+    line-height: var(--font-h3--line-height);
+    margin: 0;
+  }
+
+  .size-guide__note {
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+    font-size: var(--font-paragraph-small--size);
+    line-height: var(--font-paragraph--line-height);
+    text-align: left;
+  }
+
+  .size-guide__note > * {
+    margin-block: 0;
+  }
+
+  .size-guide__media {
+    display: flex;
+    justify-content: center;
+    min-width: 0;
+  }
+
+  .size-guide__image {
+    display: block;
+    height: auto;
+    max-height: 29rem;
+    max-width: min(100%, 24rem);
+    object-fit: contain;
+    width: auto;
+  }
+
+  .size-guide__tables {
+    background: rgb(var(--color-foreground-rgb) / 0.035);
+    border: 1px solid rgb(var(--color-foreground-rgb) / 0.08);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .size-guide__unit-toggle {
+    background: rgb(var(--color-foreground-rgb) / 0.06);
+    border-radius: 999px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin: var(--margin-sm) var(--margin-sm) 0 auto;
+    max-width: 8.75rem;
+    padding: 2px;
+  }
+
+  .size-guide__unit-input {
+    clip: rect(0 0 0 0);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
+
+  .size-guide__unit-label {
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: var(--font-paragraph-small--size);
+    line-height: 1;
+    padding: var(--padding-xs) var(--padding-sm);
+    text-align: center;
+  }
+
+  .size-guide__unit-input:checked + .size-guide__unit-label {
+    background: var(--color-background);
+    box-shadow: 0 1px 3px rgb(var(--color-foreground-rgb) / 0.12);
+  }
+
+  .size-guide__unit-input:focus-visible + .size-guide__unit-label {
+    outline: var(--focus-outline-width) solid currentColor;
+    outline-offset: 2px;
+  }
+
+  .size-guide__table-panel--cm {
+    display: none;
+  }
+
+  .size-guide__unit-toggle:has(.size-guide__unit-input--cm:checked) ~ .size-guide__table-panel--inches {
+    display: none;
+  }
+
+  .size-guide__unit-toggle:has(.size-guide__unit-input--cm:checked) ~ .size-guide__table-panel--cm {
+    display: block;
+  }
+
+  .size-guide__table-title {
+    font-size: var(--font-paragraph--size);
+    font-weight: var(--font-weight-semibold);
+    margin: 0;
+    padding: var(--padding-md) var(--padding-md) var(--padding-sm);
+    text-align: center;
+  }
+
+  .size-guide__table-wrap {
+    overflow-x: auto;
+  }
+
+  .size-guide__table {
+    border-collapse: collapse;
+    font-size: var(--font-paragraph-small--size);
+    min-width: 100%;
+    text-align: center;
+  }
+
+  .size-guide__table th,
+  .size-guide__table td {
+    border-top: 1px solid rgb(var(--color-foreground-rgb) / 0.08);
+    padding: var(--padding-sm) var(--padding-md);
+    white-space: nowrap;
+  }
+
+  .size-guide__table th {
+    font-weight: var(--font-weight-semibold);
+  }
+
+  @media screen and (max-width: 489px) {
+    .size-guide {
+      justify-content: flex-start;
+    }
+
+    .size-guide__dialog {
+      border-end-end-radius: 0;
+      border-end-start-radius: 0;
+      margin-block-end: 0;
+      max-width: 100vw;
+      padding: var(--padding-lg);
+    }
+
+    .size-guide__header {
+      padding-inline: var(--padding-xl);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Size guide",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Product metafield"
+    },
+    {
+      "type": "text",
+      "id": "metafield_namespace",
+      "label": "Namespace",
+      "default": "custom"
+    },
+    {
+      "type": "text",
+      "id": "metafield_key",
+      "label": "Key",
+      "default": "size_guide",
+      "info": "Use a product metafield that references one size guide metaobject."
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Size guide"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Fallback heading",
+      "default": "Size Chart"
+    },
+    {
+      "type": "header",
+      "content": "Metaobject fields"
+    },
+    {
+      "type": "text",
+      "id": "title_field",
+      "label": "Title field key",
+      "default": "title"
+    },
+    {
+      "type": "text",
+      "id": "note_field",
+      "label": "Note field key",
+      "default": "note"
+    },
+    {
+      "type": "text",
+      "id": "image_field",
+      "label": "Image field key",
+      "default": "image"
+    },
+    {
+      "type": "text",
+      "id": "inches_table_field",
+      "label": "Inches table field key",
+      "default": "inches_table",
+      "info": "Use multiline text. Separate columns with | and put headers on the first line."
+    },
+    {
+      "type": "text",
+      "id": "cm_table_field",
+      "label": "Cm table field key",
+      "default": "cm_table",
+      "info": "Optional multiline text. Separate columns with | and put headers on the first line."
+    },
+    {
+      "type": "header",
+      "content": "Table labels"
+    },
+    {
+      "type": "text",
+      "id": "inches_label",
+      "label": "Inches toggle label",
+      "default": "Inches"
+    },
+    {
+      "type": "text",
+      "id": "cm_label",
+      "label": "Cm toggle label",
+      "default": "Cm"
+    },
+    {
+      "type": "text",
+      "id": "unit_toggle_label",
+      "label": "Unit toggle accessibility label",
+      "default": "Size unit"
+    },
+    {
+      "type": "text",
+      "id": "inches_table_title",
+      "label": "Inches table title",
+      "default": "Size Chart"
+    },
+    {
+      "type": "text",
+      "id": "cm_table_title",
+      "label": "Cm table title",
+      "default": "Size Chart"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "Left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "Right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Size guide",
+      "category": "Product"
+    }
+  ]
+}
+{% endschema %}

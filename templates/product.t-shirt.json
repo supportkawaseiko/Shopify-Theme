@@ -264,6 +264,31 @@
               },
               "blocks": {}
             },
+            "size_guide": {
+              "type": "size-guide",
+              "name": "Size guide",
+              "settings": {
+                "metafield_namespace": "custom",
+                "metafield_key": "size_guide",
+                "button_label": "Size guide",
+                "heading": "Size Chart",
+                "title_field": "title",
+                "note_field": "note",
+                "image_field": "image",
+                "inches_table_field": "inches_table",
+                "cm_table_field": "cm_table",
+                "inches_label": "Inches",
+                "cm_label": "Cm",
+                "unit_toggle_label": "Size unit",
+                "inches_table_title": "Size Chart",
+                "cm_table_title": "Size Chart",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
             "buy_buttons_eYQEYi": {
               "type": "buy-buttons",
               "settings": {
@@ -443,6 +468,7 @@
             "group_icgrde",
             "divider_VJhene",
             "variant_picker_R3rGDr",
+            "size_guide",
             "buy_buttons_eYQEYi",
             "shipping_eta",
             "product_metaobject_details",
