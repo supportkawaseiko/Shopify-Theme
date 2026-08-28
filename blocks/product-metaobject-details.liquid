@@ -1,0 +1,373 @@
+{%- liquid
+  assign block_settings = block.settings
+  assign metafield_namespace = block_settings.metafield_namespace | strip
+  assign metafield_key = block_settings.metafield_key | strip
+  assign product_detail_metafield = blank
+  assign detail = blank
+
+  if metafield_namespace != blank and metafield_key != blank
+    assign product_detail_metafield = closest.product.metafields[metafield_namespace][metafield_key]
+    assign detail = product_detail_metafield.value
+  endif
+
+  assign image_field = blank
+  assign image = blank
+  if detail != blank and block_settings.image_field != blank
+    assign image_field_key = block_settings.image_field | strip
+    assign image_field = detail[image_field_key]
+    assign image = image_field.value | default: image_field
+  endif
+
+  assign title_field = blank
+  if detail != blank and block_settings.title_field != blank
+    assign title_field_key = block_settings.title_field | strip
+    assign title_field = detail[title_field_key]
+  endif
+
+  assign body_field = blank
+  if detail != blank and block_settings.body_field != blank
+    assign body_field_key = block_settings.body_field | strip
+    assign body_field = detail[body_field_key]
+  endif
+
+  capture specs
+    for index in (1..4)
+      assign label_setting = 'spec_' | append: index | append: '_label'
+      assign field_setting = 'spec_' | append: index | append: '_field'
+      assign spec_label = block_settings[label_setting] | strip
+      assign spec_field_key = block_settings[field_setting] | strip
+
+      if detail != blank and spec_label != blank and spec_field_key != blank
+        assign spec_field = detail[spec_field_key]
+        assign spec_value = spec_field.value | default: spec_field
+
+        if spec_value != blank
+          echo '<div class="product-metaobject-details__spec">'
+          echo '<dt class="product-metaobject-details__spec-label">'
+          echo spec_label | escape
+          echo '</dt>'
+          echo '<dd class="product-metaobject-details__spec-value">'
+          echo spec_value
+          echo '</dd>'
+          echo '</div>'
+        endif
+      endif
+    endfor
+  endcapture
+
+  assign has_content = false
+  if detail != blank and image != blank
+    assign has_content = true
+  elsif detail != blank and title_field != blank
+    assign has_content = true
+  elsif detail != blank and body_field != blank
+    assign has_content = true
+  elsif specs != blank
+    assign has_content = true
+  endif
+-%}
+
+{%- if has_content -%}
+  <div
+    class="product-metaobject-details product-metaobject-details--{{ block_settings.image_position }} spacing-style"
+    style="{% render 'spacing-style', settings: block_settings %}"
+    {{ block.shopify_attributes }}
+  >
+    {%- if image != blank -%}
+      <div class="product-metaobject-details__media">
+        {{
+          image
+          | image_url: width: 900
+          | image_tag:
+            widths: '220, 360, 540, 720, 900',
+            sizes: '(min-width: 750px) 220px, 100vw',
+            loading: 'lazy',
+            class: 'product-metaobject-details__image'
+        }}
+      </div>
+    {%- endif -%}
+
+    <div class="product-metaobject-details__content">
+      {%- if title_field != blank -%}
+        <h3 class="product-metaobject-details__title">
+          {{ title_field.value | default: title_field | escape }}
+        </h3>
+      {%- endif -%}
+
+      {%- if body_field != blank -%}
+        <div class="product-metaobject-details__body rte">
+          {%- if body_field.type contains 'rich_text' -%}
+            {{ body_field | metafield_tag }}
+          {%- else -%}
+            {{ body_field.value | default: body_field }}
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- if specs != blank -%}
+        <dl class="product-metaobject-details__specs">
+          {{ specs }}
+        </dl>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  .product-metaobject-details {
+    align-items: stretch;
+    border: 1px solid rgb(var(--color-foreground-rgb) / 0.12);
+    border-radius: var(--style-border-radius-inputs, 8px);
+    display: grid;
+    gap: var(--gap-md);
+    grid-template-columns: 1fr;
+    overflow: hidden;
+    padding: var(--padding-md);
+  }
+
+  .product-metaobject-details__media {
+    background: rgb(var(--color-foreground-rgb) / 0.04);
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .product-metaobject-details__image {
+    aspect-ratio: 4 / 3;
+    display: block;
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .product-metaobject-details__content {
+    align-self: center;
+    min-width: 0;
+  }
+
+  .product-metaobject-details__title {
+    font-size: var(--font-h5--size);
+    line-height: var(--font-h5--line-height);
+    margin-block: 0 var(--margin-xs);
+  }
+
+  .product-metaobject-details__body {
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+    font-size: var(--font-paragraph-small--size);
+  }
+
+  .product-metaobject-details__body > *:first-child {
+    margin-block-start: 0;
+  }
+
+  .product-metaobject-details__body > *:last-child {
+    margin-block-end: 0;
+  }
+
+  .product-metaobject-details__specs {
+    display: grid;
+    gap: var(--gap-xs);
+    margin: var(--margin-md) 0 0;
+  }
+
+  .product-metaobject-details__spec {
+    border-top: 1px solid rgb(var(--color-foreground-rgb) / 0.1);
+    display: grid;
+    gap: var(--gap-xs);
+    grid-template-columns: minmax(7rem, 0.8fr) 1fr;
+    padding-block-start: var(--padding-xs);
+  }
+
+  .product-metaobject-details__spec-label,
+  .product-metaobject-details__spec-value {
+    font-size: var(--font-paragraph-small--size);
+    line-height: var(--font-paragraph--line-height);
+    margin: 0;
+  }
+
+  .product-metaobject-details__spec-label {
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+    font-weight: var(--font-weight-semibold);
+  }
+
+  @media screen and (min-width: 750px) {
+    .product-metaobject-details {
+      grid-template-columns: minmax(120px, 38%) 1fr;
+    }
+
+    .product-metaobject-details--right {
+      grid-template-columns: 1fr minmax(120px, 38%);
+    }
+
+    .product-metaobject-details--right .product-metaobject-details__media {
+      order: 1;
+    }
+  }
+
+  @media screen and (max-width: 489px) {
+    .product-metaobject-details__spec {
+      grid-template-columns: 1fr;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Metaobject details",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Product metafield"
+    },
+    {
+      "type": "text",
+      "id": "metafield_namespace",
+      "label": "Namespace",
+      "default": "custom"
+    },
+    {
+      "type": "text",
+      "id": "metafield_key",
+      "label": "Key",
+      "default": "product_details",
+      "info": "Use a product metafield that references one metaobject."
+    },
+    {
+      "type": "header",
+      "content": "Metaobject fields"
+    },
+    {
+      "type": "text",
+      "id": "image_field",
+      "label": "Image field key",
+      "default": "image"
+    },
+    {
+      "type": "text",
+      "id": "title_field",
+      "label": "Title field key",
+      "default": "title"
+    },
+    {
+      "type": "text",
+      "id": "body_field",
+      "label": "Body field key",
+      "default": "description"
+    },
+    {
+      "type": "text",
+      "id": "spec_1_label",
+      "label": "Spec 1 label",
+      "default": "Material"
+    },
+    {
+      "type": "text",
+      "id": "spec_1_field",
+      "label": "Spec 1 field key",
+      "default": "material"
+    },
+    {
+      "type": "text",
+      "id": "spec_2_label",
+      "label": "Spec 2 label",
+      "default": "Size"
+    },
+    {
+      "type": "text",
+      "id": "spec_2_field",
+      "label": "Spec 2 field key",
+      "default": "size"
+    },
+    {
+      "type": "text",
+      "id": "spec_3_label",
+      "label": "Spec 3 label"
+    },
+    {
+      "type": "text",
+      "id": "spec_3_field",
+      "label": "Spec 3 field key"
+    },
+    {
+      "type": "text",
+      "id": "spec_4_label",
+      "label": "Spec 4 label"
+    },
+    {
+      "type": "text",
+      "id": "spec_4_field",
+      "label": "Spec 4 field key"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image position on desktop",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "Left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "Right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Metaobject details",
+      "category": "Product"
+    }
+  ]
+}
+{% endschema %}

@@ -324,6 +324,31 @@
               },
               "block_order": []
             },
+            "product_metaobject_details": {
+              "type": "product-metaobject-details",
+              "name": "Metaobject details",
+              "settings": {
+                "metafield_namespace": "custom",
+                "metafield_key": "product_details",
+                "image_field": "image",
+                "title_field": "title",
+                "body_field": "description",
+                "spec_1_label": "Material",
+                "spec_1_field": "material",
+                "spec_2_label": "Size",
+                "spec_2_field": "size",
+                "spec_3_label": "",
+                "spec_3_field": "",
+                "spec_4_label": "",
+                "spec_4_field": "",
+                "image_position": "left",
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
             "text_aEtTtq": {
               "type": "text",
               "name": "t:names.product_description",
@@ -391,6 +416,7 @@
             "divider_VJhene",
             "variant_picker_R3rGDr",
             "buy_buttons_eYQEYi",
+            "product_metaobject_details",
             "text_aEtTtq",
             "ai_gen_block_0558575_EUwxiw"
           ]
