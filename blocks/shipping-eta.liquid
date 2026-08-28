@@ -289,7 +289,8 @@
 
   .shipping-eta__timeline {
     display: grid;
-    gap: var(--gap-md);
+    column-gap: 0;
+    row-gap: var(--gap-md);
     grid-template-columns: repeat(3, minmax(0, 1fr));
     position: relative;
     width: 100%;
@@ -300,7 +301,7 @@
     content: '';
     height: 1px;
     inset-block-start: 18px;
-    inset-inline: 7%;
+    inset-inline: 19px;
     position: absolute;
   }
 
@@ -312,6 +313,16 @@
     position: relative;
     text-align: center;
     width: 100%;
+  }
+
+  .shipping-eta__step:first-child {
+    justify-items: start;
+    text-align: left;
+  }
+
+  .shipping-eta__step:last-child {
+    justify-items: end;
+    text-align: right;
   }
 
   .shipping-eta__icon {
@@ -351,6 +362,12 @@
 
     .shipping-eta__step {
       grid-template-columns: 36px 1fr;
+      justify-items: start;
+      text-align: left;
+    }
+
+    .shipping-eta__step:first-child,
+    .shipping-eta__step:last-child {
       justify-items: start;
       text-align: left;
     }
