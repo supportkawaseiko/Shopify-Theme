@@ -19,7 +19,12 @@
 {%- if eta_value != blank -%}
   <shipping-eta-selector
     class="shipping-eta spacing-style"
-    style="{% render 'spacing-style', settings: block_settings %}"
+    style="
+      {% render 'spacing-style', settings: block_settings %}
+      --shipping-eta-background: {{ block_settings.background_color | default: 'rgb(var(--color-foreground-rgb) / 0.04)' }};
+      --shipping-eta-border-color: {{ block_settings.border_color | default: 'rgb(var(--color-foreground-rgb) / 0.14)' }};
+      --shipping-eta-border-radius: {{ block_settings.border_radius | default: 8 }}px;
+    "
     {{ block.shopify_attributes }}
   >
     <div class="shipping-eta__destination-control">
@@ -120,9 +125,16 @@
 
 {% stylesheet %}
   .shipping-eta {
+    background: var(--shipping-eta-background);
+    border: 1px solid var(--shipping-eta-border-color);
+    border-radius: var(--shipping-eta-border-radius);
     color: rgb(var(--color-foreground-rgb));
     display: grid;
     gap: var(--gap-md);
+    justify-self: stretch;
+    min-width: 100%;
+    padding: var(--padding-md);
+    width: 100%;
   }
 
   .shipping-eta__destination-control {
@@ -139,6 +151,7 @@
 
   .shipping-eta__destination-dropdown {
     position: relative;
+    width: 100%;
   }
 
   .shipping-eta__destination-trigger {
@@ -152,6 +165,7 @@
     list-style: none;
     min-height: 44px;
     padding: var(--padding-xs) var(--padding-sm);
+    width: 100%;
   }
 
   .shipping-eta__destination-trigger::-webkit-details-marker {
@@ -275,9 +289,10 @@
 
   .shipping-eta__timeline {
     display: grid;
-    gap: var(--gap-sm);
+    gap: var(--gap-md);
     grid-template-columns: repeat(3, minmax(0, 1fr));
     position: relative;
+    width: 100%;
   }
 
   .shipping-eta__timeline::before {
@@ -285,7 +300,7 @@
     content: '';
     height: 1px;
     inset-block-start: 18px;
-    inset-inline: 10%;
+    inset-inline: 7%;
     position: absolute;
   }
 
@@ -296,18 +311,20 @@
     min-width: 0;
     position: relative;
     text-align: center;
+    width: 100%;
   }
 
   .shipping-eta__icon {
     align-items: center;
-    background: rgb(var(--color-background-rgb));
+    background: var(--shipping-eta-background);
+    border: 1px solid rgb(var(--color-foreground-rgb) / 0.12);
     border-radius: 50%;
     color: rgb(var(--color-foreground-rgb));
     display: inline-flex;
-    height: 36px;
+    height: 38px;
     justify-content: center;
     padding: 8px;
-    width: 36px;
+    width: 38px;
     z-index: 1;
   }
 
@@ -451,6 +468,34 @@
       "id": "accessibility_label",
       "label": "Accessibility label",
       "default": "Shipping timeline"
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "alpha": true,
+      "default": "#f8f3ea"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "alpha": true,
+      "default": "#e4d8c7"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 8
     },
     {
       "type": "header",
