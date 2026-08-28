@@ -17,48 +17,106 @@
 -%}
 
 {%- if eta_value != blank -%}
-  <div
+  <shipping-eta-selector
     class="shipping-eta spacing-style"
     style="{% render 'spacing-style', settings: block_settings %}"
     {{ block.shopify_attributes }}
   >
-    {%- if is_eta_list -%}
-      {%- capture region_rows -%}
-        {%- for eta in eta_value -%}
-          {% render 'shipping-eta-entry', eta: eta, settings: block_settings, mode: 'row' %}
-        {%- endfor -%}
-      {%- endcapture -%}
+    <div class="shipping-eta__destination-control">
+      <p class="shipping-eta__destination-label">{{ block_settings.destination_label | escape }}</p>
 
-      {%- if region_rows != blank -%}
-        {%- if block_settings.region_heading != blank -%}
-          <p class="shipping-eta__headline">
-            <span class="shipping-eta__truck" aria-hidden="true">
-              <svg viewBox="0 0 24 24" focusable="false">
-                <path d="M3 6.5h11v9H3z" />
-                <path d="M14 9h3.6l2.4 3.2v3.3h-6z" />
-                <circle cx="7" cy="17" r="1.7" />
-                <circle cx="17.5" cy="17" r="1.7" />
-                <path d="M1.5 9h4M.5 12h5M2 15h3.5" />
-              </svg>
-            </span>
-            <span>{{ block_settings.region_heading | escape }}</span>
-          </p>
-        {%- endif -%}
+      <details class="shipping-eta__destination-dropdown" data-shipping-eta-dropdown>
+        <summary
+          class="shipping-eta__destination-trigger"
+          aria-label="{{ block_settings.destination_label | escape }}"
+        >
+          {%- if is_eta_list -%}
+            {%- for eta in eta_value -%}
+              {%- if forloop.first -%}
+                {% render 'shipping-eta-entry', eta: eta, settings: block_settings, mode: 'selected', selected: true %}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- else -%}
+            {% render 'shipping-eta-entry', eta: eta_value, settings: block_settings, mode: 'selected', selected: true %}
+          {%- endif -%}
+          <span class="shipping-eta__chevron" aria-hidden="true">
+            {{- 'icon-caret.svg' | inline_asset_content -}}
+          </span>
+        </summary>
 
-        <div class="shipping-eta__regions" aria-label="{{ block_settings.regions_accessibility_label | escape }}">
-          <div class="shipping-eta__region-header" aria-hidden="true">
-            <span>{{ block_settings.region_column_label | escape }}</span>
-            <span>{{ block_settings.ship_label | escape }}</span>
-            <span>{{ block_settings.arrival_label | escape }}</span>
+        {%- if is_eta_list -%}
+          <div class="shipping-eta__destination-options" role="listbox">
+            {%- for eta in eta_value -%}
+              {% render 'shipping-eta-entry',
+                eta: eta,
+                settings: block_settings,
+                mode: 'option',
+                index: forloop.index0,
+                selected: forloop.first
+              %}
+            {%- endfor -%}
           </div>
-          {{ region_rows }}
-        </div>
+        {%- endif -%}
+      </details>
+    </div>
+
+    <div class="shipping-eta__panels">
+      {%- if is_eta_list -%}
+        {%- for eta in eta_value -%}
+          {% render 'shipping-eta-entry',
+            eta: eta,
+            settings: block_settings,
+            mode: 'panel',
+            index: forloop.index0,
+            selected: forloop.first
+          %}
+        {%- endfor -%}
+      {%- else -%}
+        {% render 'shipping-eta-entry', eta: eta_value, settings: block_settings, mode: 'panel', index: 0, selected: true %}
       {%- endif -%}
-    {%- else -%}
-      {% render 'shipping-eta-entry', eta: eta_value, settings: block_settings, mode: 'timeline' %}
-    {%- endif -%}
-  </div>
+    </div>
+  </shipping-eta-selector>
 {%- endif -%}
+
+<script>
+  if (!customElements.get('shipping-eta-selector')) {
+    customElements.define(
+      'shipping-eta-selector',
+      class ShippingEtaSelector extends HTMLElement {
+        connectedCallback() {
+          this.dropdown = this.querySelector('[data-shipping-eta-dropdown]');
+          this.selectedFlag = this.querySelector('[data-shipping-eta-selected-flag]');
+          this.selectedLabel = this.querySelector('[data-shipping-eta-selected-label]');
+          this.options = Array.from(this.querySelectorAll('[data-shipping-eta-option]'));
+          this.panels = Array.from(this.querySelectorAll('[data-shipping-eta-panel]'));
+
+          this.options.forEach((option) => {
+            option.addEventListener('click', () => this.selectOption(option));
+          });
+        }
+
+        selectOption(option) {
+          const selectedIndex = option.dataset.index;
+          const optionFlag = option.querySelector('[data-shipping-eta-option-flag]');
+          const optionLabel = option.querySelector('[data-shipping-eta-option-label]');
+
+          if (this.selectedFlag && optionFlag) this.selectedFlag.innerHTML = optionFlag.innerHTML;
+          if (this.selectedLabel && optionLabel) this.selectedLabel.textContent = optionLabel.textContent;
+
+          this.options.forEach((item) => {
+            item.setAttribute('aria-selected', item === option ? 'true' : 'false');
+          });
+
+          this.panels.forEach((panel) => {
+            panel.hidden = panel.dataset.index !== selectedIndex;
+          });
+
+          if (this.dropdown) this.dropdown.open = false;
+        }
+      }
+    );
+  }
+</script>
 
 {% stylesheet %}
   .shipping-eta {
@@ -67,44 +125,152 @@
     gap: var(--gap-md);
   }
 
-  .shipping-eta__headline {
-    align-items: center;
-    display: flex;
-    font-size: var(--font-paragraph--size);
+  .shipping-eta__destination-control {
+    display: grid;
     gap: var(--gap-xs);
+  }
+
+  .shipping-eta__destination-label {
+    font-size: var(--font-paragraph--size);
+    font-weight: var(--font-weight-semibold);
     line-height: var(--font-paragraph--line-height);
     margin: 0;
   }
 
-  .shipping-eta__headline strong,
+  .shipping-eta__destination-dropdown {
+    position: relative;
+  }
+
+  .shipping-eta__destination-trigger {
+    align-items: center;
+    border: 1px solid rgb(var(--color-foreground-rgb) / 0.16);
+    border-radius: var(--style-border-radius-inputs, 8px);
+    cursor: pointer;
+    display: grid;
+    gap: var(--gap-xs);
+    grid-template-columns: auto 1fr auto;
+    list-style: none;
+    min-height: 44px;
+    padding: var(--padding-xs) var(--padding-sm);
+  }
+
+  .shipping-eta__destination-trigger::-webkit-details-marker {
+    display: none;
+  }
+
+  .shipping-eta__destination-trigger:focus-visible {
+    outline: var(--focus-outline-width) solid rgb(var(--color-foreground-rgb) / var(--opacity-35-55));
+    outline-offset: var(--focus-outline-offset);
+  }
+
+  .shipping-eta__chevron {
+    display: inline-flex;
+    height: 12px;
+    transition: transform var(--animation-speed) var(--animation-easing);
+    width: 12px;
+  }
+
+  .shipping-eta__destination-dropdown[open] .shipping-eta__chevron {
+    transform: rotate(180deg);
+  }
+
+  .shipping-eta__destination-options {
+    background: rgb(var(--color-background-rgb));
+    border: 1px solid rgb(var(--color-foreground-rgb) / 0.16);
+    border-radius: var(--style-border-radius-inputs, 8px);
+    box-shadow: var(--shadow-popover);
+    display: grid;
+    inset-block-start: calc(100% + var(--gap-3xs));
+    inset-inline: 0;
+    max-height: 240px;
+    overflow: auto;
+    padding: var(--padding-2xs);
+    position: absolute;
+    z-index: var(--layer-temporary);
+  }
+
+  .shipping-eta__destination-option {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    border-radius: calc(var(--style-border-radius-inputs, 8px) / 2);
+    color: currentColor;
+    cursor: pointer;
+    display: grid;
+    font: inherit;
+    gap: var(--gap-xs);
+    grid-template-columns: auto 1fr;
+    padding: var(--padding-xs);
+    text-align: left;
+  }
+
+  .shipping-eta__destination-option:hover,
+  .shipping-eta__destination-option[aria-selected='true'] {
+    background: rgb(var(--color-foreground-rgb) / 0.06);
+  }
+
+  .shipping-eta__flag {
+    align-items: center;
+    background: rgb(var(--color-foreground-rgb) / 0.06);
+    border-radius: 50%;
+    display: inline-flex;
+    height: 28px;
+    justify-content: center;
+    overflow: hidden;
+    width: 28px;
+  }
+
+  .shipping-eta__flag:empty::before {
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+    content: '-';
+    font-size: var(--font-size--xs);
+  }
+
+  .shipping-eta__flag-image {
+    display: block;
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .shipping-eta__panels {
+    display: grid;
+  }
+
+  .shipping-eta__panel {
+    display: grid;
+    gap: var(--gap-md);
+  }
+
+  .shipping-eta__panel[hidden] {
+    display: none;
+  }
+
   .shipping-eta__date,
-  .shipping-eta__region-cell strong {
+  .shipping-eta__label,
+  .shipping-eta__note {
+    margin: 0;
+  }
+
+  .shipping-eta__date {
+    color: rgb(var(--color-button));
+    font-size: var(--font-paragraph-small--size);
     font-weight: var(--font-weight-semibold);
   }
 
-  .shipping-eta__truck,
-  .shipping-eta__icon {
-    align-items: center;
-    display: inline-flex;
-    flex-shrink: 0;
-    justify-content: center;
+  .shipping-eta__label {
+    font-size: var(--font-paragraph-small--size);
   }
 
-  .shipping-eta__truck {
-    color: currentColor;
-    height: 1.5rem;
-    width: 1.8rem;
+  .shipping-eta__note {
+    color: rgb(var(--color-button));
+    font-size: var(--font-paragraph-small--size);
+    font-style: italic;
+    line-height: var(--font-paragraph--line-height);
   }
 
-  .shipping-eta svg {
-    display: block;
-    fill: none;
-    height: 100%;
-    stroke: currentColor;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-width: 2;
-    width: 100%;
+  .shipping-eta__note > * {
+    margin-block: 0;
   }
 
   .shipping-eta__timeline {
@@ -133,84 +299,27 @@
   }
 
   .shipping-eta__icon {
+    align-items: center;
     background: rgb(var(--color-background-rgb));
     border-radius: 50%;
     color: rgb(var(--color-foreground-rgb));
+    display: inline-flex;
     height: 36px;
+    justify-content: center;
     padding: 8px;
     width: 36px;
     z-index: 1;
   }
 
-  .shipping-eta__date,
-  .shipping-eta__label,
-  .shipping-eta__note,
-  .shipping-eta__region-note,
-  .shipping-eta__region-cell {
-    margin: 0;
-  }
-
-  .shipping-eta__date {
-    color: rgb(var(--color-button));
-    font-size: var(--font-paragraph-small--size);
-  }
-
-  .shipping-eta__label {
-    font-size: var(--font-paragraph-small--size);
-  }
-
-  .shipping-eta__note,
-  .shipping-eta__region-note {
-    color: rgb(var(--color-button));
-    font-size: var(--font-paragraph-small--size);
-    font-style: italic;
-    line-height: var(--font-paragraph--line-height);
-  }
-
-  .shipping-eta__note > *,
-  .shipping-eta__region-note > * {
-    margin-block: 0;
-  }
-
-  .shipping-eta__regions {
-    border-block: 1px solid rgb(var(--color-foreground-rgb) / 0.14);
-    display: grid;
-  }
-
-  .shipping-eta__region-header,
-  .shipping-eta__region-row {
-    display: grid;
-    gap: var(--gap-sm);
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-
-  .shipping-eta__region-header {
-    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
-    font-size: var(--font-paragraph-small--size);
-    padding-block: var(--padding-xs);
-  }
-
-  .shipping-eta__region-row {
-    border-block-start: 1px solid rgb(var(--color-foreground-rgb) / 0.1);
-    padding-block: var(--padding-sm);
-  }
-
-  .shipping-eta__region-cell {
-    font-size: var(--font-paragraph-small--size);
-    line-height: var(--font-paragraph--line-height);
-    min-width: 0;
-  }
-
-  .shipping-eta__region-name {
-    font-weight: var(--font-weight-semibold);
-  }
-
-  .shipping-eta__region-note {
-    grid-column: 1 / -1;
-  }
-
-  .shipping-eta__mobile-label {
-    display: none;
+  .shipping-eta svg {
+    display: block;
+    fill: none;
+    height: 100%;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2;
+    width: 100%;
   }
 
   @media screen and (max-width: 489px) {
@@ -219,8 +328,7 @@
       grid-template-columns: 1fr;
     }
 
-    .shipping-eta__timeline::before,
-    .shipping-eta__region-header {
+    .shipping-eta__timeline::before {
       display: none;
     }
 
@@ -237,28 +345,6 @@
 
     .shipping-eta__icon {
       grid-row: 1 / span 2;
-    }
-
-    .shipping-eta__region-row {
-      gap: var(--gap-xs);
-      grid-template-columns: 1fr;
-    }
-
-    .shipping-eta__region-cell {
-      display: grid;
-      gap: var(--gap-xs);
-      grid-template-columns: 8rem 1fr;
-    }
-
-    .shipping-eta__region-name {
-      display: block;
-      font-size: var(--font-paragraph--size);
-    }
-
-    .shipping-eta__mobile-label {
-      color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
-      display: inline;
-      font-weight: var(--font-weight-normal);
     }
   }
 {% endstylesheet %}
@@ -297,6 +383,12 @@
     },
     {
       "type": "text",
+      "id": "flag_field",
+      "label": "Flag image field key",
+      "default": "flag"
+    },
+    {
+      "type": "text",
       "id": "processing_min_field",
       "label": "Processing min days field key",
       "default": "processing_min_days"
@@ -331,27 +423,9 @@
     },
     {
       "type": "text",
-      "id": "headline_prefix",
-      "label": "Headline prefix",
-      "default": "Arrives"
-    },
-    {
-      "type": "text",
-      "id": "headline_suffix",
-      "label": "Headline suffix",
-      "default": "if you order today. Hooray!"
-    },
-    {
-      "type": "text",
-      "id": "region_heading",
-      "label": "Region list heading",
-      "default": "Estimated delivery by region"
-    },
-    {
-      "type": "text",
-      "id": "region_column_label",
-      "label": "Region column label",
-      "default": "Region"
+      "id": "destination_label",
+      "label": "Destination label",
+      "default": "Where your package is shipped to"
     },
     {
       "type": "text",
@@ -382,12 +456,6 @@
       "id": "accessibility_label",
       "label": "Accessibility label",
       "default": "Shipping timeline"
-    },
-    {
-      "type": "text",
-      "id": "regions_accessibility_label",
-      "label": "Regions accessibility label",
-      "default": "Shipping timelines by region"
     },
     {
       "type": "header",
