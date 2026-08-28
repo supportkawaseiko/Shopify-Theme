@@ -3,169 +3,59 @@
   assign metafield_namespace = block_settings.metafield_namespace | strip
   assign metafield_key = block_settings.metafield_key | strip
   assign shipping_metafield = blank
-  assign eta = blank
+  assign eta_value = blank
+  assign is_eta_list = false
 
   if metafield_namespace != blank and metafield_key != blank
     assign shipping_metafield = closest.product.metafields[metafield_namespace][metafield_key]
-    assign eta = shipping_metafield.value
-  endif
+    assign eta_value = shipping_metafield.value
 
-  assign processing_min_key = block_settings.processing_min_field | strip
-  assign processing_max_key = block_settings.processing_max_field | strip
-  assign transit_min_key = block_settings.transit_min_field | strip
-  assign transit_max_key = block_settings.transit_max_field | strip
-  assign note_key = block_settings.note_field | strip
-
-  assign processing_min_days = blank
-  assign processing_max_days = blank
-  assign transit_min_days = blank
-  assign transit_max_days = blank
-  assign note_field = blank
-  assign note_value = blank
-
-  if eta != blank
-    if processing_min_key != blank
-      assign processing_min_field = eta[processing_min_key]
-      assign processing_min_days = processing_min_field.value | default: processing_min_field
+    if shipping_metafield.type contains 'list.'
+      assign is_eta_list = true
     endif
-
-    if processing_max_key != blank
-      assign processing_max_field = eta[processing_max_key]
-      assign processing_max_days = processing_max_field.value | default: processing_max_field
-    endif
-
-    if transit_min_key != blank
-      assign transit_min_field = eta[transit_min_key]
-      assign transit_min_days = transit_min_field.value | default: transit_min_field
-    endif
-
-    if transit_max_key != blank
-      assign transit_max_field = eta[transit_max_key]
-      assign transit_max_days = transit_max_field.value | default: transit_max_field
-    endif
-
-    if note_key != blank
-      assign note_field = eta[note_key]
-      assign note_value = note_field.value | default: note_field
-    endif
-  endif
-
-  assign has_eta = false
-  if processing_min_days != blank and processing_max_days != blank and transit_min_days != blank and transit_max_days != blank
-    assign has_eta = true
-  endif
-
-  assign day_seconds = 86400
-  assign now_timestamp = 'now' | date: '%s' | plus: 0
-  assign processing_min_seconds = processing_min_days | plus: 0 | times: day_seconds
-  assign processing_max_seconds = processing_max_days | plus: 0 | times: day_seconds
-  assign transit_min_seconds = transit_min_days | plus: 0 | times: day_seconds
-  assign transit_max_seconds = transit_max_days | plus: 0 | times: day_seconds
-
-  assign ship_start_timestamp = now_timestamp | plus: processing_min_seconds
-  assign ship_end_timestamp = now_timestamp | plus: processing_max_seconds
-  assign arrival_start_timestamp = ship_start_timestamp | plus: transit_min_seconds
-  assign arrival_end_timestamp = ship_end_timestamp | plus: transit_max_seconds
-
-  assign today_label = now_timestamp | date: '%b %d'
-  assign ship_start_month = ship_start_timestamp | date: '%b'
-  assign ship_end_month = ship_end_timestamp | date: '%b'
-  assign arrival_start_month = arrival_start_timestamp | date: '%b'
-  assign arrival_end_month = arrival_end_timestamp | date: '%b'
-
-  if ship_start_timestamp == ship_end_timestamp
-    assign ship_range = ship_start_timestamp | date: '%b %d'
-  elsif ship_start_month == ship_end_month
-    assign ship_range = ship_start_timestamp | date: '%b %d'
-    assign ship_end_day = ship_end_timestamp | date: '%d'
-    assign ship_range = ship_range | append: ' - ' | append: ship_end_day
-  else
-    assign ship_range = ship_start_timestamp | date: '%b %d'
-    assign ship_end_date = ship_end_timestamp | date: '%b %d'
-    assign ship_range = ship_range | append: ' - ' | append: ship_end_date
-  endif
-
-  if arrival_start_timestamp == arrival_end_timestamp
-    assign arrival_range = arrival_start_timestamp | date: '%b %d'
-  elsif arrival_start_month == arrival_end_month
-    assign arrival_range = arrival_start_timestamp | date: '%b %d'
-    assign arrival_end_day = arrival_end_timestamp | date: '%d'
-    assign arrival_range = arrival_range | append: ' - ' | append: arrival_end_day
-  else
-    assign arrival_range = arrival_start_timestamp | date: '%b %d'
-    assign arrival_end_date = arrival_end_timestamp | date: '%b %d'
-    assign arrival_range = arrival_range | append: ' - ' | append: arrival_end_date
   endif
 -%}
 
-{%- if has_eta -%}
+{%- if eta_value != blank -%}
   <div
     class="shipping-eta spacing-style"
     style="{% render 'spacing-style', settings: block_settings %}"
     {{ block.shopify_attributes }}
   >
-    <p class="shipping-eta__headline">
-      <span class="shipping-eta__truck" aria-hidden="true">
-        <svg viewBox="0 0 24 24" focusable="false">
-          <path d="M3 6.5h11v9H3z" />
-          <path d="M14 9h3.6l2.4 3.2v3.3h-6z" />
-          <circle cx="7" cy="17" r="1.7" />
-          <circle cx="17.5" cy="17" r="1.7" />
-          <path d="M1.5 9h4M.5 12h5M2 15h3.5" />
-        </svg>
-      </span>
-      <span>
-        {{ block_settings.headline_prefix | escape }}
-        <strong>{{ arrival_range }}</strong>
-        {{ block_settings.headline_suffix | escape }}
-      </span>
-    </p>
+    {%- if is_eta_list -%}
+      {%- capture region_rows -%}
+        {%- for eta in eta_value -%}
+          {% render 'shipping-eta-entry', eta: eta, settings: block_settings, mode: 'row' %}
+        {%- endfor -%}
+      {%- endcapture -%}
 
-    <div class="shipping-eta__timeline" aria-label="{{ block_settings.accessibility_label | escape }}">
-      <div class="shipping-eta__step">
-        <span class="shipping-eta__icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" focusable="false">
-            <path d="m5 12 4 4 10-10" />
-          </svg>
-        </span>
-        <p class="shipping-eta__date">{{ today_label }}</p>
-        <p class="shipping-eta__label">{{ block_settings.order_label | escape }}</p>
-      </div>
-
-      <div class="shipping-eta__step">
-        <span class="shipping-eta__icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" focusable="false">
-            <path d="M3 7h11v8H3z" />
-            <path d="M14 10h3l2 2.8V15h-5z" />
-            <circle cx="7" cy="17" r="1.5" />
-            <circle cx="17" cy="17" r="1.5" />
-          </svg>
-        </span>
-        <p class="shipping-eta__date">{{ ship_range }}</p>
-        <p class="shipping-eta__label">{{ block_settings.ship_label | escape }}</p>
-      </div>
-
-      <div class="shipping-eta__step">
-        <span class="shipping-eta__icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" focusable="false">
-            <path d="M5 8h14v12H5z" />
-            <path d="M8 8a4 4 0 0 1 8 0" />
-            <path d="M9 13h6M12 10v6" />
-          </svg>
-        </span>
-        <p class="shipping-eta__date">{{ arrival_range }}</p>
-        <p class="shipping-eta__label">{{ block_settings.arrival_label | escape }}</p>
-      </div>
-    </div>
-
-    {%- if note_value != blank -%}
-      <div class="shipping-eta__note rte">
-        {%- if note_field.type contains 'rich_text' -%}
-          {{ note_field | metafield_tag }}
-        {%- else -%}
-          <p>{{ note_value }}</p>
+      {%- if region_rows != blank -%}
+        {%- if block_settings.region_heading != blank -%}
+          <p class="shipping-eta__headline">
+            <span class="shipping-eta__truck" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <path d="M3 6.5h11v9H3z" />
+                <path d="M14 9h3.6l2.4 3.2v3.3h-6z" />
+                <circle cx="7" cy="17" r="1.7" />
+                <circle cx="17.5" cy="17" r="1.7" />
+                <path d="M1.5 9h4M.5 12h5M2 15h3.5" />
+              </svg>
+            </span>
+            <span>{{ block_settings.region_heading | escape }}</span>
+          </p>
         {%- endif -%}
-      </div>
+
+        <div class="shipping-eta__regions" aria-label="{{ block_settings.regions_accessibility_label | escape }}">
+          <div class="shipping-eta__region-header" aria-hidden="true">
+            <span>{{ block_settings.region_column_label | escape }}</span>
+            <span>{{ block_settings.ship_label | escape }}</span>
+            <span>{{ block_settings.arrival_label | escape }}</span>
+          </div>
+          {{ region_rows }}
+        </div>
+      {%- endif -%}
+    {%- else -%}
+      {% render 'shipping-eta-entry', eta: eta_value, settings: block_settings, mode: 'timeline' %}
     {%- endif -%}
   </div>
 {%- endif -%}
@@ -187,7 +77,8 @@
   }
 
   .shipping-eta__headline strong,
-  .shipping-eta__date {
+  .shipping-eta__date,
+  .shipping-eta__region-cell strong {
     font-weight: var(--font-weight-semibold);
   }
 
@@ -253,7 +144,9 @@
 
   .shipping-eta__date,
   .shipping-eta__label,
-  .shipping-eta__note {
+  .shipping-eta__note,
+  .shipping-eta__region-note,
+  .shipping-eta__region-cell {
     margin: 0;
   }
 
@@ -266,15 +159,58 @@
     font-size: var(--font-paragraph-small--size);
   }
 
-  .shipping-eta__note {
+  .shipping-eta__note,
+  .shipping-eta__region-note {
     color: rgb(var(--color-button));
     font-size: var(--font-paragraph-small--size);
     font-style: italic;
     line-height: var(--font-paragraph--line-height);
   }
 
-  .shipping-eta__note > * {
+  .shipping-eta__note > *,
+  .shipping-eta__region-note > * {
     margin-block: 0;
+  }
+
+  .shipping-eta__regions {
+    border-block: 1px solid rgb(var(--color-foreground-rgb) / 0.14);
+    display: grid;
+  }
+
+  .shipping-eta__region-header,
+  .shipping-eta__region-row {
+    display: grid;
+    gap: var(--gap-sm);
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .shipping-eta__region-header {
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+    font-size: var(--font-paragraph-small--size);
+    padding-block: var(--padding-xs);
+  }
+
+  .shipping-eta__region-row {
+    border-block-start: 1px solid rgb(var(--color-foreground-rgb) / 0.1);
+    padding-block: var(--padding-sm);
+  }
+
+  .shipping-eta__region-cell {
+    font-size: var(--font-paragraph-small--size);
+    line-height: var(--font-paragraph--line-height);
+    min-width: 0;
+  }
+
+  .shipping-eta__region-name {
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .shipping-eta__region-note {
+    grid-column: 1 / -1;
+  }
+
+  .shipping-eta__mobile-label {
+    display: none;
   }
 
   @media screen and (max-width: 489px) {
@@ -283,7 +219,8 @@
       grid-template-columns: 1fr;
     }
 
-    .shipping-eta__timeline::before {
+    .shipping-eta__timeline::before,
+    .shipping-eta__region-header {
       display: none;
     }
 
@@ -300,6 +237,28 @@
 
     .shipping-eta__icon {
       grid-row: 1 / span 2;
+    }
+
+    .shipping-eta__region-row {
+      gap: var(--gap-xs);
+      grid-template-columns: 1fr;
+    }
+
+    .shipping-eta__region-cell {
+      display: grid;
+      gap: var(--gap-xs);
+      grid-template-columns: 8rem 1fr;
+    }
+
+    .shipping-eta__region-name {
+      display: block;
+      font-size: var(--font-paragraph--size);
+    }
+
+    .shipping-eta__mobile-label {
+      color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+      display: inline;
+      font-weight: var(--font-weight-normal);
     }
   }
 {% endstylesheet %}
@@ -324,11 +283,17 @@
       "id": "metafield_key",
       "label": "Key",
       "default": "shipping_eta",
-      "info": "Use a product metafield that references one shipping ETA metaobject."
+      "info": "Use a product metafield that references one shipping ETA metaobject or a list of metaobjects."
     },
     {
       "type": "header",
       "content": "Metaobject fields"
+    },
+    {
+      "type": "text",
+      "id": "region_field",
+      "label": "Region field key",
+      "default": "region"
     },
     {
       "type": "text",
@@ -378,6 +343,24 @@
     },
     {
       "type": "text",
+      "id": "region_heading",
+      "label": "Region list heading",
+      "default": "Estimated delivery by region"
+    },
+    {
+      "type": "text",
+      "id": "region_column_label",
+      "label": "Region column label",
+      "default": "Region"
+    },
+    {
+      "type": "text",
+      "id": "region_fallback_label",
+      "label": "Region fallback label",
+      "default": "Region"
+    },
+    {
+      "type": "text",
       "id": "order_label",
       "label": "Order placed label",
       "default": "Order placed"
@@ -399,6 +382,12 @@
       "id": "accessibility_label",
       "label": "Accessibility label",
       "default": "Shipping timeline"
+    },
+    {
+      "type": "text",
+      "id": "regions_accessibility_label",
+      "label": "Regions accessibility label",
+      "default": "Shipping timelines by region"
     },
     {
       "type": "header",
