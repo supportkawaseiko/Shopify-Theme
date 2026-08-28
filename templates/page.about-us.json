@@ -1,0 +1,115 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "blocks": {
+        "text_bmbftR": {
+          "type": "text",
+          "name": "t:names.text",
+          "settings": {
+            "text": "<h2>A Letter from the Owner</h2><p>Hello and welcome!</p><p>Our journey began during the COVID-19 pandemic, when workforce reductions and travel restrictions led me to explore ways to earn an income from home. With determination and a willingness to learn, I opened a small Etsy shop—without knowing how far it would go.</p><p>Three years later, we have proudly completed over 23,000 orders and served more than 20,000 customers. Every order, review, and message has helped us grow and improve while staying committed to quality, thoughtful service, and customer satisfaction.</p><p>Opening our own website marks an exciting new chapter. It allows us to connect with you more directly and offer an even better shopping experience, while continuing to provide the same care and attention that earned the trust of thousands of Etsy customers.</p><p>Thank you for supporting our small business. We’re truly grateful to have you as part of our story.</p><p>With gratitude,<br/>[Owner’s Name]<br/>Founder of [Brand Name]</p>",
+            "width": "100%",
+            "max_width": "none",
+            "alignment": "left",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "text_color": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "text_bmbftR"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "gap": 32,
+        "background_color": "{{ settings.color_palette.background }}",
+        "padding-block-start": 40,
+        "padding-block-end": 80
+      }
+    },
+    "audience_showcase_DNhxdh": {
+      "type": "audience_showcase",
+      "blocks": {
+        "card_bKGeFD": {
+          "type": "card",
+          "settings": {
+            "icon": "heart",
+            "image_upload": "shopify://shop_images/wedding-icon-4k.png",
+            "title": "For Wedding",
+            "text": "<p>Add a special touch to your bachelorette outfits</p>"
+          }
+        },
+        "card_ExCdMa": {
+          "type": "card",
+          "settings": {
+            "icon": "box",
+            "image_upload": "shopify://shop_images/birthday-icon-4k.png",
+            "title": "For Birthday",
+            "text": "<p>A funny shirt is essential for every birthday</p>"
+          }
+        },
+        "card_EqMqeE": {
+          "type": "card",
+          "settings": {
+            "icon": "leaf",
+            "image_upload": "shopify://shop_images/back-to-school-icon-4k.png",
+            "title": "For Back To School",
+            "text": "<p>Perfect way to start a new educated journey</p>"
+          }
+        },
+        "card_zEMaJX": {
+          "type": "card",
+          "settings": {
+            "icon": "chat_bubble",
+            "image_upload": "shopify://shop_images/anniversary-icon-4k_6510ad05-01e8-413e-b4b2-cb5cd9f3e57d.png",
+            "title": "For Anniversary",
+            "text": "<p>Remind how long you have been together</p>"
+          }
+        }
+      },
+      "block_order": [
+        "card_bKGeFD",
+        "card_ExCdMa",
+        "card_EqMqeE",
+        "card_zEMaJX"
+      ],
+      "name": "Audience showcase",
+      "settings": {
+        "eyebrow": "Made for you",
+        "heading": "Thoughtfully designed for every space",
+        "intro_text": "<p>We believe good design should feel personal. Every piece is made to fit naturally into the life you already have.</p>",
+        "image": "shopify://shop_images/91a6ff97-bef2-46c0-9247-dcf09896f3c6.png",
+        "color_scheme": "",
+        "padding_top": 64,
+        "padding_bottom": 64
+      }
+    }
+  },
+  "order": [
+    "main",
+    "audience_showcase_DNhxdh"
+  ]
+}

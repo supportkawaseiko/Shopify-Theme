@@ -1,0 +1,853 @@
+{% assign block_settings = block.settings %}
+{% liquid
+  assign is_custom_input = false
+  if block_settings.input_style == 'custom'
+    assign is_custom_input = true
+  endif
+%}
+{% render 'button-custom-styles', block_settings: block_settings, block_id: block.id %}
+<div
+  class="klaviyo-signup-block size-style spacing-style"
+  style="
+    {% render 'size-style', settings: block_settings %}
+    {% render 'spacing-style', settings: block_settings %}
+  "
+  {{ block.shopify_attributes }}
+>
+  {% if block_settings.heading != blank %}
+    <div
+      class="klaviyo-signup__heading {{ block_settings.heading_preset }}"
+      style="{% if block_settings.heading_text_color != blank %}--color: {{ block_settings.heading_text_color }}; --color-rgb: {{ block_settings.heading_text_color.rgb }};{% endif %}"
+    >
+      {{ block_settings.heading | escape }}
+    </div>
+  {% endif %}
+  <form
+    id="KlaviyoEmailSignup-{{ block.id }}"
+    class="klaviyo-signup__form spacing-style"
+    data-klaviyo-signup-form
+    data-klaviyo-public-key="{{ block_settings.klaviyo_public_key | escape }}"
+    data-klaviyo-list-id="{{ block_settings.klaviyo_list_id | escape }}"
+    data-klaviyo-source="{{ block_settings.klaviyo_source | escape }}"
+    data-success-message="{{ block_settings.success_message | escape }}"
+    data-error-message="{{ block_settings.error_message | escape }}"
+    data-loading-label="{{ block_settings.loading_label | escape }}"
+  >
+    <div
+      class="klaviyo-signup__controls"
+      style="
+        --border-width: {% if is_custom_input %}{{ block_settings.border_width }}px{% else %}var(--style-border-width-inputs){% endif %};
+        --border-radius: {% if is_custom_input %}{{ block_settings.border_radius }}px{% else %}var(--style-border-radius-inputs){% endif %};
+        {% if is_custom_input %}{% render 'input-custom-styles', block_settings: block_settings %}{% endif %}
+      "
+    >
+      <label for="FirstNameInput-{{ block.id }}" class="visually-hidden">First Name</label>
+      <input
+        id="FirstNameInput-{{ block.id }}"
+        class="klaviyo-signup__input {% if is_custom_input %}{{ block_settings.input_type_preset }}{% else %}{{ settings.type_preset }}{% endif %} {{ block_settings.border_variation }}"
+        type="text"
+        name="first_name"
+        autocomplete="given-name"
+        placeholder="{{ block_settings.first_name_placeholder | escape }}"
+        aria-describedby="KlaviyoEmailSignupMessage-{{ block.id }}"
+        required
+      >
+
+      <label for="EmailInput-{{ block.id }}" class="visually-hidden">{{ 'blocks.email_signup.label' | t }}</label>
+      <input
+        id="EmailInput-{{ block.id }}"
+        class="klaviyo-signup__input {% if is_custom_input %}{{ block_settings.input_type_preset }}{% else %}{{ settings.type_preset }}{% endif %} {{ block_settings.border_variation }}"
+        type="email"
+        name="email"
+        autocorrect="off"
+        autocapitalize="off"
+        autocomplete="email"
+        placeholder="{{ block_settings.email_placeholder | escape }}"
+        aria-describedby="KlaviyoEmailSignupMessage-{{ block.id }}"
+        required
+      >
+
+      <button
+        type="submit"
+        class="klaviyo-signup__button {{ block_settings.button_type_preset }} {{ block_settings.style_class }} {{ block_settings.style_class }}--{{ block.id }}"
+      >
+        {{ block_settings.klaviyo_button_label | default: 'Claim Your 10% OFF' | escape }}
+      </button>
+    </div>
+
+    <div
+      id="KlaviyoEmailSignupMessage-{{ block.id }}"
+      class="klaviyo-signup__message"
+      role="status"
+      aria-live="polite"
+      tabindex="-1"
+      hidden
+    >
+      <p class="klaviyo-signup__message-text"></p>
+    </div>
+  </form>
+</div>
+
+{% javascript %}
+  (() => {
+    if (window.__horizonKlaviyoEmailSignupBound) return;
+    window.__horizonKlaviyoEmailSignupBound = true;
+
+    document.addEventListener('submit', async (event) => {
+      const form = event.target.closest('[data-klaviyo-signup-form]');
+      if (!form) return;
+
+      event.preventDefault();
+
+      if (form.dataset.submitting === 'true') return;
+
+      const firstNameInput = form.querySelector('input[name="first_name"]');
+      const emailInput = form.querySelector('input[name="email"]');
+      const button = form.querySelector('button[type="submit"]');
+      const inputGroup = form.querySelector('.klaviyo-signup__controls');
+      const message = form.querySelector('.klaviyo-signup__message');
+      const messageText = message?.querySelector('.klaviyo-signup__message-text');
+
+      if (!firstNameInput || !emailInput || !button || !message || !messageText) return;
+
+      firstNameInput.setCustomValidity('');
+      const firstName = firstNameInput.value.trim();
+      const email = emailInput.value.trim();
+
+      if (!firstName) {
+        firstNameInput.setCustomValidity('Please enter your first name.');
+        firstNameInput.reportValidity();
+        return;
+      }
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      const publicKey = (form.dataset.klaviyoPublicKey || '').trim();
+      const listId = (form.dataset.klaviyoListId || '').trim();
+      const customSource = (form.dataset.klaviyoSource || 'Website 10% Off Form').trim();
+      const successMessage = form.dataset.successMessage || 'Thanks! Check your inbox for your 10% OFF.';
+      const errorMessage = form.dataset.errorMessage || 'Something went wrong. Please try again.';
+      const loadingLabel = form.dataset.loadingLabel || 'Submitting...';
+
+      if (!publicKey || !listId) {
+        console.error('Klaviyo signup is missing the Public API Key / Site ID or List ID.');
+        messageText.textContent = 'Signup is temporarily unavailable. Please try again later.';
+        message.hidden = false;
+        message.setAttribute('role', 'alert');
+        message.focus();
+        return;
+      }
+
+      const originalButtonHtml = button.innerHTML;
+      form.dataset.submitting = 'true';
+      button.disabled = true;
+      button.setAttribute('aria-busy', 'true');
+      button.textContent = loadingLabel;
+      message.hidden = true;
+
+      const payload = {
+        data: {
+          type: 'subscription',
+          attributes: {
+            custom_source: customSource,
+            profile: {
+              data: {
+                type: 'profile',
+                attributes: {
+                  email,
+                  first_name: firstName,
+                  subscriptions: {
+                    email: {
+                      marketing: {
+                        consent: 'SUBSCRIBED'
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          relationships: {
+            list: {
+              data: {
+                type: 'list',
+                id: listId
+              }
+            }
+          }
+        }
+      };
+
+      try {
+        const response = await fetch(
+          `https://a.klaviyo.com/client/subscriptions?company_id=${encodeURIComponent(publicKey)}`,
+          {
+            method: 'POST',
+            headers: {
+              Accept: 'application/vnd.api+json',
+              'Content-Type': 'application/vnd.api+json',
+              revision: '2026-07-15'
+            },
+            body: JSON.stringify(payload)
+          }
+        );
+
+        if (!response.ok) {
+          let errorBody = '';
+          try {
+            errorBody = await response.text();
+          } catch (readError) {
+            errorBody = '';
+          }
+          console.error('Klaviyo subscription failed:', response.status, errorBody);
+          throw new Error(`Klaviyo subscription failed with status ${response.status}`);
+        }
+
+        form.reset();
+        if (inputGroup) inputGroup.hidden = true;
+        messageText.textContent = successMessage;
+        message.hidden = false;
+        message.setAttribute('role', 'status');
+        message.focus();
+      } catch (error) {
+        console.error(error);
+        messageText.textContent = errorMessage;
+        message.hidden = false;
+        message.setAttribute('role', 'alert');
+        message.focus();
+      } finally {
+        form.dataset.submitting = 'false';
+        button.disabled = false;
+        button.removeAttribute('aria-busy');
+        button.innerHTML = originalButtonHtml;
+      }
+    });
+  })();
+{% endjavascript %}
+
+{% stylesheet %}
+  /*
+   * Klaviyo signup block uses dedicated class names so Horizon's built-in
+   * email-signup flex rules cannot collapse the controls on mobile.
+   */
+  .klaviyo-signup-block {
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    flex: 1 1 100% !important;
+    align-self: stretch !important;
+    justify-self: stretch !important;
+    box-sizing: border-box;
+  }
+
+  .klaviyo-signup__heading {
+    color: var(--color, inherit);
+    padding-block: var(--padding-sm);
+  }
+
+  .klaviyo-signup__form {
+    display: block;
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    box-sizing: border-box;
+  }
+
+  /* Desktop/tablet: 3 equal columns across the whole block. */
+  .klaviyo-signup__controls {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: var(--gap-xs, 10px);
+    align-items: stretch;
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-shadow: none;
+    background: transparent;
+    box-sizing: border-box;
+  }
+
+  .klaviyo-signup__input,
+  .klaviyo-signup__button {
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    min-height: 56px;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .klaviyo-signup__input {
+    display: block;
+    padding: var(--padding-lg) var(--padding-3xl);
+    color: var(--color-input-text);
+    background-color: var(--color-input-background);
+    border-width: var(--border-width);
+    border-style: solid;
+    border-color: var(--color-input-border);
+    border-radius: var(--border-radius);
+    outline-color: var(--color-input-background);
+    transition: background-color var(--animation-speed) var(--animation-easing),
+      color var(--animation-speed) var(--animation-easing);
+  }
+
+  .klaviyo-signup__input::placeholder {
+    color: rgb(var(--color-input-text-rgb) / var(--opacity-70));
+  }
+
+  .klaviyo-signup__button {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    padding: var(--padding-lg) var(--padding-3xl) !important;
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  .klaviyo-signup__button:not(.button-unstyled) {
+    background-color: var(--button-background-color);
+    color: var(--button-color);
+    text-transform: var(--button-text-case-primary);
+  }
+
+  .klaviyo-signup__button.button-secondary {
+    text-transform: var(--button-text-case-secondary);
+  }
+
+  .klaviyo-signup__button.button-unstyled {
+    background-color: transparent;
+    color: var(--color-input-text);
+  }
+
+  .klaviyo-signup__button:disabled {
+    cursor: wait;
+    opacity: 0.7;
+  }
+
+  .klaviyo-signup__message {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-xs);
+    width: 100%;
+    margin-block-start: var(--gap-xs);
+  }
+
+  .klaviyo-signup__message[hidden] {
+    display: none;
+  }
+
+  .klaviyo-signup__message-text {
+    margin: 0;
+  }
+
+  /* Mobile: stack all 3 controls, each one full width. */
+  @media screen and (max-width: 749px) {
+    .klaviyo-signup-block,
+    .klaviyo-signup__form,
+    .klaviyo-signup__controls {
+      width: 100% !important;
+      max-width: none !important;
+      min-width: 0 !important;
+    }
+
+    .klaviyo-signup__controls {
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: stretch !important;
+      justify-content: flex-start !important;
+      gap: 10px;
+    }
+
+    .klaviyo-signup__input,
+    .klaviyo-signup__button {
+      display: flex;
+      flex: 0 0 auto !important;
+      align-self: stretch !important;
+      width: 100% !important;
+      max-width: none !important;
+      min-width: 0 !important;
+      min-height: 54px;
+      margin: 0 !important;
+    }
+
+    .klaviyo-signup__input {
+      display: block;
+    }
+
+    .klaviyo-signup__button {
+      justify-content: center;
+      white-space: normal;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.email_signup",
+  "tag": null,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Collect First Name + Email and subscribe the profile directly to a Klaviyo list."
+    },
+    {
+      "type": "header",
+      "content": "Klaviyo"
+    },
+    {
+      "type": "text",
+      "id": "klaviyo_public_key",
+      "label": "Public API Key / Site ID",
+      "info": "Use only the public Site ID. Never paste a private API key here."
+    },
+    {
+      "type": "text",
+      "id": "klaviyo_list_id",
+      "label": "List ID"
+    },
+    {
+      "type": "text",
+      "id": "klaviyo_source",
+      "label": "Signup source",
+      "default": "Website 10% Off Form"
+    },
+    {
+      "type": "text",
+      "id": "first_name_placeholder",
+      "label": "First name placeholder",
+      "default": "First Name"
+    },
+    {
+      "type": "text",
+      "id": "email_placeholder",
+      "label": "Email placeholder",
+      "default": "Email"
+    },
+    {
+      "type": "text",
+      "id": "klaviyo_button_label",
+      "label": "Button label",
+      "default": "Claim Your 10% OFF"
+    },
+    {
+      "type": "text",
+      "id": "loading_label",
+      "label": "Loading label",
+      "default": "Submitting..."
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "Thanks! Check your inbox for your 10% OFF."
+    },
+    {
+      "type": "text",
+      "id": "error_message",
+      "label": "Error message",
+      "default": "Something went wrong. Please try again."
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "t:settings.width",
+      "options": [
+        {
+          "value": "fill",
+          "label": "t:options.fill"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "fill"
+    },
+    {
+      "type": "range",
+      "id": "custom_width",
+      "label": "t:settings.custom_width",
+      "min": 20,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ block.settings.width == \"custom\" }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.heading"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:settings.text"
+    },
+    {
+      "type": "color",
+      "id": "heading_text_color",
+      "label": "t:settings.color"
+    },
+    {
+      "type": "select",
+      "id": "heading_preset",
+      "label": "t:settings.type_preset",
+      "options": [
+        {
+          "value": "",
+          "label": "t:options.default"
+        },
+        {
+          "value": "paragraph",
+          "label": "t:options.paragraph"
+        },
+        {
+          "value": "h1",
+          "label": "t:options.h1"
+        },
+        {
+          "value": "h2",
+          "label": "t:options.h2"
+        },
+        {
+          "value": "h3",
+          "label": "t:options.h3"
+        },
+        {
+          "value": "h4",
+          "label": "t:options.h4"
+        },
+        {
+          "value": "h5",
+          "label": "t:options.h5"
+        },
+        {
+          "value": "h6",
+          "label": "t:options.h6"
+        }
+      ],
+      "default": "h3",
+      "info": "t:info.edit_presets_in_theme_settings"
+    },
+    {
+      "type": "header",
+      "content": "t:content.input"
+    },
+    {
+      "type": "select",
+      "id": "border_style",
+      "label": "t:settings.border",
+      "options": [
+        {
+          "value": "all",
+          "label": "t:options.all"
+        },
+        {
+          "value": "underline",
+          "label": "t:options.underline"
+        },
+        {
+          "value": "none",
+          "label": "t:options.none"
+        }
+      ],
+      "default": "all"
+    },
+    {
+      "type": "select",
+      "id": "input_style",
+      "label": "t:settings.style",
+      "options": [
+        {
+          "value": "default",
+          "label": "t:options.default"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "default",
+      "info": "t:info.edit_input_field_in_theme_settings"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "t:settings.border_width",
+      "min": 0,
+      "max": 4,
+      "step": 0.5,
+      "unit": "px",
+      "default": 1,
+      "visible_if": "{{ block.settings.input_style == \"custom\" and block.settings.border_style != \"none\" }}"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 100,
+      "visible_if": "{{ block.settings.input_style == \"custom\" and block.settings.border_style != \"underline\" }}"
+    },
+    {
+      "type": "color",
+      "id": "input_background_color",
+      "label": "t:settings.background",
+      "placeholder": "t:settings.default",
+      "visible_if": "{{ block.settings.input_style == \"custom\" and block.settings.border_style != \"underline\" }}"
+    },
+    {
+      "type": "color",
+      "id": "input_text_color",
+      "label": "t:settings.text",
+      "placeholder": "t:settings.default",
+      "visible_if": "{{ block.settings.input_style == \"custom\" }}"
+    },
+    {
+      "type": "color",
+      "id": "input_border_color",
+      "label": "t:settings.borders",
+      "placeholder": "t:settings.default",
+      "visible_if": "{{ block.settings.input_style == \"custom\" }}"
+    },
+    {
+      "type": "select",
+      "id": "input_type_preset",
+      "label": "t:settings.type_preset",
+      "options": [
+        {
+          "value": "",
+          "label": "t:options.default"
+        },
+        {
+          "value": "paragraph",
+          "label": "t:options.paragraph"
+        },
+        {
+          "value": "h1",
+          "label": "t:options.h1"
+        },
+        {
+          "value": "h2",
+          "label": "t:options.h2"
+        },
+        {
+          "value": "h3",
+          "label": "t:options.h3"
+        },
+        {
+          "value": "h4",
+          "label": "t:options.h4"
+        },
+        {
+          "value": "h5",
+          "label": "t:options.h5"
+        },
+        {
+          "value": "h6",
+          "label": "t:options.h6"
+        }
+      ],
+      "default": "paragraph",
+      "info": "t:info.edit_presets_in_theme_settings",
+      "visible_if": "{{ block.settings.input_style == \"custom\" }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.submit_button"
+    },
+    {
+      "type": "select",
+      "id": "style_class",
+      "label": "t:settings.style",
+      "options": [
+        {
+          "value": "button",
+          "label": "t:options.primary"
+        },
+        {
+          "value": "button-secondary",
+          "label": "t:options.secondary"
+        },
+        {
+          "value": "button-unstyled",
+          "label": "t:options.link"
+        },
+        {
+          "value": "button-custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "button",
+      "info": "t:info.edit_button_style_in_theme_settings"
+    },
+    {
+      "type": "header",
+      "content": "t:content.button_colors",
+      "visible_if": "{{ block.settings.style_class == \"button-custom\" }}"
+    },
+    {
+      "type": "color",
+      "id": "custom_button_background",
+      "label": "t:settings.background",
+      "default": "{{ settings.color_palette.foreground }}",
+      "alpha": true,
+      "visible_if": "{{ block.settings.style_class == 'button-custom' }}"
+    },
+    {
+      "type": "color",
+      "id": "custom_button_text",
+      "label": "t:settings.text",
+      "default": "{{ settings.color_palette.background }}",
+      "alpha": true,
+      "visible_if": "{{ block.settings.style_class == 'button-custom' }}"
+    },
+    {
+      "type": "color",
+      "id": "custom_button_border",
+      "label": "t:settings.borders",
+      "default": "{{ settings.color_palette.background }}",
+      "alpha": true,
+      "visible_if": "{{ block.settings.style_class == 'button-custom' }}"
+    },
+    {
+      "type": "color",
+      "id": "link_text_color",
+      "label": "t:settings.link_text_color",
+      "placeholder": "t:settings.default",
+      "visible_if": "{{ block.settings.style_class == 'button-unstyled' }}"
+    },
+    {
+      "type": "select",
+      "id": "display_type",
+      "label": "t:settings.display",
+      "options": [
+        {
+          "value": "text",
+          "label": "t:options.text"
+        },
+        {
+          "value": "arrow",
+          "label": "t:options.arrow"
+        }
+      ],
+      "default": "text"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "t:settings.label",
+      "default": "Claim Your 10% OFF",
+      "visible_if": "{{ block.settings.display_type == \"text\" }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "integrated_button",
+      "label": "t:settings.integrated_button",
+      "default": false,
+      "visible_if": "{{ block.settings.border_style != \"underline\" }}"
+    },
+    {
+      "type": "select",
+      "id": "button_type_preset",
+      "label": "t:settings.type_preset",
+      "options": [
+        {
+          "value": "",
+          "label": "t:options.default"
+        },
+        {
+          "value": "paragraph",
+          "label": "t:options.paragraph"
+        },
+        {
+          "value": "h1",
+          "label": "t:options.h1"
+        },
+        {
+          "value": "h2",
+          "label": "t:options.h2"
+        },
+        {
+          "value": "h3",
+          "label": "t:options.h3"
+        },
+        {
+          "value": "h4",
+          "label": "t:options.h4"
+        },
+        {
+          "value": "h5",
+          "label": "t:options.h5"
+        },
+        {
+          "value": "h6",
+          "label": "t:options.h6"
+        }
+      ],
+      "default": "paragraph",
+      "info": "t:info.edit_presets_in_theme_settings",
+      "visible_if": "{{ block.settings.display_type == \"text\" }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.email_signup",
+      "category": "t:categories.forms"
+    }
+  ]
+}
+{% endschema %}

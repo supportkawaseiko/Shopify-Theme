@@ -1,0 +1,178 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "about_story": {
+      "type": "about-story",
+      "settings": {
+        "hero_eyebrow": "ABOUT HIPPOLORD",
+        "hero_heading": "NOT JUST A GIFT.",
+        "hero_subheading": "Something only you could give.",
+        "hero_intro": "<p>A name. A photo. An inside joke. A date that means everything to two people and nothing to anyone else.</p>",
+        "hero_background": "#6F1E33",
+        "hero_text_color": "#FFF9F6",
+        "hero_overlay": 35,
+        "hero_height": 85,
+        "hero_content_width": 700,
+        "hero_horizontal": "flex-start",
+        "hero_vertical": "center",
+        "page_background": "#FFF9F6",
+        "page_text": "#2B2325",
+        "page_muted": "#6F6266",
+        "page_accent": "#88283F",
+        "max_width": 1280,
+        "section_gap": 0
+      },
+      "blocks": {
+        "story_1": {
+          "type": "story",
+          "settings": {
+            "layout": "image_left",
+            "image_ratio": "4 / 5",
+            "image_radius": 12,
+            "eyebrow": "IT STARTED WITH A SIMPLE BELIEF",
+            "heading": "The best gifts are the ones that feel made for one person.",
+            "body": "<p>The best gifts are not always the biggest. Or the most expensive.</p><p>They are the ones that make someone pause for a second, smile, and say: “Wait... you made this for me?”</p>",
+            "quote": "That is the feeling we are here for.",
+            "background": "#FFF9F6",
+            "text_color": "#2B2325",
+            "muted_color": "#6F6266",
+            "accent_color": "#88283F",
+            "padding_top": 84,
+            "padding_bottom": 84
+          }
+        },
+        "statement_1": {
+          "type": "statement",
+          "settings": {
+            "alignment": "center",
+            "eyebrow": "MADE FROM YOUR MOMENTS",
+            "heading": "THE SMALL DETAILS BECOME THE BIG MEMORIES.",
+            "body": "<p>The photo you never delete. The nickname only your family uses. The date you will always remember.</p>",
+            "background": "#F5E6EA",
+            "text_color": "#2B2325",
+            "muted_color": "#6F6266",
+            "accent_color": "#88283F",
+            "heading_size": 94,
+            "padding": 104
+          }
+        },
+        "story_2": {
+          "type": "story",
+          "settings": {
+            "layout": "image_right",
+            "image_ratio": "4 / 5",
+            "image_radius": 12,
+            "eyebrow": "FROM ORDINARY TO ONLY YOURS",
+            "heading": "Personalization is not adding a name. It is adding meaning.",
+            "body": "<p>A shirt can be just a shirt until it carries a picture of the people who made you who you are.</p><p>A mug can be just a mug until someone’s name turns it into their mug.</p><p>A blanket can become a piece of home.</p>",
+            "background": "#FFF9F6",
+            "text_color": "#2B2325",
+            "muted_color": "#6F6266",
+            "accent_color": "#88283F",
+            "padding_top": 84,
+            "padding_bottom": 84
+          }
+        },
+        "statement_2": {
+          "type": "statement",
+          "settings": {
+            "alignment": "left",
+            "eyebrow": "HIPPOLORD",
+            "heading": "YOUR STORY IS THE DESIGN.",
+            "body": "<p>You bring the people, photos, words and moments. We help turn them into something you can hold, wear, display, wrap up and give.</p>",
+            "background": "#6F1E33",
+            "text_color": "#FFF9F6",
+            "muted_color": "#E8D8DD",
+            "accent_color": "#F5E8D7",
+            "heading_size": 94,
+            "padding": 104
+          }
+        },
+        "story_3": {
+          "type": "story",
+          "settings": {
+            "layout": "image_left",
+            "image_ratio": "4 / 5",
+            "image_radius": 12,
+            "eyebrow": "MADE FOR THE MOMENTS THAT MATTER",
+            "heading": "Not every meaningful moment needs an occasion.",
+            "body": "<p>Birthdays. Weddings. Anniversaries. New beginnings. Family traditions. The holidays everyone comes home for.</p><p>And the completely ordinary Tuesday when you simply want someone to know: “I was thinking about you.”</p>",
+            "background": "#FFF9F6",
+            "text_color": "#2B2325",
+            "muted_color": "#6F6266",
+            "accent_color": "#88283F",
+            "padding_top": 84,
+            "padding_bottom": 84
+          }
+        },
+        "story_4": {
+          "type": "story",
+          "settings": {
+            "layout": "image_right",
+            "image_ratio": "4 / 5",
+            "image_radius": 12,
+            "eyebrow": "PERSONAL FEELS DIFFERENT",
+            "heading": "There is a difference between finding something to give and making something for someone.",
+            "body": "<p>That difference is why Hippolord exists.</p><p>We want every gift to feel considered, personal, a little unexpected, and unmistakably theirs.</p>",
+            "background": "#F5E6EA",
+            "text_color": "#2B2325",
+            "muted_color": "#6F6266",
+            "accent_color": "#88283F",
+            "padding_top": 84,
+            "padding_bottom": 84
+          }
+        },
+        "statement_3": {
+          "type": "statement",
+          "settings": {
+            "alignment": "center",
+            "eyebrow": "THE BEST PART?",
+            "heading": "THE MOMENT THEY REALIZE IT IS ABOUT THEM.",
+            "body": "<p>That smile. That laugh. That “how did you even remember that?” No product photo can really show it. But it is the reason we make what we make.</p>",
+            "background": "#2B2325",
+            "text_color": "#FFF9F6",
+            "muted_color": "#D8CCCF",
+            "accent_color": "#F5E8D7",
+            "heading_size": 94,
+            "padding": 104
+          }
+        },
+        "cta_1": {
+          "type": "cta",
+          "settings": {
+            "eyebrow": "HIPPOLORD",
+            "heading": "MAKE IT PERSONAL.",
+            "body": "<p>For your person. For your moment. For the story only you can tell.</p>",
+            "primary_label": "SHOP PERSONALIZED GIFTS",
+            "background": "#FFF9F6",
+            "text_color": "#2B2325",
+            "muted_color": "#6F6266",
+            "accent_color": "#88283F",
+            "padding": 104
+          }
+        }
+      },
+      "block_order": [
+        "story_1",
+        "statement_1",
+        "story_2",
+        "statement_2",
+        "story_3",
+        "story_4",
+        "statement_3",
+        "cta_1"
+      ]
+    }
+  },
+  "order": [
+    "about_story"
+  ]
+}

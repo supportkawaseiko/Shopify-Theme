@@ -1,0 +1,552 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "faq_main": {
+      "type": "faq-page",
+      "blocks": {
+        "faq_1": {
+          "type": "faq",
+          "settings": {
+            "category": "cat1",
+            "question": "How long will my order take to arrive?",
+            "answer": "<p>Production and delivery times can vary by product, destination, and time of year. Please check the estimated delivery information shown on the product or shipping page before ordering.</p>",
+            "most_asked": true
+          }
+        },
+        "faq_2": {
+          "type": "faq",
+          "settings": {
+            "category": "cat1",
+            "question": "How do I track my order?",
+            "answer": "<p>Once tracking is available, you can use the tracking link provided in your shipping confirmation or order status page to follow the package.</p>",
+            "most_asked": true
+          }
+        },
+        "faq_3": {
+          "type": "faq",
+          "settings": {
+            "category": "cat1",
+            "question": "Why has my tracking not updated?",
+            "answer": "<p>Carriers can take time to scan a package between facilities. If tracking has not changed for several business days, contact our support team with your order number so we can help review it.</p>",
+            "most_asked": false
+          }
+        },
+        "faq_4": {
+          "type": "faq",
+          "settings": {
+            "category": "cat1",
+            "question": "My package says delivered, but I cannot find it. What should I do?",
+            "answer": "<p>First check around the delivery location, with household members or neighbors, and with the carrier. If the package still cannot be located, contact us with your order number and tracking information.</p>",
+            "most_asked": true
+          }
+        },
+        "faq_5": {
+          "type": "faq",
+          "settings": {
+            "category": "cat1",
+            "question": "Can I change my shipping address after ordering?",
+            "answer": "<p>Contact us as soon as possible. We may be able to update the address before the order enters production or ships, but changes are not guaranteed once processing has started.</p>",
+            "most_asked": false
+          }
+        },
+        "faq_6": {
+          "type": "faq",
+          "settings": {
+            "category": "cat1",
+            "question": "Will items in the same order arrive together?",
+            "answer": "<p>Not always. Personalized products may be produced or shipped separately, so an order can arrive in more than one package. Separate tracking details may be provided when applicable.</p>",
+            "most_asked": false
+          }
+        },
+        "faq_7": {
+          "type": "faq",
+          "settings": {
+            "category": "cat2",
+            "question": "How do I personalize my item?",
+            "answer": "<p>Open the product page, choose the available personalization options, enter your details, and review the preview when one is provided before adding the item to your cart.</p>",
+            "most_asked": true
+          }
+        },
+        "faq_8": {
+          "type": "faq",
+          "settings": {
+            "category": "cat2",
+            "question": "Can I preview my personalized design before I buy?",
+            "answer": "<p>Many personalized products include a live or generated preview. Review names, photos, dates, spelling, and placement carefully before adding the item to your cart.</p>",
+            "most_asked": true
+          }
+        },
+        "faq_9": {
+          "type": "faq",
+          "settings": {
+            "category": "cat2",
+            "question": "What kind of photo should I upload?",
+            "answer": "<p>Use the clearest, highest-resolution original image you have. Avoid screenshots, heavily compressed files, blurry images, or photos where the main subject is too small.</p>",
+            "most_asked": false
+          }
+        },
+        "faq_10": {
+          "type": "faq",
+          "settings": {
+            "category": "cat2",
+            "question": "Will the final colors look exactly like the screen preview?",
+            "answer": "<p>Screen settings and printing materials can cause small color differences. The preview is intended to show the overall design and personalization, while the final printed color may vary slightly.</p>",
+            "most_asked": false
+          }
+        },
+        "faq_11": {
+          "type": "faq",
+          "settings": {
+            "category": "cat2",
+            "question": "Where can I find sizing and material information?",
+            "answer": "<p>Check the product details and size guide on the relevant product page. Sizing and materials can differ between product types, so review the information for the exact item you are ordering.</p>",
+            "most_asked": false
+          }
+        },
+        "faq_12": {
+          "type": "faq",
+          "settings": {
+            "category": "cat2",
+            "question": "Can I use special characters, emojis, or very long text?",
+            "answer": "<p>Availability depends on the design and personalization field. If a character or text length is not supported, the product page or preview may limit the entry. Review the preview carefully before ordering.</p>",
+            "most_asked": false
+          }
+        },
+        "faq_13": {
+          "type": "faq",
+          "settings": {
+            "category": "cat3",
+            "question": "Can I change my personalization after placing an order?",
+            "answer": "<p>Contact us immediately with your order number and the requested change. Because personalized items can enter production quickly, changes may not be possible once production has started.</p>",
+            "most_asked": true
+          }
+        },
+        "faq_14": {
+          "type": "faq",
+          "settings": {
+            "category": "cat3",
+            "question": "Can I change the size, color, or product option after ordering?",
+            "answer": "<p>Please contact us as soon as possible. If the order has not entered production, we will review whether the option can be changed. Once production begins, a change may no longer be possible.</p>",
+            "most_asked": false
+          }
+        },
+        "faq_15": {
+          "type": "faq",
+          "settings": {
+            "category": "cat3",
+            "question": "Can I cancel a personalized order?",
+            "answer": "<p>Cancellation requests should be submitted as soon as possible. Personalized products are made to order, so cancellation may not be available after production has begun.</p>",
+            "most_asked": true
+          }
+        },
+        "faq_16": {
+          "type": "faq",
+          "settings": {
+            "category": "cat3",
+            "question": "I entered the wrong shipping address. Can it be corrected?",
+            "answer": "<p>Send us the correct address and your order number as soon as possible. We will review the order status and update it when possible before shipment.</p>",
+            "most_asked": false
+          }
+        },
+        "faq_17": {
+          "type": "faq",
+          "settings": {
+            "category": "cat3",
+            "question": "Can I add another item to an order I already placed?",
+            "answer": "<p>Orders are normally processed separately after checkout. If you want another item, placing a new order is usually the fastest option. Contact support if you need help.</p>",
+            "most_asked": false
+          }
+        },
+        "faq_18": {
+          "type": "faq",
+          "settings": {
+            "category": "cat3",
+            "question": "How will I know whether my change request was accepted?",
+            "answer": "<p>A requested change is not confirmed until our support team verifies it. Please watch for a confirmation response before assuming the order has been updated.</p>",
+            "most_asked": false
+          }
+        },
+        "faq_19": {
+          "type": "faq",
+          "settings": {
+            "category": "cat4",
+            "question": "What should I do if my item arrives damaged or defective?",
+            "answer": "<p>Contact us with your order number and clear photos showing the item, packaging, and issue. We will review the information and determine the appropriate resolution under our current policy.</p>",
+            "most_asked": true
+          }
+        },
+        "faq_20": {
+          "type": "faq",
+          "settings": {
+            "category": "cat4",
+            "question": "What if I received the wrong item or wrong personalization?",
+            "answer": "<p>Please contact support with your order number and photos of what you received. We will compare the delivered item with the order details and help resolve the issue.</p>",
+            "most_asked": true
+          }
+        },
+        "faq_21": {
+          "type": "faq",
+          "settings": {
+            "category": "cat4",
+            "question": "My order is missing an item. What should I do?",
+            "answer": "<p>Check whether the order was split into multiple shipments. If there is no separate tracking for the missing item, contact us with your order number so we can investigate.</p>",
+            "most_asked": false
+          }
+        },
+        "faq_22": {
+          "type": "faq",
+          "settings": {
+            "category": "cat4",
+            "question": "Can I return a personalized product because I changed my mind?",
+            "answer": "<p>Because personalized items are made specifically for each order, return eligibility may differ from non-personalized products. Please review our current return and refund policy or contact support before sending anything back.</p>",
+            "most_asked": false
+          }
+        },
+        "faq_23": {
+          "type": "faq",
+          "settings": {
+            "category": "cat4",
+            "question": "How do I request a replacement or refund?",
+            "answer": "<p>Contact support with your order number, a description of the issue, and any requested photos. We will review the case and let you know the available resolution.</p>",
+            "most_asked": false
+          }
+        },
+        "faq_24": {
+          "type": "faq",
+          "settings": {
+            "category": "cat4",
+            "question": "How long does a refund take to appear?",
+            "answer": "<p>After an approved refund is issued, the time it takes to appear depends on your payment provider or bank. Processing times can vary by payment method.</p>",
+            "most_asked": false
+          }
+        },
+        "faq_25": {
+          "type": "faq",
+          "settings": {
+            "category": "cat5",
+            "question": "How do I place a personalized order?",
+            "answer": "<p>Choose a product, select the required options, complete the personalization fields, review the preview or entered details, then add the item to your cart and complete checkout.</p>",
+            "most_asked": true
+          }
+        },
+        "faq_26": {
+          "type": "faq",
+          "settings": {
+            "category": "cat5",
+            "question": "Do I need to create an account before ordering?",
+            "answer": "<p>If guest checkout is available, you can place an order without creating an account. Enter an accurate email address so you can receive order and shipping updates.</p>",
+            "most_asked": false
+          }
+        },
+        "faq_27": {
+          "type": "faq",
+          "settings": {
+            "category": "cat5",
+            "question": "How can I make sure my personalization is correct?",
+            "answer": "<p>Check spelling, capitalization, dates, uploaded images, size, color, and every other selected option before checkout. Personalized products are created using the information submitted with the order.</p>",
+            "most_asked": true
+          }
+        },
+        "faq_28": {
+          "type": "faq",
+          "settings": {
+            "category": "cat5",
+            "question": "Why cannot I add my personalized product to the cart?",
+            "answer": "<p>Make sure all required personalization and product options have been completed. If the button still does not work, refresh the page or try another browser or device, then contact support if the issue continues.</p>",
+            "most_asked": false
+          }
+        },
+        "faq_29": {
+          "type": "faq",
+          "settings": {
+            "category": "cat5",
+            "question": "Can I order more than one item with different personalization?",
+            "answer": "<p>Yes. Personalize the first item and add it to the cart, then return to the product page and create the next version with its own personalization before adding it separately.</p>",
+            "most_asked": false
+          }
+        },
+        "faq_30": {
+          "type": "faq",
+          "settings": {
+            "category": "cat5",
+            "question": "Can I send a personalized gift directly to the recipient?",
+            "answer": "<p>You can usually enter the recipient's address as the shipping address during checkout. Review the address carefully before submitting the order.</p>",
+            "most_asked": false
+          }
+        },
+        "faq_31": {
+          "type": "faq",
+          "settings": {
+            "category": "cat6",
+            "question": "Where do I enter my discount code?",
+            "answer": "<p>Enter an eligible promo or discount code in the discount field during checkout. The order summary should update when the code is successfully applied.</p>",
+            "most_asked": true
+          }
+        },
+        "faq_32": {
+          "type": "faq",
+          "settings": {
+            "category": "cat6",
+            "question": "Why is my discount code not working?",
+            "answer": "<p>Check the spelling, expiration date, minimum order requirements, eligible products, and any other promotion conditions. Some offers cannot be combined with other discounts.</p>",
+            "most_asked": false
+          }
+        },
+        "faq_33": {
+          "type": "faq",
+          "settings": {
+            "category": "cat6",
+            "question": "Can I use more than one discount code on the same order?",
+            "answer": "<p>Whether discounts can be combined depends on the promotion rules and checkout settings. If a second code is not accepted, the offers may not be combinable.</p>",
+            "most_asked": false
+          }
+        },
+        "faq_34": {
+          "type": "faq",
+          "settings": {
+            "category": "cat6",
+            "question": "Can a discount be applied after I already placed my order?",
+            "answer": "<p>Discounts normally need to be applied before checkout is completed. If you forgot to use a code, contact support, but retroactive adjustments are not guaranteed.</p>",
+            "most_asked": false
+          }
+        },
+        "faq_35": {
+          "type": "faq",
+          "settings": {
+            "category": "cat6",
+            "question": "Why did my discount disappear at checkout?",
+            "answer": "<p>A discount can stop applying if the cart no longer meets its conditions, such as eligible products, quantity, minimum spend, customer eligibility, or promotion dates.</p>",
+            "most_asked": false
+          }
+        },
+        "faq_36": {
+          "type": "faq",
+          "settings": {
+            "category": "cat6",
+            "question": "Do sale prices and promo codes work together?",
+            "answer": "<p>This depends on the specific promotion. Some discounts can apply to sale items, while others exclude them or cannot be combined with an existing offer.</p>",
+            "most_asked": false
+          }
+        },
+        "faq_37": {
+          "type": "faq",
+          "settings": {
+            "category": "cat7",
+            "question": "What payment methods can I use?",
+            "answer": "<p>The payment methods currently available for your location are shown at checkout. Availability can vary by country, device, currency, and payment provider.</p>",
+            "most_asked": true
+          }
+        },
+        "faq_38": {
+          "type": "faq",
+          "settings": {
+            "category": "cat7",
+            "question": "Why was my payment declined?",
+            "answer": "<p>Check your card or payment details, billing address, available funds, and any security verification requested by your payment provider. If the issue continues, try another available method or contact your provider.</p>",
+            "most_asked": true
+          }
+        },
+        "faq_39": {
+          "type": "faq",
+          "settings": {
+            "category": "cat7",
+            "question": "When will I be charged for my order?",
+            "answer": "<p>Payment is generally authorized or collected when checkout is completed, depending on the payment method and provider used for the transaction.</p>",
+            "most_asked": false
+          }
+        },
+        "faq_40": {
+          "type": "faq",
+          "settings": {
+            "category": "cat7",
+            "question": "Why do I see a pending charge after a failed checkout?",
+            "answer": "<p>Some banks temporarily display an authorization hold even when an order is not completed. The hold usually disappears according to your bank's processing schedule.</p>",
+            "most_asked": false
+          }
+        },
+        "faq_41": {
+          "type": "faq",
+          "settings": {
+            "category": "cat7",
+            "question": "Is my payment information secure?",
+            "answer": "<p>Checkout payments are processed through the payment services enabled on our Shopify store. We do not ask you to send full card details by email or support message.</p>",
+            "most_asked": false
+          }
+        },
+        "faq_42": {
+          "type": "faq",
+          "settings": {
+            "category": "cat7",
+            "question": "Can I pay in a different currency?",
+            "answer": "<p>The currency options available depend on the store and checkout configuration for your location. The currency shown at checkout is the currency used for the transaction.</p>",
+            "most_asked": false
+          }
+        },
+        "faq_43": {
+          "type": "faq",
+          "settings": {
+            "category": "cat8",
+            "question": "How can I contact customer support?",
+            "answer": "<p>Use the Contact Us page or the support method listed on our website. Include your order number when asking about an existing order so we can assist more efficiently.</p>",
+            "most_asked": true
+          }
+        },
+        "faq_44": {
+          "type": "faq",
+          "settings": {
+            "category": "cat8",
+            "question": "What information should I include when contacting support?",
+            "answer": "<p>For order-related questions, include your order number, the email used at checkout, a clear description of the issue, and photos when the issue involves a physical product.</p>",
+            "most_asked": false
+          }
+        },
+        "faq_45": {
+          "type": "faq",
+          "settings": {
+            "category": "cat8",
+            "question": "I did not receive an order confirmation email. What should I do?",
+            "answer": "<p>Check your spam or promotions folder and confirm that the email address used at checkout is correct. If you still cannot find the confirmation, contact support with your name and order details.</p>",
+            "most_asked": false
+          }
+        },
+        "faq_46": {
+          "type": "faq",
+          "settings": {
+            "category": "cat8",
+            "question": "How do I find my order number?",
+            "answer": "<p>Your order number is normally included in the order confirmation and order status communications. If you cannot locate it, contact support using the email address used at checkout.</p>",
+            "most_asked": false
+          }
+        },
+        "faq_47": {
+          "type": "faq",
+          "settings": {
+            "category": "cat8",
+            "question": "The website or personalization tool is not working. What can I try?",
+            "answer": "<p>Refresh the page, check your internet connection, disable browser extensions that may interfere, or try a current version of another browser or device. If the problem continues, send support a screenshot and the product link.</p>",
+            "most_asked": false
+          }
+        },
+        "faq_48": {
+          "type": "faq",
+          "settings": {
+            "category": "cat8",
+            "question": "Where can I find your store policies?",
+            "answer": "<p>Links to shipping, returns, privacy, terms, and other policies are typically available in the website footer or help area. Review the relevant policy for the most current terms.</p>",
+            "most_asked": false
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_5",
+        "faq_6",
+        "faq_7",
+        "faq_8",
+        "faq_9",
+        "faq_10",
+        "faq_11",
+        "faq_12",
+        "faq_13",
+        "faq_14",
+        "faq_15",
+        "faq_16",
+        "faq_17",
+        "faq_18",
+        "faq_19",
+        "faq_20",
+        "faq_21",
+        "faq_22",
+        "faq_23",
+        "faq_24",
+        "faq_25",
+        "faq_26",
+        "faq_27",
+        "faq_28",
+        "faq_29",
+        "faq_30",
+        "faq_31",
+        "faq_32",
+        "faq_33",
+        "faq_34",
+        "faq_35",
+        "faq_36",
+        "faq_37",
+        "faq_38",
+        "faq_39",
+        "faq_40",
+        "faq_41",
+        "faq_42",
+        "faq_43",
+        "faq_44",
+        "faq_45",
+        "faq_46",
+        "faq_47",
+        "faq_48"
+      ],
+      "settings": {
+        "eyebrow": "HELP CENTER",
+        "heading": "How can we help?",
+        "subheading": "<p>Find answers about your order, personalization, shipping and more.</p>",
+        "search_placeholder": "Search for a question...",
+        "categories_heading": "What do you need help with?",
+        "categories_text": "<p>Choose a topic or search above to find the information you need.</p>",
+        "category_1_label": "Shipment & Delivery",
+        "category_1_description": "Shipping times, tracking and delivery questions.",
+        "category_2_label": "Product Information",
+        "category_2_description": "Personalization, materials, sizing and product details.",
+        "category_3_label": "Modification & Cancellation",
+        "category_3_description": "Changes to orders and cancellation requests.",
+        "category_4_label": "Replacement & Refund",
+        "category_4_description": "Damaged, incorrect or missing items and refund help.",
+        "category_5_label": "Order Placement",
+        "category_5_description": "Help with ordering, personalization and checkout.",
+        "category_6_label": "Discount Code",
+        "category_6_description": "Promo codes, offers and discount questions.",
+        "category_7_label": "Payment",
+        "category_7_description": "Payment methods, charges and checkout issues.",
+        "category_8_label": "Additional Support",
+        "category_8_description": "Account, contact and other support questions.",
+        "most_heading": "Most asked questions",
+        "all_label": "HELP CENTER",
+        "all_heading": "All questions",
+        "view_all_text": "View all questions",
+        "no_results_heading": "No answers found",
+        "no_results_text": "Try another keyword or contact our support team.",
+        "show_contact": true,
+        "contact_eyebrow": "STILL NEED SOME HELP?",
+        "contact_heading": "Didn't find what you were looking for?",
+        "contact_description": "<p>We're happy to help with your order, personalization or anything in between.</p>",
+        "contact_button": "CONTACT US",
+        "contact_link": "shopify://pages/contact-us",
+        "content_width": 1200,
+        "corner_radius": 10,
+        "background": "#fff9f6",
+        "hero_background": "#f5e6ea",
+        "card_background": "#ffffff",
+        "border_color": "#eadde1",
+        "text_color": "#2b2325",
+        "muted_color": "#6f6266",
+        "accent_color": "#88283f",
+        "accent_soft": "#f5e6ea",
+        "contact_background": "#6f1e33",
+        "contact_text_color": "#fff9f6",
+        "enable_schema": true
+      }
+    }
+  },
+  "order": [
+    "faq_main"
+  ]
+}

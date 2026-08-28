@@ -1,0 +1,719 @@
+{% doc %}
+  @prompt
+    tạo một block cho production tab (collapsable), Thêm cho tôi 3 icon bên cạnh các header
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-product-tab-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .ai-product-tab__item-{{ ai_gen_id }} {
+    border: {{ block.settings.border_width }}px solid {{ block.settings.border_color }};
+    border-radius: {{ block.settings.border_radius }}px;
+    margin-bottom: {{ block.settings.spacing }}px;
+    overflow: hidden;
+    background-color: {{ block.settings.background_color }};
+  }
+
+  .ai-product-tab__header-{{ ai_gen_id }} {
+    width: 100%;
+    padding: {{ block.settings.padding }}px;
+    background-color: {{ block.settings.header_background_color }};
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    transition: background-color 0.3s ease;
+  }
+
+  .ai-product-tab__header-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.header_hover_color }};
+  }
+
+  .ai-product-tab__header-left-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+  }
+
+  .ai-product-tab__header-icon-{{ ai_gen_id }} {
+    width: {{ block.settings.header_icon_size }}px;
+    height: {{ block.settings.header_icon_size }}px;
+    color: {{ block.settings.header_icon_color }};
+    flex-shrink: 0;
+  }
+
+  .ai-product-tab__title-{{ ai_gen_id }} {
+    margin: 0;
+    font-size: {{ block.settings.title_size }}px;
+    color: {{ block.settings.title_color }};
+    font-weight: 600;
+  }
+
+  .ai-product-tab__icon-{{ ai_gen_id }} {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease;
+    color: {{ block.settings.icon_color }};
+    flex-shrink: 0;
+  }
+
+  .ai-product-tab__icon-{{ ai_gen_id }}.active {
+    transform: rotate(180deg);
+  }
+
+  .ai-product-tab__content-{{ ai_gen_id }} {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+
+  .ai-product-tab__content-{{ ai_gen_id }}.active {
+    max-height: 1000px;
+  }
+
+  .ai-product-tab__content-inner-{{ ai_gen_id }} {
+    padding: {{ block.settings.padding }}px;
+    color: {{ block.settings.content_color }};
+    font-size: {{ block.settings.content_size }}px;
+    line-height: 1.6;
+  }
+
+  .ai-product-tab__content-inner-{{ ai_gen_id }} p {
+    margin: 0 0 12px;
+  }
+
+  .ai-product-tab__content-inner-{{ ai_gen_id }} p:last-child {
+    margin-bottom: 0;
+  }
+
+  .ai-product-tab__empty-state-{{ ai_gen_id }} {
+    padding: {{ block.settings.padding }}px;
+    text-align: center;
+    color: #999;
+    font-style: italic;
+  }
+{% endstyle %}
+
+<product-tabs-{{ ai_gen_id }} class="ai-product-tab-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  {% if block.settings.tab_1_title != blank %}
+    <div class="ai-product-tab__item-{{ ai_gen_id }}">
+      <button
+        class="ai-product-tab__header-{{ ai_gen_id }}"
+        aria-expanded="{% if block.settings.tab_1_open %}true{% else %}false{% endif %}"
+        data-tab-index="1"
+      >
+        <div class="ai-product-tab__header-left-{{ ai_gen_id }}">
+          {% if block.settings.tab_1_icon == 'info' %}
+            <svg class="ai-product-tab__header-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+          {% elsif block.settings.tab_1_icon == 'package' %}
+            <svg class="ai-product-tab__header-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line>
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+              <line x1="12" y1="22.08" x2="12" y2="12"></line>
+            </svg>
+          {% elsif block.settings.tab_1_icon == 'heart' %}
+            <svg class="ai-product-tab__header-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+          {% elsif block.settings.tab_1_icon == 'star' %}
+            <svg class="ai-product-tab__header-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+          {% elsif block.settings.tab_1_icon == 'tag' %}
+            <svg class="ai-product-tab__header-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+              <line x1="7" y1="7" x2="7.01" y2="7"></line>
+            </svg>
+          {% elsif block.settings.tab_1_icon == 'shield' %}
+            <svg class="ai-product-tab__header-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+          {% elsif block.settings.tab_1_icon == 'truck' %}
+            <svg class="ai-product-tab__header-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="1" y="3" width="15" height="13"></rect>
+              <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+              <circle cx="5.5" cy="18.5" r="2.5"></circle>
+              <circle cx="18.5" cy="18.5" r="2.5"></circle>
+            </svg>
+          {% elsif block.settings.tab_1_icon == 'check' %}
+            <svg class="ai-product-tab__header-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          {% endif %}
+          <h3 class="ai-product-tab__title-{{ ai_gen_id }}">{{ block.settings.tab_1_title }}</h3>
+        </div>
+        <svg
+          class="ai-product-tab__icon-{{ ai_gen_id }} {% if block.settings.tab_1_open %}active{% endif %}"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+      <div class="ai-product-tab__content-{{ ai_gen_id }} {% if block.settings.tab_1_open %}active{% endif %}">
+        <div class="ai-product-tab__content-inner-{{ ai_gen_id }}">
+          {% if block.settings.tab_1_content != blank %}
+            {{ block.settings.tab_1_content }}
+          {% else %}
+            <div class="ai-product-tab__empty-state-{{ ai_gen_id }}">
+              Add content for this tab
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  {% if block.settings.tab_2_title != blank %}
+    <div class="ai-product-tab__item-{{ ai_gen_id }}">
+      <button
+        class="ai-product-tab__header-{{ ai_gen_id }}"
+        aria-expanded="{% if block.settings.tab_2_open %}true{% else %}false{% endif %}"
+        data-tab-index="2"
+      >
+        <div class="ai-product-tab__header-left-{{ ai_gen_id }}">
+          {% if block.settings.tab_2_icon == 'info' %}
+            <svg class="ai-product-tab__header-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+          {% elsif block.settings.tab_2_icon == 'package' %}
+            <svg class="ai-product-tab__header-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line>
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+              <line x1="12" y1="22.08" x2="12" y2="12"></line>
+            </svg>
+          {% elsif block.settings.tab_2_icon == 'heart' %}
+            <svg class="ai-product-tab__header-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+          {% elsif block.settings.tab_2_icon == 'star' %}
+            <svg class="ai-product-tab__header-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+          {% elsif block.settings.tab_2_icon == 'tag' %}
+            <svg class="ai-product-tab__header-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+              <line x1="7" y1="7" x2="7.01" y2="7"></line>
+            </svg>
+          {% elsif block.settings.tab_2_icon == 'shield' %}
+            <svg class="ai-product-tab__header-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+          {% elsif block.settings.tab_2_icon == 'truck' %}
+            <svg class="ai-product-tab__header-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="1" y="3" width="15" height="13"></rect>
+              <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+              <circle cx="5.5" cy="18.5" r="2.5"></circle>
+              <circle cx="18.5" cy="18.5" r="2.5"></circle>
+            </svg>
+          {% elsif block.settings.tab_2_icon == 'check' %}
+            <svg class="ai-product-tab__header-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          {% endif %}
+          <h3 class="ai-product-tab__title-{{ ai_gen_id }}">{{ block.settings.tab_2_title }}</h3>
+        </div>
+        <svg
+          class="ai-product-tab__icon-{{ ai_gen_id }} {% if block.settings.tab_2_open %}active{% endif %}"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+      <div class="ai-product-tab__content-{{ ai_gen_id }} {% if block.settings.tab_2_open %}active{% endif %}">
+        <div class="ai-product-tab__content-inner-{{ ai_gen_id }}">
+          {% if block.settings.tab_2_content != blank %}
+            {{ block.settings.tab_2_content }}
+          {% else %}
+            <div class="ai-product-tab__empty-state-{{ ai_gen_id }}">
+              Add content for this tab
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  {% if block.settings.tab_3_title != blank %}
+    <div class="ai-product-tab__item-{{ ai_gen_id }}">
+      <button
+        class="ai-product-tab__header-{{ ai_gen_id }}"
+        aria-expanded="{% if block.settings.tab_3_open %}true{% else %}false{% endif %}"
+        data-tab-index="3"
+      >
+        <div class="ai-product-tab__header-left-{{ ai_gen_id }}">
+          {% if block.settings.tab_3_icon == 'info' %}
+            <svg class="ai-product-tab__header-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+          {% elsif block.settings.tab_3_icon == 'package' %}
+            <svg class="ai-product-tab__header-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line>
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+              <line x1="12" y1="22.08" x2="12" y2="12"></line>
+            </svg>
+          {% elsif block.settings.tab_3_icon == 'heart' %}
+            <svg class="ai-product-tab__header-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+          {% elsif block.settings.tab_3_icon == 'star' %}
+            <svg class="ai-product-tab__header-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+          {% elsif block.settings.tab_3_icon == 'tag' %}
+            <svg class="ai-product-tab__header-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+              <line x1="7" y1="7" x2="7.01" y2="7"></line>
+            </svg>
+          {% elsif block.settings.tab_3_icon == 'shield' %}
+            <svg class="ai-product-tab__header-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+          {% elsif block.settings.tab_3_icon == 'truck' %}
+            <svg class="ai-product-tab__header-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="1" y="3" width="15" height="13"></rect>
+              <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+              <circle cx="5.5" cy="18.5" r="2.5"></circle>
+              <circle cx="18.5" cy="18.5" r="2.5"></circle>
+            </svg>
+          {% elsif block.settings.tab_3_icon == 'check' %}
+            <svg class="ai-product-tab__header-icon-{{ ai_gen_id }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          {% endif %}
+          <h3 class="ai-product-tab__title-{{ ai_gen_id }}">{{ block.settings.tab_3_title }}</h3>
+        </div>
+        <svg
+          class="ai-product-tab__icon-{{ ai_gen_id }} {% if block.settings.tab_3_open %}active{% endif %}"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+      <div class="ai-product-tab__content-{{ ai_gen_id }} {% if block.settings.tab_3_open %}active{% endif %}">
+        <div class="ai-product-tab__content-inner-{{ ai_gen_id }}">
+          {% if block.settings.tab_3_content != blank %}
+            {{ block.settings.tab_3_content }}
+          {% else %}
+            <div class="ai-product-tab__empty-state-{{ ai_gen_id }}">
+              Add content for this tab
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+</product-tabs-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class ProductTabs{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.headers = this.querySelectorAll('.ai-product-tab__header-{{ ai_gen_id }}');
+        this.setupEventListeners();
+      }
+
+      setupEventListeners() {
+        this.headers.forEach((header) => {
+          header.addEventListener('click', () => {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.ai-product-tab__icon-{{ ai_gen_id }}');
+            const isActive = content.classList.contains('active');
+
+            content.classList.toggle('active');
+            icon.classList.toggle('active');
+            header.setAttribute('aria-expanded', !isActive);
+          });
+        });
+      }
+    }
+
+    customElements.define('product-tabs-{{ ai_gen_id }}', ProductTabs{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Product tabs",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Tab 1"
+    },
+    {
+      "type": "text",
+      "id": "tab_1_title",
+      "label": "Title",
+      "default": "Product details"
+    },
+    {
+      "type": "select",
+      "id": "tab_1_icon",
+      "label": "Icon",
+      "options": [
+        {
+          "value": "info",
+          "label": "Info"
+        },
+        {
+          "value": "package",
+          "label": "Package"
+        },
+        {
+          "value": "heart",
+          "label": "Heart"
+        },
+        {
+          "value": "star",
+          "label": "Star"
+        },
+        {
+          "value": "tag",
+          "label": "Tag"
+        },
+        {
+          "value": "shield",
+          "label": "Shield"
+        },
+        {
+          "value": "truck",
+          "label": "Truck"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        }
+      ],
+      "default": "info"
+    },
+    {
+      "type": "richtext",
+      "id": "tab_1_content",
+      "label": "Content",
+      "default": "<p>Add detailed product information here</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "tab_1_open",
+      "label": "Open by default",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Tab 2"
+    },
+    {
+      "type": "text",
+      "id": "tab_2_title",
+      "label": "Title",
+      "default": "Shipping & returns"
+    },
+    {
+      "type": "select",
+      "id": "tab_2_icon",
+      "label": "Icon",
+      "options": [
+        {
+          "value": "info",
+          "label": "Info"
+        },
+        {
+          "value": "package",
+          "label": "Package"
+        },
+        {
+          "value": "heart",
+          "label": "Heart"
+        },
+        {
+          "value": "star",
+          "label": "Star"
+        },
+        {
+          "value": "tag",
+          "label": "Tag"
+        },
+        {
+          "value": "shield",
+          "label": "Shield"
+        },
+        {
+          "value": "truck",
+          "label": "Truck"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        }
+      ],
+      "default": "truck"
+    },
+    {
+      "type": "richtext",
+      "id": "tab_2_content",
+      "label": "Content",
+      "default": "<p>Add shipping and return policy information</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "tab_2_open",
+      "label": "Open by default",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Tab 3"
+    },
+    {
+      "type": "text",
+      "id": "tab_3_title",
+      "label": "Title",
+      "default": "Care instructions"
+    },
+    {
+      "type": "select",
+      "id": "tab_3_icon",
+      "label": "Icon",
+      "options": [
+        {
+          "value": "info",
+          "label": "Info"
+        },
+        {
+          "value": "package",
+          "label": "Package"
+        },
+        {
+          "value": "heart",
+          "label": "Heart"
+        },
+        {
+          "value": "star",
+          "label": "Star"
+        },
+        {
+          "value": "tag",
+          "label": "Tag"
+        },
+        {
+          "value": "shield",
+          "label": "Shield"
+        },
+        {
+          "value": "truck",
+          "label": "Truck"
+        },
+        {
+          "value": "check",
+          "label": "Check"
+        }
+      ],
+      "default": "heart"
+    },
+    {
+      "type": "richtext",
+      "id": "tab_3_content",
+      "label": "Content",
+      "default": "<p>Add care and maintenance instructions</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "tab_3_open",
+      "label": "Open by default",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "spacing",
+      "label": "Spacing between tabs",
+      "min": 0,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "padding",
+      "label": "Padding",
+      "min": 8,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#FAF7F0"
+    },
+    {
+      "type": "color",
+      "id": "header_background_color",
+      "label": "Header background",
+      "default": "#FAF7F0"
+    },
+    {
+      "type": "color",
+      "id": "header_hover_color",
+      "label": "Header hover background",
+      "default": "#E8DED0"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border",
+      "default": "#dfdfdf"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "Border width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#333333"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title size",
+      "min": 12,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "content_color",
+      "label": "Content color",
+      "default": "#333333"
+    },
+    {
+      "type": "range",
+      "id": "content_size",
+      "label": "Content size",
+      "min": 12,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Icons"
+    },
+    {
+      "type": "color",
+      "id": "header_icon_color",
+      "label": "Header icon color",
+      "default": "#333333"
+    },
+    {
+      "type": "range",
+      "id": "header_icon_size",
+      "label": "Header icon size",
+      "min": 16,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Chevron icon color",
+      "default": "#333333"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product tabs"
+    }
+  ]
+}
+{% endschema %}

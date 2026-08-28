@@ -1,0 +1,297 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-block-start: {{ section.settings.padding_top }}px;
+    padding-block-end: {{ section.settings.padding_bottom }}px;
+  }
+
+  .audience-showcase__eyebrow {
+    background: rgb(var(--color-button) / 0.12);
+    border-radius: 999px;
+    color: rgb(var(--color-button));
+    display: inline-block;
+    font-size: var(--font-size--xs);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    margin: 0 0 1.6rem;
+    padding: 0.6rem 1.6rem;
+    text-transform: uppercase;
+  }
+
+  .audience-showcase__header {
+    display: grid;
+    gap: 2.4rem;
+    grid-template-columns: 1fr;
+    margin-block-end: 4rem;
+  }
+
+  @media screen and (min-width: 750px) {
+    .audience-showcase__header {
+      align-items: start;
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .audience-showcase__heading {
+    margin: 0;
+  }
+
+  .audience-showcase__intro {
+    color: rgb(var(--color-foreground) / 0.75);
+    margin: 0;
+  }
+
+  .audience-showcase__body {
+    display: grid;
+    gap: 2.4rem;
+    grid-template-columns: 1fr;
+  }
+
+  @media screen and (min-width: 750px) {
+    .audience-showcase__body {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .audience-showcase__image-wrapper {
+    border-radius: var(--style-border-radius-inputs, 12px);
+    overflow: hidden;
+  }
+
+  .audience-showcase__image {
+    display: block;
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .audience-showcase__cards {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media screen and (max-width: 489px) {
+    .audience-showcase__cards {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .audience-showcase__card {
+  background: rgb(var(--color-background));
+  border-radius: var(--style-border-radius-inputs, 12px);
+  box-shadow: 0 0.2rem 1.2rem rgb(0 0 0 / 0.06);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 2.4rem;
+  text-align: left;
+}
+
+.audience-showcase__card-icon {
+  color: rgb(var(--color-button));
+  height: 6.4rem;
+  margin-block-end: 1.2rem;
+  object-fit: contain;
+  width: 6.4rem;
+}
+
+.audience-showcase__card-title {
+  font-size: 2.4rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin: 0 0 0.8rem;
+}
+
+.audience-showcase__card-text {
+  color: rgb(var(--color-foreground) / 0.75);
+  font-size: 1.3rem;
+  line-height: 1.4;
+  margin: 0;
+}
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width-normal section-{{ section.id }}-padding">
+    <div class="audience-showcase__header">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="audience-showcase__eyebrow">{{ section.settings.eyebrow | escape }}</span>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="audience-showcase__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.intro_text != blank -%}
+        <div class="audience-showcase__intro rte">{{ section.settings.intro_text }}</div>
+      {%- endif -%}
+    </div>
+
+    <div class="audience-showcase__body">
+      <div class="audience-showcase__image-wrapper">
+        {%- if section.settings.image != blank -%}
+          {{
+            section.settings.image
+            | image_url: width: 900
+            | image_tag: widths: '400, 600, 800, 900', class: 'audience-showcase__image', loading: 'lazy'
+          }}
+        {%- endif -%}
+      </div>
+
+      <div class="audience-showcase__cards">
+        {%- for block in section.blocks -%}
+          <div
+            class="audience-showcase__card"
+            {{ block.shopify_attributes }}
+          >
+            {%- render 'icon-or-image',
+              icon: block.settings.icon,
+              image_upload: block.settings.image_upload,
+              width: 64,
+              class_name: 'audience-showcase__card-icon'
+            -%}
+            {%- if block.settings.title != blank -%}
+              <p class="audience-showcase__card-title">{{ block.settings.title | escape }}</p>
+            {%- endif -%}
+            {%- if block.settings.text != blank -%}
+              <div class="audience-showcase__card-text rte">{{ block.settings.text }}</div>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Audience showcase",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow label",
+      "default": "Made for you"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Thoughtfully designed for every space"
+    },
+    {
+      "type": "richtext",
+      "id": "intro_text",
+      "label": "Intro text",
+      "default": "<p>We believe good design should feel personal. Every piece is made to fit naturally into the life you already have.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "leaf", "label": "Leaf" },
+            { "value": "box", "label": "Box" },
+            { "value": "chat_bubble", "label": "Chat bubble" },
+            { "value": "map_pin", "label": "Map pin" },
+            { "value": "lock", "label": "Lock" },
+            { "value": "clipboard", "label": "Clipboard" },
+            { "value": "fire", "label": "Fire" },
+            { "value": "eye", "label": "Eye" },
+            { "value": "check_box", "label": "Check box" }
+          ],
+          "default": "heart"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_upload",
+          "label": "Custom icon image",
+          "info": "Overrides the icon above if set."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Category name"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>A short description of who this is for.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Audience showcase",
+      "blocks": [
+        {
+          "type": "card",
+          "settings": { "icon": "heart", "title": "Category one" }
+        },
+        {
+          "type": "card",
+          "settings": { "icon": "box", "title": "Category two" }
+        },
+        {
+          "type": "card",
+          "settings": { "icon": "leaf", "title": "Category three" }
+        },
+        {
+          "type": "card",
+          "settings": { "icon": "chat_bubble", "title": "Category four" }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

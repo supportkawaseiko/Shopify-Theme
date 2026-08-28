@@ -1,0 +1,955 @@
+{% comment %}
+  ============================================================
+  HIPPolord - Brand Values Section
+  Custom section for Shopify Horizon
+
+  Editable in Theme Editor:
+  - Eyebrow
+  - Heading
+  - Description
+  - Images / icons
+  - Highlight value
+  - Card title
+  - Card description
+  - Card link
+  - Colors
+  - Layout
+  - Spacing
+  - Card dimensions
+  ============================================================
+{% endcomment %}
+
+
+<section
+  class="hippo-values{% if section.settings.enable_hover %} hippo-values--hover{% endif %}"
+  style="
+    --hv-bg: {{ section.settings.background }};
+    --hv-card-bg: {{ section.settings.card_background }};
+    --hv-card-border: {{ section.settings.card_border }};
+    --hv-heading: {{ section.settings.heading_color }};
+    --hv-text: {{ section.settings.text_color }};
+    --hv-accent: {{ section.settings.accent_color }};
+
+    --hv-max-width: {{ section.settings.max_width }}px;
+    --hv-columns: {{ section.settings.columns_desktop }};
+    --hv-mobile-columns: {{ section.settings.columns_mobile }};
+
+    --hv-gap: {{ section.settings.card_gap }}px;
+    --hv-radius: {{ section.settings.card_radius }}px;
+    --hv-card-height: {{ section.settings.card_min_height }}px;
+
+    --hv-padding-top: {{ section.settings.padding_top }}px;
+    --hv-padding-bottom: {{ section.settings.padding_bottom }}px;
+
+    --hv-heading-size: {{ section.settings.heading_size }}px;
+  "
+>
+
+  <div class="hippo-values__inner">
+
+    <!-- =========================
+         LEFT INTRO
+    ========================== -->
+
+    <div class="hippo-values__intro">
+
+      {% if section.settings.eyebrow != blank %}
+        <div class="hippo-values__eyebrow">
+          {{ section.settings.eyebrow }}
+        </div>
+      {% endif %}
+
+      {% if section.settings.heading != blank %}
+        <h2 class="hippo-values__heading">
+          {{ section.settings.heading }}
+        </h2>
+      {% endif %}
+
+      {% if section.settings.description != blank %}
+        <div class="hippo-values__description">
+          {{ section.settings.description }}
+        </div>
+      {% endif %}
+
+    </div>
+
+
+    <!-- =========================
+         VALUE CARDS
+    ========================== -->
+
+    <div class="hippo-values__grid">
+
+      {% for block in section.blocks %}
+
+        <div
+          class="hippo-values__card{% if block.settings.link != blank %} hippo-values__card--linked{% endif %}"
+          {{ block.shopify_attributes }}
+        >
+
+          {% if block.settings.link != blank %}
+            <a
+              href="{{ block.settings.link }}"
+              class="hippo-values__card-overlay"
+              aria-label="{{ block.settings.title | escape }}"
+            ></a>
+          {% endif %}
+
+
+          <!-- IMAGE / ICON -->
+
+          {% if block.settings.image != blank %}
+
+            <div
+              class="hippo-values__image"
+              style="
+                --hv-image-size: {{ block.settings.image_size }}px;
+              "
+            >
+
+              {{
+                block.settings.image
+                | image_url: width: 300
+                | image_tag:
+                  loading: 'lazy',
+                  widths: '40, 60, 80, 100, 120, 160, 200, 300',
+                  alt: block.settings.image_alt
+              }}
+
+            </div>
+
+          {% elsif block.settings.show_placeholder %}
+
+            <div
+              class="hippo-values__image hippo-values__placeholder"
+              style="
+                --hv-image-size: {{ block.settings.image_size }}px;
+              "
+            >
+              {{ 'image' | placeholder_svg_tag }}
+            </div>
+
+          {% endif %}
+
+
+          <!-- LARGE VALUE -->
+
+          {% if block.settings.highlight != blank %}
+            <div class="hippo-values__highlight">
+              {{ block.settings.highlight }}
+            </div>
+          {% endif %}
+
+
+          <!-- TITLE -->
+
+          {% if block.settings.title != blank %}
+            <div class="hippo-values__card-title">
+              {{ block.settings.title }}
+            </div>
+          {% endif %}
+
+
+          <!-- DESCRIPTION -->
+
+          {% if block.settings.text != blank %}
+            <div class="hippo-values__card-text">
+              {{ block.settings.text }}
+            </div>
+          {% endif %}
+
+        </div>
+
+      {% endfor %}
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+{% style %}
+
+/* ============================================================
+   SECTION
+============================================================ */
+
+#shopify-section-{{ section.id }} .hippo-values {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding-top: var(--hv-padding-top);
+  padding-bottom: var(--hv-padding-bottom);
+
+  background: var(--hv-bg);
+  color: var(--hv-text);
+}
+
+
+/* ============================================================
+   MAIN CONTAINER
+============================================================ */
+
+#shopify-section-{{ section.id }} .hippo-values__inner {
+  width: min(calc(100% - 40px), var(--hv-max-width));
+  margin-inline: auto;
+
+  display: grid;
+  grid-template-columns:
+    minmax(260px, 0.85fr)
+    minmax(0, 2.15fr);
+
+  align-items: center;
+
+  gap: 54px;
+}
+
+
+/* ============================================================
+   LEFT CONTENT
+============================================================ */
+
+#shopify-section-{{ section.id }} .hippo-values__intro {
+  width: 100%;
+  max-width: 390px;
+}
+
+
+/* Eyebrow */
+
+#shopify-section-{{ section.id }} .hippo-values__eyebrow {
+  margin: 0 0 12px;
+
+  font-family: var(--font-subheading--family, var(--font-body--family));
+  font-style: var(--font-subheading--style, normal);
+  font-weight: var(--font-subheading--weight, 600);
+
+  font-size: 11px;
+  line-height: 1.2;
+
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+
+  color: var(--hv-accent);
+}
+
+
+/* Main heading */
+
+#shopify-section-{{ section.id }} .hippo-values__heading {
+  margin: 0;
+
+  font-family: var(--font-heading--family);
+  font-style: var(--font-heading--style, normal);
+  font-weight: var(--font-heading--weight, 800);
+
+  font-size: clamp(
+    30px,
+    3vw,
+    var(--hv-heading-size)
+  );
+
+  line-height: 1;
+  letter-spacing: -0.035em;
+
+  color: var(--hv-heading);
+}
+
+
+/* Description */
+
+#shopify-section-{{ section.id }} .hippo-values__description {
+  margin-top: 18px;
+
+  font-family: var(--font-body--family);
+  font-style: var(--font-body--style, normal);
+  font-weight: var(--font-body--weight, 400);
+
+  font-size: 14px;
+  line-height: 1.65;
+
+  color: var(--hv-text);
+}
+
+#shopify-section-{{ section.id }} .hippo-values__description p {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+#shopify-section-{{ section.id }} .hippo-values__description p:last-child {
+  margin-bottom: 0;
+}
+
+
+/* ============================================================
+   GRID
+============================================================ */
+
+#shopify-section-{{ section.id }} .hippo-values__grid {
+  min-width: 0;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(var(--hv-columns), minmax(0, 1fr));
+
+  gap: var(--hv-gap);
+}
+
+
+/* ============================================================
+   CARD
+============================================================ */
+
+#shopify-section-{{ section.id }} .hippo-values__card {
+  position: relative;
+
+  min-width: 0;
+  min-height: var(--hv-card-height);
+
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px 16px;
+
+  text-align: center;
+
+  background: var(--hv-card-bg);
+
+  border:
+    1px
+    solid
+    var(--hv-card-border);
+
+  border-radius: var(--hv-radius);
+
+  overflow: hidden;
+
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    background-color 0.25s ease;
+}
+
+
+/* Make content appear above optional card link */
+
+#shopify-section-{{ section.id }} .hippo-values__card > *:not(.hippo-values__card-overlay) {
+  position: relative;
+  z-index: 2;
+
+  pointer-events: none;
+}
+
+
+/* Optional full-card link */
+
+#shopify-section-{{ section.id }} .hippo-values__card-overlay {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 1;
+
+  display: block;
+}
+
+
+/* ============================================================
+   IMAGE
+============================================================ */
+
+#shopify-section-{{ section.id }} .hippo-values__image {
+  width: var(--hv-image-size);
+  height: var(--hv-image-size);
+
+  flex: 0 0 auto;
+
+  margin: 0 0 16px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+}
+
+
+#shopify-section-{{ section.id }} .hippo-values__image img {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+}
+
+
+/* Shopify placeholder */
+
+#shopify-section-{{ section.id }} .hippo-values__placeholder svg {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  opacity: 0.4;
+
+  fill: var(--hv-accent);
+}
+
+
+/* ============================================================
+   LARGE VALUE
+============================================================ */
+
+#shopify-section-{{ section.id }} .hippo-values__highlight {
+  margin: 0 0 6px;
+
+  font-family: var(--font-heading--family);
+  font-style: var(--font-heading--style, normal);
+  font-weight: var(--font-heading--weight, 800);
+
+  font-size: 20px;
+  line-height: 1;
+
+  letter-spacing: -0.03em;
+
+  color: var(--hv-heading);
+}
+
+
+/* ============================================================
+   CARD TITLE
+============================================================ */
+
+#shopify-section-{{ section.id }} .hippo-values__card-title {
+  font-family: var(--font-heading--family);
+  font-style: var(--font-heading--style, normal);
+  font-weight: var(--font-heading--weight, 800);
+
+  font-size: 13px;
+  line-height: 1.15;
+
+  color: var(--hv-heading);
+}
+
+
+/* ============================================================
+   CARD DESCRIPTION
+============================================================ */
+
+#shopify-section-{{ section.id }} .hippo-values__card-text {
+  width: 100%;
+  max-width: 190px;
+
+  margin: 7px auto 0;
+
+  font-family: var(--font-body--family);
+  font-style: var(--font-body--style, normal);
+  font-weight: var(--font-body--weight, 400);
+
+  font-size: 11px;
+  line-height: 1.45;
+
+  color: var(--hv-text);
+}
+
+
+/* ============================================================
+   HOVER
+============================================================ */
+
+@media (hover: hover) and (pointer: fine) {
+
+  #shopify-section-{{ section.id }}
+  .hippo-values--hover
+  .hippo-values__card:hover {
+    transform: translateY(-3px);
+
+    border-color: var(--hv-accent);
+  }
+
+}
+
+
+/* ============================================================
+   TABLET
+============================================================ */
+
+@media screen and (max-width: 990px) {
+
+  #shopify-section-{{ section.id }} .hippo-values__inner {
+    grid-template-columns: 1fr;
+
+    gap: 34px;
+  }
+
+
+  #shopify-section-{{ section.id }} .hippo-values__intro {
+    max-width: 620px;
+  }
+
+
+  #shopify-section-{{ section.id }} .hippo-values__grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+
+/* ============================================================
+   MOBILE
+============================================================ */
+
+@media screen and (max-width: 749px) {
+
+  #shopify-section-{{ section.id }} .hippo-values__inner {
+    width: calc(100% - 28px);
+
+    gap: 28px;
+  }
+
+
+  #shopify-section-{{ section.id }} .hippo-values__heading {
+    font-size: min(
+      32px,
+      var(--hv-heading-size)
+    );
+  }
+
+
+  #shopify-section-{{ section.id }} .hippo-values__description {
+    margin-top: 14px;
+
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+
+  #shopify-section-{{ section.id }} .hippo-values__grid {
+    grid-template-columns:
+      repeat(
+        var(--hv-mobile-columns),
+        minmax(0, 1fr)
+      );
+
+    gap: 10px;
+  }
+
+
+  #shopify-section-{{ section.id }} .hippo-values__card {
+    min-height: calc(var(--hv-card-height) * 0.9);
+
+    padding: 18px 10px;
+  }
+
+
+  #shopify-section-{{ section.id }} .hippo-values__image {
+    margin-bottom: 12px;
+  }
+
+
+  #shopify-section-{{ section.id }} .hippo-values__highlight {
+    font-size: 18px;
+  }
+
+
+  #shopify-section-{{ section.id }} .hippo-values__card-title {
+    font-size: 12px;
+  }
+
+
+  #shopify-section-{{ section.id }} .hippo-values__card-text {
+    margin-top: 6px;
+
+    font-size: 10px;
+    line-height: 1.4;
+  }
+
+}
+
+{% endstyle %}
+
+
+
+{% schema %}
+{
+  "name": "Hippolord - Brand values",
+  "tag": "section",
+  "class": "hippolord-brand-values-section",
+  "max_blocks": 8,
+
+  "settings": [
+
+    {
+      "type": "header",
+      "content": "Content"
+    },
+
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Small heading",
+      "default": "BUILT DIFFERENT"
+    },
+
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Made personal. Made to mean more."
+    },
+
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Thoughtful gifts should feel as special as the people receiving them. From personalization to the finished product, every detail is made to turn your moments into something worth keeping.</p>"
+    },
+
+
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "Cards per row - desktop",
+      "options": [
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        }
+      ],
+      "default": "4"
+    },
+
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Cards per row - mobile",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ],
+      "default": "2"
+    },
+
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Content width",
+      "min": 900,
+      "max": 1600,
+      "step": 20,
+      "unit": "px",
+      "default": 1280
+    },
+
+    {
+      "type": "range",
+      "id": "card_gap",
+      "label": "Gap between cards",
+      "min": 6,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 14
+    },
+
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card corner radius",
+      "min": 0,
+      "max": 30,
+      "step": 2,
+      "unit": "px",
+      "default": 10
+    },
+
+    {
+      "type": "range",
+      "id": "card_min_height",
+      "label": "Card height",
+      "min": 120,
+      "max": 260,
+      "step": 5,
+      "unit": "px",
+      "default": 175
+    },
+
+
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size",
+      "min": 28,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+
+
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Section background",
+      "default": "#2B2325"
+    },
+
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background",
+      "default": "#352C2F"
+    },
+
+    {
+      "type": "color",
+      "id": "card_border",
+      "label": "Card border",
+      "default": "#514347"
+    },
+
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Main text",
+      "default": "#FFF9F6"
+    },
+
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Secondary text",
+      "default": "#C9BEC1"
+    },
+
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "default": "#F5E8D7"
+    },
+
+
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top padding",
+      "min": 20,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
+      "min": 20,
+      "max": 140,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+
+
+    {
+      "type": "header",
+      "content": "Effects"
+    },
+
+    {
+      "type": "checkbox",
+      "id": "enable_hover",
+      "label": "Enable card hover effect",
+      "default": true
+    }
+
+  ],
+
+
+  "blocks": [
+
+    {
+      "type": "value_card",
+      "name": "Value card",
+
+      "settings": [
+
+        {
+          "type": "header",
+          "content": "Image"
+        },
+
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image / icon"
+        },
+
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Image alt text",
+          "info": "Describe the image for accessibility."
+        },
+
+        {
+          "type": "range",
+          "id": "image_size",
+          "label": "Image size",
+          "min": 24,
+          "max": 120,
+          "step": 2,
+          "unit": "px",
+          "default": 42
+        },
+
+        {
+          "type": "checkbox",
+          "id": "show_placeholder",
+          "label": "Show placeholder if no image",
+          "default": false
+        },
+
+
+        {
+          "type": "header",
+          "content": "Content"
+        },
+
+        {
+          "type": "text",
+          "id": "highlight",
+          "label": "Large value",
+          "default": "100%"
+        },
+
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "PERSONALIZED"
+        },
+
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Description",
+          "default": "Names, photos and meaningful details made uniquely yours."
+        },
+
+
+        {
+          "type": "header",
+          "content": "Link"
+        },
+
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Card link",
+          "info": "Optional. Leave empty if the card should not be clickable."
+        }
+
+      ]
+    }
+
+  ],
+
+
+  "presets": [
+
+    {
+      "name": "Hippolord - Brand values",
+
+      "blocks": [
+
+        {
+          "type": "value_card",
+          "settings": {
+            "highlight": "100%",
+            "title": "PERSONALIZED",
+            "text": "Names, photos and meaningful details made uniquely yours."
+          }
+        },
+
+        {
+          "type": "value_card",
+          "settings": {
+            "highlight": "PREMIUM",
+            "title": "QUALITY FIRST",
+            "text": "Carefully selected products designed to look great and last."
+          }
+        },
+
+        {
+          "type": "value_card",
+          "settings": {
+            "highlight": "MADE",
+            "title": "TO ORDER",
+            "text": "Each personalized piece is created specifically for your order."
+          }
+        },
+
+        {
+          "type": "value_card",
+          "settings": {
+            "highlight": "GIFT",
+            "title": "WITH MEANING",
+            "text": "Thoughtful keepsakes for milestones and everyday moments."
+          }
+        }
+
+      ]
+
+    }
+
+  ]
+
+}
+{% endschema %}
