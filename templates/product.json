@@ -87,6 +87,10 @@
             "padding-inline-end": 0
           },
           "blocks": {
+            "upsell_com_ex_reconvert_product_upsell_FLMVqT": {
+              "type": "shopify://apps/upsell-com-ex-reconvert/blocks/product-upsell/72c64c30-2f7c-4a71-ae4c-efd1d5d1d2e2",
+              "settings": {}
+            },
             "group_icgrde": {
               "type": "group",
               "name": "t:names.header",
@@ -338,47 +342,6 @@
               },
               "block_order": []
             },
-            "shipping_eta": {
-              "type": "shipping-eta",
-              "name": "Shipping ETA",
-              "settings": {
-                "metafield_namespace": "custom",
-                "metafield_key": "shipping_eta",
-                "country_name_field": "country_name",
-                "flag_field": "flag",
-                "processing_min_field": "processing_min_days",
-                "processing_max_field": "processing_max_days",
-                "transit_min_field": "transit_min_days",
-                "transit_max_field": "transit_max_days",
-                "express_processing_min_field": "express_processing_min_days",
-                "express_processing_max_field": "express_processing_max_days",
-                "express_transit_min_field": "express_transit_min_days",
-                "express_transit_max_field": "express_transit_max_days",
-                "note_field": "note",
-                "destination_label": "Deliver to:",
-                "lead_text": "Order today, get it as early as:",
-                "standard_method_label": "Standard Shipping",
-                "express_method_label": "Express Shipping",
-                "delivery_modal_heading": "Delivery Method",
-                "order_label": "Order placed",
-                "ship_label": "Order ships",
-                "arrival_label": "Estimated arrival",
-                "delivered_label": "Delivered",
-                "accessibility_label": "Delivery methods",
-                "background_color": "#f8f3ea",
-                "border_color": "#e4d8c7",
-                "border_radius": 8,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "aftersell_pdp_upsells_EgcgTy": {
-              "type": "shopify://apps/aftersell/blocks/pdp-upsells/509ec35d-0632-4dfc-a105-fa799cd9d149",
-              "settings": {}
-            },
             "text_aEtTtq": {
               "type": "text",
               "name": "t:names.product_description",
@@ -442,13 +405,13 @@
             }
           },
           "block_order": [
+            "upsell_com_ex_reconvert_product_upsell_FLMVqT",
             "group_icgrde",
             "shipping_eta",
             "divider_VJhene",
             "variant_picker_R3rGDr",
             "size_guide",
             "buy_buttons_eYQEYi",
-            "aftersell_pdp_upsells_EgcgTy",
             "text_aEtTtq",
             "ai_gen_block_0558575_EUwxiw"
           ]
@@ -471,145 +434,6 @@
         "gap": 48,
         "enable_sticky_add_to_cart": true,
         "background_color": "{{ settings.color_palette.background }}",
-        "padding-block-start": 0,
-        "padding-block-end": 0
-      }
-    },
-    "product_metaobject_details": {
-      "type": "product-metaobject-details",
-      "settings": {
-        "metafield_namespace": "custom",
-        "metafield_key": "product_details",
-        "image_field": "image",
-        "title_field": "title",
-        "body_field": "description",
-        "spec_1_label": "Material",
-        "spec_1_field": "material",
-        "spec_2_label": "Size",
-        "spec_2_field": "size",
-        "spec_3_label": "",
-        "spec_3_field": "",
-        "spec_4_label": "",
-        "spec_4_field": "",
-        "section_width": "page-width",
-        "image_position": "left",
-        "background_color": "",
-        "border_color": "",
-        "border_radius": 8,
-        "padding-block-start": 48,
-        "padding-block-end": 48
-      }
-    },
-    "customization_steps": {
-      "type": "customization-steps",
-      "blocks": {
-        "step_select_product": {
-          "type": "step",
-          "settings": {
-            "step_number": "1",
-            "title": "Select your product",
-            "text": "<p>Choose the product, variant, size, color and quantity that fit your order.</p>"
-          }
-        },
-        "step_personalize_design": {
-          "type": "step",
-          "settings": {
-            "step_number": "2",
-            "title": "Personalize your design",
-            "text": "<p>Upload your photo and enter the name, text or custom details needed for the design.</p>"
-          }
-        },
-        "step_review_preview": {
-          "type": "step",
-          "settings": {
-            "step_number": "3",
-            "title": "Review the preview",
-            "text": "<p>Check the preview carefully, including spelling, photo placement and selected options.</p>"
-          }
-        },
-        "step_checkout": {
-          "type": "step",
-          "settings": {
-            "step_number": "4",
-            "title": "Checkout",
-            "text": "<p>Add the item to your cart, complete payment and watch for your order confirmation.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "step_select_product",
-        "step_personalize_design",
-        "step_review_preview",
-        "step_checkout"
-      ],
-      "settings": {
-        "heading": "How to customize your product",
-        "subheading": "<p>Follow these four steps to create and review your personalized design before checkout.</p>",
-        "section_width": "page-width",
-        "background_color": "#fbf6f0",
-        "card_background_color": "#ffffff",
-        "border_color": "#e3d8cc",
-        "border_radius": 8,
-        "padding-block-start": 48,
-        "padding-block-end": 48
-      }
-    },
-    "product_features": {
-      "type": "product-features",
-      "settings": {
-        "heading": "Product features",
-        "subheading": "<p>Explore the details that make this product easy to personalize, wear and gift.</p>",
-        "metafield_namespace": "custom",
-        "metafield_key": "product_features",
-        "image_field": "image",
-        "title_field": "title",
-        "body_field": "description",
-        "max_items": 4,
-        "section_width": "page-width",
-        "background_color": "#ffffff",
-        "card_background_color": "#fbf6f0",
-        "border_color": "#e3d8cc",
-        "border_radius": 8,
-        "padding-block-start": 48,
-        "padding-block-end": 48
-      }
-    },
-    "17870405177eb26d93": {
-      "type": "_blocks",
-      "blocks": {
-        "aftersell_pdp_upsells_VxgifU": {
-          "type": "shopify://apps/aftersell/blocks/pdp-upsells/509ec35d-0632-4dfc-a105-fa799cd9d149",
-          "settings": {}
-        }
-      },
-      "block_order": [
-        "aftersell_pdp_upsells_VxgifU"
-      ],
-      "settings": {
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "flex-start",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 12,
-        "section_width": "page-width",
-        "section_height": "",
-        "section_height_custom": 50,
-        "background_media": "none",
-        "background_color": "",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_color": "",
-        "border_radius": 0,
         "padding-block-start": 0,
         "padding-block-end": 0
       }
@@ -879,10 +703,6 @@
   },
   "order": [
     "main",
-    "product_metaobject_details",
-    "customization_steps",
-    "product_features",
-    "17870405177eb26d93",
     "product_recommendations_qggXJq",
     "1787121188cf99014f",
     "1787121510c62485b7",
