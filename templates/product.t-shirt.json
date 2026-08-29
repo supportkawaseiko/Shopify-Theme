@@ -508,6 +508,60 @@
         "padding-block-end": 48
       }
     },
+    "customization_steps": {
+      "type": "customization-steps",
+      "blocks": {
+        "step_select_product": {
+          "type": "step",
+          "settings": {
+            "step_number": "1",
+            "title": "Select your product",
+            "text": "<p>Choose the product, variant, size, color and quantity that fit your order.</p>"
+          }
+        },
+        "step_personalize_design": {
+          "type": "step",
+          "settings": {
+            "step_number": "2",
+            "title": "Personalize your design",
+            "text": "<p>Upload your photo and enter the name, text or custom details needed for the design.</p>"
+          }
+        },
+        "step_review_preview": {
+          "type": "step",
+          "settings": {
+            "step_number": "3",
+            "title": "Review the preview",
+            "text": "<p>Check the preview carefully, including spelling, photo placement and selected options.</p>"
+          }
+        },
+        "step_checkout": {
+          "type": "step",
+          "settings": {
+            "step_number": "4",
+            "title": "Checkout",
+            "text": "<p>Add the item to your cart, complete payment and watch for your order confirmation.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "step_select_product",
+        "step_personalize_design",
+        "step_review_preview",
+        "step_checkout"
+      ],
+      "settings": {
+        "heading": "How to customize your product",
+        "subheading": "<p>Follow these four steps to create and review your personalized design before checkout.</p>",
+        "section_width": "page-width",
+        "background_color": "#fbf6f0",
+        "card_background_color": "#ffffff",
+        "border_color": "#e3d8cc",
+        "border_radius": 8,
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
+    },
     "17870405177eb26d93": {
       "type": "_blocks",
       "blocks": {
@@ -814,6 +868,7 @@
   "order": [
     "main",
     "product_metaobject_details",
+    "customization_steps",
     "17870405177eb26d93",
     "product_recommendations_qggXJq",
     "1787121188cf99014f",

@@ -1,0 +1,373 @@
+{%- liquid
+  assign section_settings = section.settings
+  assign heading = section_settings.heading
+  assign subheading = section_settings.subheading
+-%}
+
+<section
+  class="customization-steps section section--{{ section_settings.section_width }} spacing-style"
+  style="
+    {% render 'spacing-style', settings: section_settings %}
+    --customization-steps-background: {{ section_settings.background_color | default: 'transparent' }};
+    --customization-steps-card-background: {{ section_settings.card_background_color | default: 'rgb(var(--color-background-rgb))' }};
+    --customization-steps-border-color: {{ section_settings.border_color | default: 'rgb(var(--color-foreground-rgb) / 0.12)' }};
+    --customization-steps-border-radius: {{ section_settings.border_radius | default: 8 }}px;
+  "
+>
+  <div class="customization-steps__inner">
+    {%- if heading != blank or subheading != blank -%}
+      <div class="customization-steps__header">
+        {%- if heading != blank -%}
+          <h2 class="customization-steps__heading">{{ heading | escape }}</h2>
+        {%- endif -%}
+
+        {%- if subheading != blank -%}
+          <div class="customization-steps__subheading rte">
+            {{ subheading }}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="customization-steps__grid">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign block_settings = block.settings
+          assign step_number = block_settings.step_number | default: forloop.index
+          assign step_title = block_settings.title
+          assign step_text = block_settings.text
+          assign step_image = block_settings.image
+        -%}
+
+        <article class="customization-steps__item" {{ block.shopify_attributes }}>
+          <div class="customization-steps__media">
+            {%- if step_image != blank -%}
+              {{
+                step_image
+                | image_url: width: 800
+                | image_tag:
+                  widths: '240, 320, 480, 640, 800',
+                  sizes: '(min-width: 990px) 25vw, (min-width: 750px) 50vw, 100vw',
+                  loading: 'lazy',
+                  class: 'customization-steps__image'
+              }}
+            {%- else -%}
+              {{ 'image' | placeholder_svg_tag: 'customization-steps__placeholder' }}
+            {%- endif -%}
+          </div>
+
+          <div class="customization-steps__content">
+            <span class="customization-steps__number">{{ step_number | escape }}</span>
+
+            {%- if step_title != blank -%}
+              <h3 class="customization-steps__title">{{ step_title | escape }}</h3>
+            {%- endif -%}
+
+            {%- if step_text != blank -%}
+              <div class="customization-steps__text rte">
+                {{ step_text }}
+              </div>
+            {%- endif -%}
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .customization-steps {
+    background: var(--customization-steps-background);
+  }
+
+  .customization-steps__inner {
+    display: grid;
+    gap: var(--gap-xl);
+  }
+
+  .customization-steps__header {
+    display: grid;
+    gap: var(--gap-xs);
+    margin-inline: auto;
+    max-width: 48rem;
+    text-align: center;
+  }
+
+  .customization-steps__heading {
+    font-size: var(--font-h2--size);
+    line-height: var(--font-h2--line-height);
+    margin: 0;
+  }
+
+  .customization-steps__subheading {
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+    font-size: var(--font-paragraph--size);
+    line-height: var(--font-paragraph--line-height);
+  }
+
+  .customization-steps__subheading > * {
+    margin-block: 0;
+  }
+
+  .customization-steps__grid {
+    display: grid;
+    gap: var(--gap-md);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .customization-steps__item {
+    background: var(--customization-steps-card-background);
+    border: 1px solid var(--customization-steps-border-color);
+    border-radius: var(--customization-steps-border-radius);
+    display: grid;
+    grid-template-rows: auto 1fr;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .customization-steps__media {
+    background: rgb(var(--color-foreground-rgb) / 0.04);
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+  }
+
+  .customization-steps__image,
+  .customization-steps__placeholder {
+    display: block;
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .customization-steps__placeholder {
+    color: rgb(var(--color-foreground-rgb) / 0.22);
+  }
+
+  .customization-steps__content {
+    align-content: start;
+    display: grid;
+    gap: var(--gap-xs);
+    padding: var(--padding-md);
+  }
+
+  .customization-steps__number {
+    align-items: center;
+    background: rgb(var(--color-button));
+    border-radius: 50%;
+    color: rgb(var(--color-button-text));
+    display: inline-flex;
+    font-size: var(--font-size--xs);
+    font-weight: var(--font-weight-semibold);
+    height: 2rem;
+    justify-content: center;
+    line-height: 1;
+    width: 2rem;
+  }
+
+  .customization-steps__title {
+    font-size: var(--font-h5--size);
+    line-height: var(--font-h5--line-height);
+    margin: 0;
+  }
+
+  .customization-steps__text {
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+    font-size: var(--font-paragraph-small--size);
+    line-height: var(--font-paragraph--line-height);
+  }
+
+  .customization-steps__text > * {
+    margin-block: 0;
+  }
+
+  @media screen and (max-width: 989px) {
+    .customization-steps__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media screen and (max-width: 599px) {
+    .customization-steps__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Customization steps",
+  "class": "section-wrapper",
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "text",
+          "id": "step_number",
+          "label": "Step number",
+          "default": "1"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Select your product"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Choose the product, variant, size, color and quantity that fit your order.</p>"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "How to customize your product"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "<p>Follow these four steps to create and review your personalized design before checkout.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section width",
+      "options": [
+        {
+          "value": "page-width",
+          "label": "Page"
+        },
+        {
+          "value": "full-width",
+          "label": "Full"
+        }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "alpha": true,
+      "default": "#fbf6f0"
+    },
+    {
+      "type": "color",
+      "id": "card_background_color",
+      "label": "Card background color",
+      "alpha": true,
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "alpha": true,
+      "default": "#e3d8cc"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "Customization steps",
+      "category": "Product",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "step_number": "1",
+            "title": "Select your product",
+            "text": "<p>Choose the product, variant, size, color and quantity that fit your order.</p>"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_number": "2",
+            "title": "Personalize your design",
+            "text": "<p>Upload your photo and enter the name, text or custom details needed for the design.</p>"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_number": "3",
+            "title": "Review the preview",
+            "text": "<p>Check the preview carefully, including spelling, photo placement and selected options.</p>"
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_number": "4",
+            "title": "Checkout",
+            "text": "<p>Add the item to your cart, complete payment and watch for your order confirmation.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
