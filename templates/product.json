@@ -379,31 +379,6 @@
               },
               "block_order": []
             },
-            "product_metaobject_details": {
-              "type": "product-metaobject-details",
-              "name": "Metaobject details",
-              "settings": {
-                "metafield_namespace": "custom",
-                "metafield_key": "product_details",
-                "image_field": "image",
-                "title_field": "title",
-                "body_field": "description",
-                "spec_1_label": "Material",
-                "spec_1_field": "material",
-                "spec_2_label": "Size",
-                "spec_2_field": "size",
-                "spec_3_label": "",
-                "spec_3_field": "",
-                "spec_4_label": "",
-                "spec_4_field": "",
-                "image_position": "left",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
             "shipping_eta": {
               "type": "shipping-eta",
               "name": "Shipping ETA",
@@ -510,7 +485,6 @@
             "size_guide",
             "buy_buttons_eYQEYi",
             "shipping_eta",
-            "product_metaobject_details",
             "text_aEtTtq",
             "ai_gen_block_0558575_EUwxiw"
           ]
@@ -538,6 +512,31 @@
         "background_color": "{{ settings.color_palette.background }}",
         "padding-block-start": 0,
         "padding-block-end": 0
+      }
+    },
+    "product_metaobject_details": {
+      "type": "product-metaobject-details",
+      "settings": {
+        "metafield_namespace": "custom",
+        "metafield_key": "product_details",
+        "image_field": "image",
+        "title_field": "title",
+        "body_field": "description",
+        "spec_1_label": "Material",
+        "spec_1_field": "material",
+        "spec_2_label": "Size",
+        "spec_2_field": "size",
+        "spec_3_label": "",
+        "spec_3_field": "",
+        "spec_4_label": "",
+        "spec_4_field": "",
+        "section_width": "page-width",
+        "image_position": "left",
+        "background_color": "",
+        "border_color": "",
+        "border_radius": 8,
+        "padding-block-start": 48,
+        "padding-block-end": 48
       }
     },
     "17870405177eb26d93": {
@@ -845,6 +844,7 @@
   },
   "order": [
     "main",
+    "product_metaobject_details",
     "17870405177eb26d93",
     "product_recommendations_qggXJq",
     "1787121188cf99014f",

@@ -1,7 +1,7 @@
 {%- liquid
-  assign block_settings = block.settings
-  assign metafield_namespace = block_settings.metafield_namespace | strip
-  assign metafield_key = block_settings.metafield_key | strip
+  assign section_settings = section.settings
+  assign metafield_namespace = section_settings.metafield_namespace | strip
+  assign metafield_key = section_settings.metafield_key | strip
   assign product_detail_metafield = blank
   assign detail = blank
 
@@ -12,21 +12,21 @@
 
   assign image_field = blank
   assign image = blank
-  if detail != blank and block_settings.image_field != blank
-    assign image_field_key = block_settings.image_field | strip
+  if detail != blank and section_settings.image_field != blank
+    assign image_field_key = section_settings.image_field | strip
     assign image_field = detail[image_field_key]
     assign image = image_field.value | default: image_field
   endif
 
   assign title_field = blank
-  if detail != blank and block_settings.title_field != blank
-    assign title_field_key = block_settings.title_field | strip
+  if detail != blank and section_settings.title_field != blank
+    assign title_field_key = section_settings.title_field | strip
     assign title_field = detail[title_field_key]
   endif
 
   assign body_field = blank
-  if detail != blank and block_settings.body_field != blank
-    assign body_field_key = block_settings.body_field | strip
+  if detail != blank and section_settings.body_field != blank
+    assign body_field_key = section_settings.body_field | strip
     assign body_field = detail[body_field_key]
   endif
 
@@ -34,8 +34,8 @@
     for index in (1..4)
       assign label_setting = 'spec_' | append: index | append: '_label'
       assign field_setting = 'spec_' | append: index | append: '_field'
-      assign spec_label = block_settings[label_setting] | strip
-      assign spec_field_key = block_settings[field_setting] | strip
+      assign spec_label = section_settings[label_setting] | strip
+      assign spec_field_key = section_settings[field_setting] | strip
 
       if detail != blank and spec_label != blank and spec_field_key != blank
         assign spec_field = detail[spec_field_key]
@@ -68,58 +68,68 @@
 -%}
 
 {%- if has_content -%}
-  <div
-    class="product-metaobject-details product-metaobject-details--{{ block_settings.image_position }} spacing-style"
-    style="{% render 'spacing-style', settings: block_settings %}"
-    {{ block.shopify_attributes }}
+  <section
+    class="product-metaobject-details-section section section--{{ section_settings.section_width }} spacing-style"
+    style="
+      {% render 'spacing-style', settings: section_settings %}
+      --product-metaobject-details-background: {{ section_settings.background_color | default: 'transparent' }};
+      --product-metaobject-details-border-color: {{ section_settings.border_color | default: 'rgb(var(--color-foreground-rgb) / 0.12)' }};
+      --product-metaobject-details-border-radius: {{ section_settings.border_radius | default: 8 }}px;
+    "
   >
-    {%- if image != blank -%}
-      <div class="product-metaobject-details__media">
-        {{
-          image
-          | image_url: width: 900
-          | image_tag:
-            widths: '220, 360, 540, 720, 900',
-            sizes: '(min-width: 750px) 220px, 100vw',
-            loading: 'lazy',
-            class: 'product-metaobject-details__image'
-        }}
-      </div>
-    {%- endif -%}
-
-    <div class="product-metaobject-details__content">
-      {%- if title_field != blank -%}
-        <h3 class="product-metaobject-details__title">
-          {{ title_field.value | default: title_field | escape }}
-        </h3>
-      {%- endif -%}
-
-      {%- if body_field != blank -%}
-        <div class="product-metaobject-details__body rte">
-          {%- if body_field.type contains 'rich_text' -%}
-            {{ body_field | metafield_tag }}
-          {%- else -%}
-            {{ body_field.value | default: body_field }}
-          {%- endif -%}
+    <div class="product-metaobject-details product-metaobject-details--{{ section_settings.image_position }}">
+      {%- if image != blank -%}
+        <div class="product-metaobject-details__media">
+          {{
+            image
+            | image_url: width: 1200
+            | image_tag:
+              widths: '320, 480, 640, 800, 1000, 1200',
+              sizes: '(min-width: 990px) 42vw, 100vw',
+              loading: 'lazy',
+              class: 'product-metaobject-details__image'
+          }}
         </div>
       {%- endif -%}
 
-      {%- if specs != blank -%}
-        <dl class="product-metaobject-details__specs">
-          {{ specs }}
-        </dl>
-      {%- endif -%}
+      <div class="product-metaobject-details__content">
+        {%- if title_field != blank -%}
+          <h2 class="product-metaobject-details__title">
+            {{ title_field.value | default: title_field | escape }}
+          </h2>
+        {%- endif -%}
+
+        {%- if body_field != blank -%}
+          <div class="product-metaobject-details__body rte">
+            {%- if body_field.type contains 'rich_text' -%}
+              {{ body_field | metafield_tag }}
+            {%- else -%}
+              {{ body_field.value | default: body_field }}
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+        {%- if specs != blank -%}
+          <dl class="product-metaobject-details__specs">
+            {{ specs }}
+          </dl>
+        {%- endif -%}
+      </div>
     </div>
-  </div>
+  </section>
 {%- endif -%}
 
 {% stylesheet %}
+  .product-metaobject-details-section {
+    background: var(--product-metaobject-details-background);
+  }
+
   .product-metaobject-details {
     align-items: stretch;
-    border: 1px solid rgb(var(--color-foreground-rgb) / 0.12);
-    border-radius: var(--style-border-radius-inputs, 8px);
+    border: 1px solid var(--product-metaobject-details-border-color);
+    border-radius: var(--product-metaobject-details-border-radius);
     display: grid;
-    gap: var(--gap-md);
+    gap: var(--gap-lg);
     grid-template-columns: 1fr;
     overflow: hidden;
     padding: var(--padding-md);
@@ -145,14 +155,14 @@
   }
 
   .product-metaobject-details__title {
-    font-size: var(--font-h5--size);
-    line-height: var(--font-h5--line-height);
-    margin-block: 0 var(--margin-xs);
+    font-size: var(--font-h3--size);
+    line-height: var(--font-h3--line-height);
+    margin-block: 0 var(--margin-sm);
   }
 
   .product-metaobject-details__body {
     color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
-    font-size: var(--font-paragraph-small--size);
+    font-size: var(--font-paragraph--size);
   }
 
   .product-metaobject-details__body > *:first-child {
@@ -179,7 +189,7 @@
 
   .product-metaobject-details__spec-label,
   .product-metaobject-details__spec-value {
-    font-size: var(--font-paragraph-small--size);
+    font-size: var(--font-paragraph--size);
     line-height: var(--font-paragraph--line-height);
     margin: 0;
   }
@@ -191,11 +201,11 @@
 
   @media screen and (min-width: 750px) {
     .product-metaobject-details {
-      grid-template-columns: minmax(120px, 38%) 1fr;
+      grid-template-columns: minmax(220px, 42%) 1fr;
     }
 
     .product-metaobject-details--right {
-      grid-template-columns: 1fr minmax(120px, 38%);
+      grid-template-columns: 1fr minmax(220px, 42%);
     }
 
     .product-metaobject-details--right .product-metaobject-details__media {
@@ -213,7 +223,10 @@
 {% schema %}
 {
   "name": "Metaobject details",
-  "tag": null,
+  "class": "section-wrapper",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
   "settings": [
     {
       "type": "header",
@@ -304,6 +317,22 @@
     },
     {
       "type": "select",
+      "id": "section_width",
+      "label": "Section width",
+      "options": [
+        {
+          "value": "page-width",
+          "label": "Page"
+        },
+        {
+          "value": "full-width",
+          "label": "Full"
+        }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "select",
       "id": "image_position",
       "label": "Image position on desktop",
       "options": [
@@ -320,6 +349,32 @@
     },
     {
       "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "alpha": true
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "alpha": true
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "header",
       "content": "Padding"
     },
     {
@@ -330,7 +385,7 @@
       "max": 100,
       "step": 1,
       "unit": "px",
-      "default": 0
+      "default": 48
     },
     {
       "type": "range",
@@ -340,27 +395,7 @@
       "max": 100,
       "step": 1,
       "unit": "px",
-      "default": 0
-    },
-    {
-      "type": "range",
-      "id": "padding-inline-start",
-      "label": "Left",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "default": 0
-    },
-    {
-      "type": "range",
-      "id": "padding-inline-end",
-      "label": "Right",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "default": 0
+      "default": 48
     }
   ],
   "presets": [
