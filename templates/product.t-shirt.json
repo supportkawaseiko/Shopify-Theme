@@ -562,6 +562,26 @@
         "padding-block-end": 48
       }
     },
+    "product_features": {
+      "type": "product-features",
+      "settings": {
+        "heading": "Product features",
+        "subheading": "<p>Explore the details that make this product easy to personalize, wear and gift.</p>",
+        "metafield_namespace": "custom",
+        "metafield_key": "product_features",
+        "image_field": "image",
+        "title_field": "title",
+        "body_field": "description",
+        "max_items": 4,
+        "section_width": "page-width",
+        "background_color": "#ffffff",
+        "card_background_color": "#fbf6f0",
+        "border_color": "#e3d8cc",
+        "border_radius": 8,
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
+    },
     "17870405177eb26d93": {
       "type": "_blocks",
       "blocks": {
@@ -869,6 +889,7 @@
     "main",
     "product_metaobject_details",
     "customization_steps",
+    "product_features",
     "17870405177eb26d93",
     "product_recommendations_qggXJq",
     "1787121188cf99014f",
