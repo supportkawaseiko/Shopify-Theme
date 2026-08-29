@@ -58,10 +58,25 @@
               assign title_field = feature[title_field_key]
               assign title = title_field.value | default: title_field
             endif
+            if title == blank
+              assign title = feature.system.handle | replace: '-', ' ' | capitalize
+            endif
 
             assign body_field = blank
             if body_field_key != blank
               assign body_field = feature[body_field_key]
+            endif
+            if body_field == blank
+              assign body_field = feature.details
+            endif
+            if body_field == blank
+              assign body_field = feature.description
+            endif
+            if body_field == blank
+              assign body_field = feature.content
+            endif
+            if body_field == blank
+              assign body_field = feature.text
             endif
           -%}
 
@@ -264,7 +279,7 @@
       "type": "text",
       "id": "body_field",
       "label": "Body field key",
-      "default": "description"
+      "default": "details"
     },
     {
       "type": "range",

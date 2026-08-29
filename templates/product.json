@@ -563,7 +563,7 @@
         "metafield_key": "product_features",
         "image_field": "image",
         "title_field": "title",
-        "body_field": "description",
+        "body_field": "details",
         "max_items": 4,
         "section_width": "page-width",
         "background_color": "#ffffff",
