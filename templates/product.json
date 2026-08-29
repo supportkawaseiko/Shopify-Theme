@@ -12,54 +12,6 @@
     "main": {
       "type": "product-information",
       "blocks": {
-        "image_bBhhkC": {
-          "type": "image",
-          "name": "t:names.image",
-          "settings": {
-            "image": "shopify://shop_images/gildan-5000-size-guide.png",
-            "link": "",
-            "image_ratio": "adapt",
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_color": "",
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "image_DF36Ei": {
-          "type": "image",
-          "name": "t:names.image",
-          "settings": {
-            "image": "shopify://shop_images/customversal-comparison.png",
-            "link": "",
-            "image_ratio": "adapt",
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_color": "",
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
         "disclosures_g9mWze": {
           "type": "disclosures",
           "name": "t:names.disclosures",
@@ -78,36 +30,6 @@
             "padding-inline-end": 0
           },
           "blocks": {}
-        },
-        "pc_product_options_product_page_customizer_7RUVfE": {
-          "type": "shopify://apps/pc-product-options/blocks/product-page-customizer/6857ca6c-35eb-4b6f-9d58-a039f31d9406",
-          "settings": {
-            "pc_container_size": 100,
-            "pc_show_options_total": "initial",
-            "pc_customizations_total_text": "Customizations Total:",
-            "pc_show_preloader": "hide",
-            "pc_preloader_color": "",
-            "pc_ignore_redirect_command": true,
-            "pc_basic_label_text_color": "#000000",
-            "pc_basic_label_font_size": 14,
-            "pc_basic_label_bolden": "unset",
-            "pc_basic_label_space_above": 0,
-            "pc_basic_option_background_color": "#FFFFFF",
-            "pc_basic_option_text_color": "#000000",
-            "pc_basic_option_border_color": "#000000",
-            "pc_basic_option_border_style": "solid",
-            "pc_basic_option_border_width": 1,
-            "pc_basic_option_curve_the_corners": "none",
-            "pc_basic_option_font_size": 14,
-            "pc_basic_option_bolden": "none",
-            "pc_basic_option_width": 100,
-            "pc_basic_option_space_above": 0,
-            "pc_basic_option_space_below": 0,
-            "pc_basic_option_space_inside": 10,
-            "pc_advanced_custom_css": "",
-            "pc_advanced_custom_js": "",
-            "pc_show_image_swatch_preview": false
-          }
         },
         "media-gallery": {
           "type": "_product-media-gallery",
@@ -258,6 +180,43 @@
                 "text_xrnftG",
                 "price_tVjtKg"
               ]
+            },
+            "shipping_eta": {
+              "type": "shipping-eta",
+              "name": "Shipping ETA",
+              "settings": {
+                "metafield_namespace": "custom",
+                "metafield_key": "shipping_eta",
+                "country_name_field": "country_name",
+                "flag_field": "flag",
+                "processing_min_field": "processing_min_days",
+                "processing_max_field": "processing_max_days",
+                "transit_min_field": "transit_min_days",
+                "transit_max_field": "transit_max_days",
+                "express_processing_min_field": "express_processing_min_days",
+                "express_processing_max_field": "express_processing_max_days",
+                "express_transit_min_field": "express_transit_min_days",
+                "express_transit_max_field": "express_transit_max_days",
+                "note_field": "note",
+                "destination_label": "Deliver to:",
+                "lead_text": "Order today, get it as early as:",
+                "standard_method_label": "Standard Shipping",
+                "express_method_label": "Express Shipping",
+                "delivery_modal_heading": "Delivery Method",
+                "order_label": "Order placed",
+                "ship_label": "Order ships",
+                "arrival_label": "Estimated arrival",
+                "delivered_label": "Delivered",
+                "accessibility_label": "Delivery methods",
+                "background_color": "#f8f3ea",
+                "border_color": "#e4d8c7",
+                "border_radius": 8,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
             },
             "divider_VJhene": {
               "type": "_divider",
@@ -416,6 +375,10 @@
               },
               "blocks": {}
             },
+            "aftersell_pdp_upsells_EgcgTy": {
+              "type": "shopify://apps/aftersell/blocks/pdp-upsells/509ec35d-0632-4dfc-a105-fa799cd9d149",
+              "settings": {}
+            },
             "text_aEtTtq": {
               "type": "text",
               "name": "t:names.product_description",
@@ -480,21 +443,19 @@
           },
           "block_order": [
             "group_icgrde",
+            "shipping_eta",
             "divider_VJhene",
             "variant_picker_R3rGDr",
             "size_guide",
             "buy_buttons_eYQEYi",
-            "shipping_eta",
+            "aftersell_pdp_upsells_EgcgTy",
             "text_aEtTtq",
             "ai_gen_block_0558575_EUwxiw"
           ]
         }
       },
       "block_order": [
-        "image_bBhhkC",
-        "image_DF36Ei",
-        "disclosures_g9mWze",
-        "pc_product_options_product_page_customizer_7RUVfE"
+        "disclosures_g9mWze"
       ],
       "custom_css": [
         ".quantity-row {align-items: center; display: flex; flex-wrap: wrap; gap: var(--gap-sm);}",
