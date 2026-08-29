@@ -12,54 +12,6 @@
     "main": {
       "type": "product-information",
       "blocks": {
-        "image_bBhhkC": {
-          "type": "image",
-          "name": "t:names.image",
-          "settings": {
-            "image": "shopify://shop_images/gildan-5000-size-guide.png",
-            "link": "",
-            "image_ratio": "adapt",
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_color": "",
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "image_DF36Ei": {
-          "type": "image",
-          "name": "t:names.image",
-          "settings": {
-            "image": "shopify://shop_images/customversal-comparison.png",
-            "link": "",
-            "image_ratio": "adapt",
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_color": "",
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
         "disclosures_g9mWze": {
           "type": "disclosures",
           "name": "t:names.disclosures",
@@ -78,36 +30,6 @@
             "padding-inline-end": 0
           },
           "blocks": {}
-        },
-        "pc_product_options_product_page_customizer_7RUVfE": {
-          "type": "shopify://apps/pc-product-options/blocks/product-page-customizer/6857ca6c-35eb-4b6f-9d58-a039f31d9406",
-          "settings": {
-            "pc_container_size": 100,
-            "pc_show_options_total": "initial",
-            "pc_customizations_total_text": "Customizations Total:",
-            "pc_show_preloader": "hide",
-            "pc_preloader_color": "",
-            "pc_ignore_redirect_command": true,
-            "pc_basic_label_text_color": "#000000",
-            "pc_basic_label_font_size": 14,
-            "pc_basic_label_bolden": "unset",
-            "pc_basic_label_space_above": 0,
-            "pc_basic_option_background_color": "#FFFFFF",
-            "pc_basic_option_text_color": "#000000",
-            "pc_basic_option_border_color": "#000000",
-            "pc_basic_option_border_style": "solid",
-            "pc_basic_option_border_width": 1,
-            "pc_basic_option_curve_the_corners": "none",
-            "pc_basic_option_font_size": 14,
-            "pc_basic_option_bolden": "none",
-            "pc_basic_option_width": 100,
-            "pc_basic_option_space_above": 0,
-            "pc_basic_option_space_below": 0,
-            "pc_basic_option_space_inside": 10,
-            "pc_advanced_custom_css": "",
-            "pc_advanced_custom_js": "",
-            "pc_show_image_swatch_preview": false
-          }
         },
         "media-gallery": {
           "type": "_product-media-gallery",
@@ -379,31 +301,6 @@
               },
               "block_order": []
             },
-            "product_metaobject_details": {
-              "type": "product-metaobject-details",
-              "name": "Metaobject details",
-              "settings": {
-                "metafield_namespace": "custom",
-                "metafield_key": "product_details",
-                "image_field": "image",
-                "title_field": "title",
-                "body_field": "description",
-                "spec_1_label": "Material",
-                "spec_1_field": "material",
-                "spec_2_label": "Size",
-                "spec_2_field": "size",
-                "spec_3_label": "",
-                "spec_3_field": "",
-                "spec_4_label": "",
-                "spec_4_field": "",
-                "image_position": "left",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
             "shipping_eta": {
               "type": "shipping-eta",
               "name": "Shipping ETA",
@@ -510,17 +407,13 @@
             "size_guide",
             "buy_buttons_eYQEYi",
             "shipping_eta",
-            "product_metaobject_details",
             "text_aEtTtq",
             "ai_gen_block_0558575_EUwxiw"
           ]
         }
       },
       "block_order": [
-        "image_bBhhkC",
-        "image_DF36Ei",
-        "disclosures_g9mWze",
-        "pc_product_options_product_page_customizer_7RUVfE"
+        "disclosures_g9mWze"
       ],
       "custom_css": [
         ".quantity-row {align-items: center; display: flex; flex-wrap: wrap; gap: var(--gap-sm);}",
