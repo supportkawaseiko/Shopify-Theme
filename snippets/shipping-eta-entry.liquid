@@ -3,6 +3,10 @@
   assign processing_max_key = settings.processing_max_field | default: 'processing_max_days' | strip
   assign transit_min_key = settings.transit_min_field | default: 'transit_min_days' | strip
   assign transit_max_key = settings.transit_max_field | default: 'transit_max_days' | strip
+  assign express_processing_min_key = settings.express_processing_min_field | default: 'express_processing_min_days' | strip
+  assign express_processing_max_key = settings.express_processing_max_field | default: 'express_processing_max_days' | strip
+  assign express_transit_min_key = settings.express_transit_min_field | default: 'express_transit_min_days' | strip
+  assign express_transit_max_key = settings.express_transit_max_field | default: 'express_transit_max_days' | strip
   assign note_key = settings.note_field | default: 'note' | strip
   assign country_name_key = settings.country_name_field | default: 'country_name' | strip
   assign flag_key = settings.flag_field | default: 'flag' | strip
@@ -11,6 +15,10 @@
   assign processing_max_days = blank
   assign transit_min_days = blank
   assign transit_max_days = blank
+  assign express_processing_min_days = blank
+  assign express_processing_max_days = blank
+  assign express_transit_min_days = blank
+  assign express_transit_max_days = blank
   assign country_name = blank
   assign flag = blank
   assign note_field = blank
@@ -37,6 +45,26 @@
       assign transit_max_days = transit_max_field.value | default: transit_max_field
     endif
 
+    if express_processing_min_key != blank
+      assign express_processing_min_field = eta[express_processing_min_key]
+      assign express_processing_min_days = express_processing_min_field.value | default: express_processing_min_field
+    endif
+
+    if express_processing_max_key != blank
+      assign express_processing_max_field = eta[express_processing_max_key]
+      assign express_processing_max_days = express_processing_max_field.value | default: express_processing_max_field
+    endif
+
+    if express_transit_min_key != blank
+      assign express_transit_min_field = eta[express_transit_min_key]
+      assign express_transit_min_days = express_transit_min_field.value | default: express_transit_min_field
+    endif
+
+    if express_transit_max_key != blank
+      assign express_transit_max_field = eta[express_transit_max_key]
+      assign express_transit_max_days = express_transit_max_field.value | default: express_transit_max_field
+    endif
+
     if country_name_key != blank
       assign country_name_field = eta[country_name_key]
       assign country_name = country_name_field.value | default: country_name_field
@@ -58,50 +86,99 @@
     assign has_eta = true
   endif
 
+  assign has_express_eta = false
+  if express_processing_min_days != blank and express_processing_max_days != blank and express_transit_min_days != blank and express_transit_max_days != blank
+    assign has_express_eta = true
+  endif
+
   assign day_seconds = 86400
   assign now_timestamp = 'now' | date: '%s' | plus: 0
   assign processing_min_seconds = processing_min_days | plus: 0 | times: day_seconds
   assign processing_max_seconds = processing_max_days | plus: 0 | times: day_seconds
   assign transit_min_seconds = transit_min_days | plus: 0 | times: day_seconds
   assign transit_max_seconds = transit_max_days | plus: 0 | times: day_seconds
+  assign express_processing_min_seconds = express_processing_min_days | plus: 0 | times: day_seconds
+  assign express_processing_max_seconds = express_processing_max_days | plus: 0 | times: day_seconds
+  assign express_transit_min_seconds = express_transit_min_days | plus: 0 | times: day_seconds
+  assign express_transit_max_seconds = express_transit_max_days | plus: 0 | times: day_seconds
 
   assign ship_start_timestamp = now_timestamp | plus: processing_min_seconds
   assign ship_end_timestamp = now_timestamp | plus: processing_max_seconds
   assign arrival_start_timestamp = ship_start_timestamp | plus: transit_min_seconds
   assign arrival_end_timestamp = ship_end_timestamp | plus: transit_max_seconds
+  assign express_ship_start_timestamp = now_timestamp | plus: express_processing_min_seconds
+  assign express_ship_end_timestamp = now_timestamp | plus: express_processing_max_seconds
+  assign express_arrival_start_timestamp = express_ship_start_timestamp | plus: express_transit_min_seconds
+  assign express_arrival_end_timestamp = express_ship_end_timestamp | plus: express_transit_max_seconds
 
-  assign today_label = now_timestamp | date: '%b %d'
+  assign today_full_label = now_timestamp | date: '%B %e' | strip
   assign ship_start_month = ship_start_timestamp | date: '%b'
   assign ship_end_month = ship_end_timestamp | date: '%b'
   assign arrival_start_month = arrival_start_timestamp | date: '%b'
   assign arrival_end_month = arrival_end_timestamp | date: '%b'
+  assign express_ship_start_month = express_ship_start_timestamp | date: '%b'
+  assign express_ship_end_month = express_ship_end_timestamp | date: '%b'
+  assign express_arrival_start_month = express_arrival_start_timestamp | date: '%b'
+  assign express_arrival_end_month = express_arrival_end_timestamp | date: '%b'
 
   if ship_start_timestamp == ship_end_timestamp
-    assign ship_range = ship_start_timestamp | date: '%b %d'
+    assign ship_full_range = ship_start_timestamp | date: '%B %e' | strip
   elsif ship_start_month == ship_end_month
-    assign ship_range = ship_start_timestamp | date: '%b %d'
-    assign ship_end_day = ship_end_timestamp | date: '%d'
-    assign ship_range = ship_range | append: ' - ' | append: ship_end_day
+    assign ship_full_range = ship_start_timestamp | date: '%B %e' | strip
+    assign ship_end_day = ship_end_timestamp | date: '%e' | strip
+    assign ship_full_range = ship_full_range | append: '-' | append: ship_end_day
   else
-    assign ship_range = ship_start_timestamp | date: '%b %d'
-    assign ship_end_date = ship_end_timestamp | date: '%b %d'
-    assign ship_range = ship_range | append: ' - ' | append: ship_end_date
+    assign ship_full_range = ship_start_timestamp | date: '%B %e' | strip
+    assign ship_end_date = ship_end_timestamp | date: '%B %e' | strip
+    assign ship_full_range = ship_full_range | append: ' - ' | append: ship_end_date
   endif
 
   if arrival_start_timestamp == arrival_end_timestamp
-    assign arrival_range = arrival_start_timestamp | date: '%b %d'
+    assign arrival_full_range = arrival_start_timestamp | date: '%B %e' | strip
   elsif arrival_start_month == arrival_end_month
-    assign arrival_range = arrival_start_timestamp | date: '%b %d'
-    assign arrival_end_day = arrival_end_timestamp | date: '%d'
-    assign arrival_range = arrival_range | append: ' - ' | append: arrival_end_day
+    assign arrival_full_range = arrival_start_timestamp | date: '%B %e' | strip
+    assign arrival_end_day = arrival_end_timestamp | date: '%e' | strip
+    assign arrival_full_range = arrival_full_range | append: '-' | append: arrival_end_day
   else
-    assign arrival_range = arrival_start_timestamp | date: '%b %d'
-    assign arrival_end_date = arrival_end_timestamp | date: '%b %d'
-    assign arrival_range = arrival_range | append: ' - ' | append: arrival_end_date
+    assign arrival_full_range = arrival_start_timestamp | date: '%B %e' | strip
+    assign arrival_end_date = arrival_end_timestamp | date: '%B %e' | strip
+    assign arrival_full_range = arrival_full_range | append: ' - ' | append: arrival_end_date
+  endif
+
+  if express_ship_start_timestamp == express_ship_end_timestamp
+    assign express_ship_full_range = express_ship_start_timestamp | date: '%B %e' | strip
+  elsif express_ship_start_month == express_ship_end_month
+    assign express_ship_full_range = express_ship_start_timestamp | date: '%B %e' | strip
+    assign express_ship_end_day = express_ship_end_timestamp | date: '%e' | strip
+    assign express_ship_full_range = express_ship_full_range | append: '-' | append: express_ship_end_day
+  else
+    assign express_ship_full_range = express_ship_start_timestamp | date: '%B %e' | strip
+    assign express_ship_end_date = express_ship_end_timestamp | date: '%B %e' | strip
+    assign express_ship_full_range = express_ship_full_range | append: ' - ' | append: express_ship_end_date
+  endif
+
+  if express_arrival_start_timestamp == express_arrival_end_timestamp
+    assign express_arrival_full_range = express_arrival_start_timestamp | date: '%B %e' | strip
+  elsif express_arrival_start_month == express_arrival_end_month
+    assign express_arrival_full_range = express_arrival_start_timestamp | date: '%B %e' | strip
+    assign express_arrival_end_day = express_arrival_end_timestamp | date: '%e' | strip
+    assign express_arrival_full_range = express_arrival_full_range | append: '-' | append: express_arrival_end_day
+  else
+    assign express_arrival_full_range = express_arrival_start_timestamp | date: '%B %e' | strip
+    assign express_arrival_end_date = express_arrival_end_timestamp | date: '%B %e' | strip
+    assign express_arrival_full_range = express_arrival_full_range | append: ' - ' | append: express_arrival_end_date
   endif
 
   assign entry_name = eta.system.handle | replace: '-', ' ' | capitalize
   assign region_label = country_name | default: entry_name | default: 'Destination'
+  assign standard_label = settings.standard_method_label | default: 'Standard Shipping'
+  assign express_label = settings.express_method_label | default: 'Express Shipping'
+  assign modal_heading = settings.delivery_modal_heading | default: 'Delivery Method'
+  assign lead_text = settings.lead_text | default: 'Order today, get it as early as:'
+  assign standard_dialog_id = 'ShippingEtaStandardDialog-' | append: index
+  assign express_dialog_id = 'ShippingEtaExpressDialog-' | append: index
+  assign standard_heading_id = 'ShippingEtaStandardHeading-' | append: index
+  assign express_heading_id = 'ShippingEtaExpressHeading-' | append: index
 -%}
 
 {%- if has_eta -%}
@@ -144,51 +221,179 @@
         hidden
       {% endunless %}
     >
-      <div class="shipping-eta__timeline" aria-label="{{ settings.accessibility_label | default: 'Shipping timeline' | escape }}">
-        <div class="shipping-eta__step">
-          <span class="shipping-eta__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" focusable="false">
-              <rect x="5" y="4" width="14" height="16" rx="2" />
-              <path d="M9 4.5V3h6v1.5M8.5 9h7M8.5 13h7M8.5 17h4" />
-            </svg>
-          </span>
-          <p class="shipping-eta__date">{{ today_label }}</p>
-          <p class="shipping-eta__label">{{ settings.order_label | default: 'Order placed' | escape }}</p>
-        </div>
+      <p class="shipping-eta__lead">{{ lead_text | escape }}</p>
 
-        <div class="shipping-eta__step">
-          <span class="shipping-eta__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" focusable="false">
-              <path d="M4 7.5 12 4l8 3.5-8 3.5z" />
-              <path d="M4 7.5v9L12 20l8-3.5v-9" />
-              <path d="M12 11v9" />
-            </svg>
-          </span>
-          <p class="shipping-eta__date">{{ ship_range }}</p>
-          <p class="shipping-eta__label">{{ settings.ship_label | default: 'Order ships' | escape }}</p>
-        </div>
+      <div class="shipping-eta__methods" aria-label="{{ settings.accessibility_label | default: 'Delivery methods' | escape }}">
+        <dialog-component class="shipping-eta__method-dialog">
+          <button
+            type="button"
+            class="shipping-eta__method-card"
+            on:click="/showDialog"
+            aria-haspopup="dialog"
+            aria-controls="{{ standard_dialog_id }}"
+          >
+            <span class="shipping-eta__method-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <path d="M3 7h11v9H3z" />
+                <path d="M14 10h3l3 3v3h-6z" />
+                <circle cx="7" cy="18" r="1.8" />
+                <circle cx="17" cy="18" r="1.8" />
+              </svg>
+            </span>
+            <span class="shipping-eta__method-copy">
+              <strong>{{ standard_label | escape }}:</strong>
+              <span>{{ arrival_full_range | escape }}</span>
+            </span>
+          </button>
 
-        <div class="shipping-eta__step">
-          <span class="shipping-eta__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" focusable="false">
-              <path d="M12 21s7-4.9 7-11a7 7 0 0 0-14 0c0 6.1 7 11 7 11z" />
-              <circle cx="12" cy="10" r="2.5" />
-            </svg>
-          </span>
-          <p class="shipping-eta__date">{{ arrival_range }}</p>
-          <p class="shipping-eta__label">{{ settings.arrival_label | default: 'Estimated arrival' | escape }}</p>
-        </div>
+          <dialog
+            id="{{ standard_dialog_id }}"
+            ref="dialog"
+            class="shipping-eta__dialog dialog-modal color-custom-popover"
+            scroll-lock
+            aria-labelledby="{{ standard_heading_id }}"
+          >
+            <button
+              ref="closeButton"
+              type="button"
+              class="button button-unstyled close-button shipping-eta__dialog-close"
+              on:click="/closeDialog"
+              aria-label="{{ 'accessibility.close_dialog' | t }}"
+            >
+              {{- 'icon-close.svg' | inline_asset_content -}}
+            </button>
+            <div class="shipping-eta__dialog-inner">
+              <h2 id="{{ standard_heading_id }}" class="shipping-eta__dialog-heading">
+                <span class="shipping-eta__method-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" focusable="false">
+                    <path d="M3 7h11v9H3z" />
+                    <path d="M14 10h3l3 3v3h-6z" />
+                    <circle cx="7" cy="18" r="1.8" />
+                    <circle cx="17" cy="18" r="1.8" />
+                  </svg>
+                </span>
+                {{ modal_heading | escape }}
+              </h2>
+
+              <div class="shipping-eta__method-tabs" aria-hidden="true">
+                <span class="shipping-eta__method-tab shipping-eta__method-tab--active">{{ standard_label | escape }}</span>
+                {%- if has_express_eta -%}
+                  <span class="shipping-eta__method-tab">{{ express_label | escape }}</span>
+                {%- endif -%}
+              </div>
+
+              <h3 class="shipping-eta__dialog-method">{{ standard_label | escape }}:</h3>
+              <dl class="shipping-eta__dialog-rows">
+                <div class="shipping-eta__dialog-row">
+                  <dt>{{ settings.order_label | default: 'Order placed' | escape }}:</dt>
+                  <dd>{{ today_full_label | escape }}</dd>
+                </div>
+                <div class="shipping-eta__dialog-row">
+                  <dt>{{ settings.ship_label | default: 'Order ships' | escape }}:</dt>
+                  <dd>{{ ship_full_range | escape }}</dd>
+                </div>
+                <div class="shipping-eta__dialog-row">
+                  <dt>{{ settings.delivered_label | default: 'Delivered' | escape }}:</dt>
+                  <dd>{{ arrival_full_range | escape }}</dd>
+                </div>
+              </dl>
+
+              {%- if note_value != blank -%}
+                <div class="shipping-eta__dialog-note rte">
+                  {%- if note_field.type contains 'rich_text' -%}
+                    {{ note_field | metafield_tag }}
+                  {%- else -%}
+                    <p>{{ note_value }}</p>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            </div>
+          </dialog>
+        </dialog-component>
+
+        {%- if has_express_eta -%}
+          <dialog-component class="shipping-eta__method-dialog">
+            <button
+              type="button"
+              class="shipping-eta__method-card"
+              on:click="/showDialog"
+              aria-haspopup="dialog"
+              aria-controls="{{ express_dialog_id }}"
+            >
+              <span class="shipping-eta__method-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" focusable="false">
+                  <path d="M3 13 21 4l-6 16-4-7z" />
+                  <path d="M11 13 8 20" />
+                </svg>
+              </span>
+              <span class="shipping-eta__method-copy">
+                <strong>{{ express_label | escape }}:</strong>
+                <span>{{ express_arrival_full_range | escape }}</span>
+              </span>
+            </button>
+
+            <dialog
+              id="{{ express_dialog_id }}"
+              ref="dialog"
+              class="shipping-eta__dialog dialog-modal color-custom-popover"
+              scroll-lock
+              aria-labelledby="{{ express_heading_id }}"
+            >
+              <button
+                ref="closeButton"
+                type="button"
+                class="button button-unstyled close-button shipping-eta__dialog-close"
+                on:click="/closeDialog"
+                aria-label="{{ 'accessibility.close_dialog' | t }}"
+              >
+                {{- 'icon-close.svg' | inline_asset_content -}}
+              </button>
+              <div class="shipping-eta__dialog-inner">
+                <h2 id="{{ express_heading_id }}" class="shipping-eta__dialog-heading">
+                  <span class="shipping-eta__method-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false">
+                      <path d="M3 13 21 4l-6 16-4-7z" />
+                      <path d="M11 13 8 20" />
+                    </svg>
+                  </span>
+                  {{ modal_heading | escape }}
+                </h2>
+
+                <div class="shipping-eta__method-tabs" aria-hidden="true">
+                  <span class="shipping-eta__method-tab">{{ standard_label | escape }}</span>
+                  <span class="shipping-eta__method-tab shipping-eta__method-tab--active">{{ express_label | escape }}</span>
+                </div>
+
+                <h3 class="shipping-eta__dialog-method">{{ express_label | escape }}:</h3>
+                <dl class="shipping-eta__dialog-rows">
+                  <div class="shipping-eta__dialog-row">
+                    <dt>{{ settings.order_label | default: 'Order placed' | escape }}:</dt>
+                    <dd>{{ today_full_label | escape }}</dd>
+                  </div>
+                  <div class="shipping-eta__dialog-row">
+                    <dt>{{ settings.ship_label | default: 'Order ships' | escape }}:</dt>
+                    <dd>{{ express_ship_full_range | escape }}</dd>
+                  </div>
+                  <div class="shipping-eta__dialog-row">
+                    <dt>{{ settings.delivered_label | default: 'Delivered' | escape }}:</dt>
+                    <dd>{{ express_arrival_full_range | escape }}</dd>
+                  </div>
+                </dl>
+
+                {%- if note_value != blank -%}
+                  <div class="shipping-eta__dialog-note rte">
+                    {%- if note_field.type contains 'rich_text' -%}
+                      {{ note_field | metafield_tag }}
+                    {%- else -%}
+                      <p>{{ note_value }}</p>
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+              </div>
+            </dialog>
+          </dialog-component>
+        {%- endif -%}
       </div>
-
-      {%- if note_value != blank -%}
-        <div class="shipping-eta__note rte">
-          {%- if note_field.type contains 'rich_text' -%}
-            {{ note_field | metafield_tag }}
-          {%- else -%}
-            <p>{{ note_value }}</p>
-          {%- endif -%}
-        </div>
-      {%- endif -%}
     </div>
   {%- endif -%}
 {%- endif -%}
