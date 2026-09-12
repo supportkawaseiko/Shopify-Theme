@@ -10,7 +10,7 @@
     width: {{ block.settings.desktop_width_percent }}%;
     max-width: 100%;
     margin: 0 auto;
-    border-top: {{ block.settings.border_width }}px solid {{ block.settings.border_color }};
+    border-top: 0;
   }
 
   .ai-product-tab__item-{{ ai_gen_id }} {
@@ -19,13 +19,13 @@
     border-radius: 0;
     margin-bottom: 0;
     overflow: hidden;
-    background-color: {{ block.settings.background_color }};
+    background-color: transparent;
   }
 
   .ai-product-tab__header-{{ ai_gen_id }} {
     width: 100%;
     padding: {{ block.settings.padding }}px;
-    background-color: {{ block.settings.header_background_color }};
+    background-color: transparent;
     border: none;
     text-align: left;
     cursor: pointer;
@@ -38,7 +38,7 @@
   }
 
   .ai-product-tab__header-{{ ai_gen_id }}:hover {
-    background-color: {{ block.settings.header_hover_color }};
+    background-color: transparent;
   }
 
   .ai-product-tab__header-left-{{ ai_gen_id }} {
@@ -470,7 +470,7 @@
       "type": "text",
       "id": "tab_1_title",
       "label": "Title",
-      "default": "Product details"
+      "default": "Product Details"
     },
     {
       "type": "select",
@@ -514,7 +514,7 @@
           "label": "Check"
         }
       ],
-      "default": "info"
+      "default": "tag"
     },
     {
       "type": "richtext",
@@ -536,7 +536,7 @@
       "type": "text",
       "id": "tab_2_title",
       "label": "Title",
-      "default": "Shipping & returns"
+      "default": "Personalization Guide"
     },
     {
       "type": "select",
@@ -580,13 +580,13 @@
           "label": "Check"
         }
       ],
-      "default": "truck"
+      "default": "star"
     },
     {
       "type": "richtext",
       "id": "tab_2_content",
       "label": "Content",
-      "default": "<p>Add shipping and return policy information</p>"
+      "default": "<p>Select your options, upload your photo, and enter the requested personalization details before adding the product to cart.</p>"
     },
     {
       "type": "checkbox",
@@ -602,7 +602,7 @@
       "type": "text",
       "id": "tab_3_title",
       "label": "Title",
-      "default": "Care instructions"
+      "default": "What's Included"
     },
     {
       "type": "select",
@@ -646,13 +646,13 @@
           "label": "Check"
         }
       ],
-      "default": "heart"
+      "default": "check"
     },
     {
       "type": "richtext",
       "id": "tab_3_content",
       "label": "Content",
-      "default": "<p>Add care and maintenance instructions</p>"
+      "default": "<p>Each order includes the selected product and the custom details shown on the product page.</p>"
     },
     {
       "type": "checkbox",
@@ -668,7 +668,7 @@
       "type": "text",
       "id": "tab_4_title",
       "label": "Title",
-      "default": "Shipping & Return"
+      "default": "Shipping & Returns"
     },
     {
       "type": "select",
