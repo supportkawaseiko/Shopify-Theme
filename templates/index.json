@@ -560,7 +560,7 @@
           "settings": {
             "product_card_gap": 4,
             "background_color": "#f5e6ea",
-            "border": "solid",
+            "border": "none",
             "border_width": 1,
             "border_opacity": 100,
             "border_color": "#dccfd4",
@@ -697,15 +697,12 @@
           ]
         }
       },
-      "custom_css": [
-        "product-card [ref=\"productTitleLink\"] .text-block {width: 100%; min-width: 0; overflow: hidden;}",
-        "product-card [ref=\"productTitleLink\"] .text-block > p {display: block !important; width: 100% !important; white-space: nowrap !important; text-wrap: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;}"
-      ],
+      "custom_css": [],
       "name": "t:names.product_list",
       "settings": {
         "collection": "all",
         "layout_type": "grid",
-        "carousel_on_mobile": false,
+        "carousel_on_mobile": true,
         "max_products": 8,
         "columns": 4,
         "mobile_columns": "2",
@@ -1088,8 +1085,8 @@
             "itemBackgroundColor": "#ffffff",
             "starsColor": "",
             "starsBackgroundColor": "#ffffff",
-            "arrows_backgroundColor": "#FFFFFF",
-            "arrows_iconColor": "#9A9A9A",
+            "arrows_backgroundColor": "#ffffff",
+            "arrows_iconColor": "#9a9a9a",
             "shadow": "offset-dark",
             "border_active": false,
             "border_width": 2,
