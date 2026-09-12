@@ -575,7 +575,7 @@
               "type": "_product-card-gallery",
               "name": "t:names.product_card_media",
               "settings": {
-                "image_ratio": "adapt",
+                "image_ratio": "square",
                 "border": "none",
                 "border_width": 1,
                 "border_opacity": 100,
@@ -1057,7 +1057,7 @@
       },
       "name": "t:names.featured_product_information",
       "settings": {
-        "product": "look-whos-getting-married-shirt-custom-bride-photo-and-name-tee-personalized-wedding-shirt-bridal-shower-gift-bachelorette-tee",
+        "product": "look-whos-getting-married-custom-childhood-photo-shirt-personalized-bride-groom-wedding-t-shirt-custom-couple-photo-tee",
         "content_width": "content-center-aligned",
         "desktop_media_position": "left",
         "equal_columns": true,
