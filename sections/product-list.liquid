@@ -94,6 +94,7 @@
   .section-resource-list product-card [ref='productTitleLink'] {
     display: block;
     min-height: 3.75rem;
+    padding-inline: var(--padding-sm);
     width: 100%;
   }
 
@@ -115,8 +116,23 @@
   }
 
   .section-resource-list product-card .product-card__content > .group-block:last-child {
+    box-sizing: border-box;
     margin-top: auto;
+    padding-inline: var(--padding-sm);
     width: 100%;
+  }
+
+  .section-resource-list product-card .product-card__content > .group-block:last-child .group-block-content {
+    column-gap: var(--gap-md);
+  }
+
+  .section-resource-list product-card .product-card__content > .group-block:last-child product-price {
+    min-width: fit-content;
+  }
+
+  .section-resource-list product-card .card-personalize-btn {
+    flex-shrink: 0;
+    margin-left: var(--gap-sm);
   }
 {% endstylesheet %}
 
