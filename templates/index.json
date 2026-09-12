@@ -697,13 +697,7 @@
           ]
         }
       },
-      "custom_css": [
-        "product-card .product-card__content {height: 100%;}",
-        "product-card [ref=\"productTitleLink\"] {display: block; width: 100%; min-height: 3.75rem;}",
-        "product-card [ref=\"productTitleLink\"] .text-block {width: 100%; min-width: 0; overflow: hidden;}",
-        "product-card [ref=\"productTitleLink\"] .text-block > p {display: -webkit-box !important; width: 100% !important; white-space: normal !important; text-wrap: wrap !important; overflow: hidden !important; text-overflow: ellipsis !important; -webkit-box-orient: vertical; -webkit-line-clamp: 3;}",
-        "product-card .product-card__content > .group-block:last-child {margin-top: auto; width: 100%;}"
-      ],
+      "custom_css": [],
       "name": "t:names.product_list",
       "settings": {
         "collection": "all",

@@ -86,6 +86,40 @@
   </div>
 </div>
 
+{% stylesheet %}
+  .section-resource-list product-card .product-card__content {
+    height: 100%;
+  }
+
+  .section-resource-list product-card [ref='productTitleLink'] {
+    display: block;
+    min-height: 3.75rem;
+    width: 100%;
+  }
+
+  .section-resource-list product-card [ref='productTitleLink'] .text-block {
+    min-width: 0;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .section-resource-list product-card [ref='productTitleLink'] .text-block > p {
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    display: -webkit-box !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    text-wrap: wrap !important;
+    white-space: normal !important;
+    width: 100% !important;
+  }
+
+  .section-resource-list product-card .product-card__content > .group-block:last-child {
+    margin-top: auto;
+    width: 100%;
+  }
+{% endstylesheet %}
+
 {% schema %}
 {
   "name": "t:names.product_list",
