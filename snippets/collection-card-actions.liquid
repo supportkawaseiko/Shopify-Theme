@@ -1,0 +1,81 @@
+{%- doc -%}
+  Renders a compact variant selector and add button for collection product cards.
+
+  @param {object} product - Product displayed by the card.
+  @param {string} section_id - Section ID used by the product form component.
+{%- enddoc -%}
+
+{% liquid
+  assign selected_variant = product.selected_or_first_available_variant
+  assign product_form_id = 'CollectionCardForm-' | append: section_id | append: '-' | append: product.id
+  assign add_text = 'actions.add' | t
+%}
+
+<script
+  src="{{ 'collection-card-actions.js' | asset_url }}"
+  type="module"
+  fetchpriority="low"
+></script>
+
+<collection-card-actions class="collection-card-actions">
+  <product-form-component
+    data-section-id="{{ section_id }}"
+    data-product-id="{{ product.id }}"
+    on:submit="/handleSubmit"
+  >
+    <div
+      class="visually-hidden"
+      aria-live="assertive"
+      role="status"
+      aria-atomic="true"
+      ref="liveRegion"
+    ></div>
+
+    {%- form 'product', product, id: product_form_id, class: 'collection-card-actions__form', novalidate: 'novalidate' -%}
+      <label
+        class="visually-hidden"
+        for="CollectionCardVariant-{{ section_id }}-{{ product.id }}"
+      >
+        {{ 'actions.choose' | t }}
+      </label>
+
+      <div class="collection-card-actions__select-wrap">
+        <select
+          id="CollectionCardVariant-{{ section_id }}-{{ product.id }}"
+          class="collection-card-actions__select"
+          aria-label="{{ 'actions.choose' | t }}"
+        >
+          {% for variant in product.variants %}
+            <option
+              value="{{ variant.id }}"
+              {% if variant.id == selected_variant.id %}selected{% endif %}
+              {% unless variant.available %}disabled{% endunless %}
+            >
+              {{ variant.title }}{% unless variant.available %} - {{ 'content.product_badge_sold_out' | t }}{% endunless %}
+            </option>
+          {% endfor %}
+        </select>
+        <span class="svg-wrapper collection-card-actions__chevron" aria-hidden="true">
+          {{- 'icon-caret.svg' | inline_asset_content -}}
+        </span>
+      </div>
+
+      <input
+        type="hidden"
+        name="id"
+        ref="variantId"
+        value="{{ selected_variant.id }}"
+      >
+      <input type="hidden" name="quantity" value="1">
+
+      {% render 'add-to-cart-button',
+        add_to_cart_text: add_text,
+        class: 'collection-card-actions__button add-to-cart-button',
+        can_add_to_cart: selected_variant.available,
+        product: product
+      %}
+    {%- endform -%}
+  </product-form-component>
+</collection-card-actions>
+
+{% render 'add-to-cart-button-styles' %}

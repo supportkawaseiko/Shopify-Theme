@@ -116,11 +116,9 @@
   >
     {{ children }}
     {% if product_view_context == 'collection-page' and product.available %}
-      {% if settings.quick_add or settings.mobile_quick_add %}
-        <div class="collection-card__quick-add">
-          {% render 'quick-add', product: product, section_id: section_id %}
-        </div>
-      {% endif %}
+      <div class="collection-card__actions">
+        {% render 'collection-card-actions', product: product, section_id: section_id %}
+      </div>
     {% endif %}
   </div>
 </product-card>
