@@ -50,6 +50,119 @@
     --cursor: pointer;
   }
 
+  /* Collection cards use a compact catalogue layout with actions below the media. */
+  .product-card--collection .product-card__content {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: auto minmax(3.25rem, auto) auto;
+    column-gap: 0;
+    row-gap: 0;
+    align-content: start;
+    overflow: visible;
+  }
+
+  .product-card--collection .card-gallery {
+    grid-column: 1 / -1;
+    border-radius: var(--style-border-radius-sm);
+    overflow: hidden;
+  }
+
+  .product-card--collection .product-card__content > a.contents {
+    grid-column: 1 / -1;
+    display: block;
+    min-width: 0;
+    padding-block: var(--padding-sm);
+  }
+
+  .product-card--collection .product-card__content > a.contents .text-block {
+    width: 100%;
+  }
+
+  .product-card--collection .product-card__content > a.contents :is(p, h3, h4) {
+    display: -webkit-box;
+    min-height: 2.6em;
+    overflow: hidden;
+    font-weight: 600;
+    line-height: 1.3;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .product-card--collection product-price {
+    grid-column: 1;
+    align-self: center;
+    width: fit-content;
+    min-width: 0;
+    padding-block: var(--padding-sm);
+    border-top: 1px solid rgb(var(--color-border-rgb) / 0.45);
+    font-weight: 700;
+  }
+
+  .product-card--collection .collection-card__quick-add {
+    grid-column: 2;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-block: var(--padding-sm);
+    padding-inline-start: var(--gap-sm);
+    border-top: 1px solid rgb(var(--color-border-rgb) / 0.45);
+  }
+
+  .product-card--collection .collection-card__quick-add .quick-add {
+    position: static;
+    display: block;
+    pointer-events: auto;
+  }
+
+  .product-card--collection .collection-card__quick-add .quick-add__product-form-component,
+  .product-card--collection .collection-card__quick-add .shopify-product-form {
+    height: auto;
+  }
+
+  .product-card--collection .collection-card__quick-add button.quick-add__button {
+    position: static;
+    display: flex;
+    width: auto;
+    min-width: 5.25rem;
+    max-width: 100%;
+    height: 2.25rem;
+    padding-inline: var(--padding-sm);
+    justify-content: center;
+    gap: var(--gap-2xs);
+    opacity: 1;
+    border-width: 1px;
+    border-radius: 999px;
+    backdrop-filter: none;
+  }
+
+  .product-card--collection .collection-card__quick-add .quick-add__button > .add-to-cart-icon {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  @media screen and (max-width: 749px) {
+    .product-card--collection .product-card__content {
+      grid-template-rows: auto minmax(3.75rem, auto) auto;
+      column-gap: 0;
+    }
+
+    .product-card--collection .collection-card__quick-add button.quick-add__button {
+      min-width: 2.5rem;
+      padding-inline: var(--padding-xs);
+      font-size: 0.75rem;
+    }
+
+    .product-card--collection .collection-card__quick-add {
+      padding-inline-start: var(--gap-xs);
+    }
+
+    .product-card--collection .collection-card__quick-add .quick-add__button > .add-to-cart-icon {
+      display: none;
+    }
+  }
+
   @media screen and (max-width: 749px) {
     .product-card slideshow-arrows .slideshow-control {
       display: none;
