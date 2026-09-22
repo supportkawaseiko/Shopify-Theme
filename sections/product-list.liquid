@@ -2,6 +2,11 @@
 
 {% liquid
   assign max_items = section.settings.max_products
+  assign use_collection_card_style = section.settings.collection_card_style
+  if request.page_type == 'index'
+    assign use_collection_card_style = true
+  endif
+
   if section.settings.background_color != blank
     render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
   endif
@@ -17,7 +22,7 @@
     section--{{ section.settings.section_width }}
     {% if section.settings.background_color != blank %}color-custom-{{ section.id }}{% endif %}
     section-resource-list
-    {% if section.settings.collection_card_style %}section-resource-list--collection-cards{% endif %}
+    {% if use_collection_card_style %}section-resource-list--collection-cards{% endif %}
     spacing-style
     gap-style
   "
@@ -42,7 +47,7 @@
               id: 'static-product-card',
               closest.product: product,
               product_view_context: 'collection',
-              collection_page_card: section.settings.collection_card_style
+              collection_page_card: use_collection_card_style
             %}
           </div>
 
