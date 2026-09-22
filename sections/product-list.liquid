@@ -2,7 +2,7 @@
 
 {% liquid
   assign max_items = section.settings.max_products
-  assign use_collection_card_style = section.settings.collection_card_style
+  assign use_collection_card_style = false
   if request.page_type == 'index'
     assign use_collection_card_style = true
   endif
@@ -166,12 +166,6 @@
       "type": "collection",
       "id": "collection",
       "label": "t:settings.collection"
-    },
-    {
-      "type": "checkbox",
-      "id": "collection_card_style",
-      "label": "Use collection card style",
-      "default": false
     },
     {
       "type": "select",
