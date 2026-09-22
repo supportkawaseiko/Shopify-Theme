@@ -118,7 +118,17 @@
     {{ children }}
     {% if collection_page_card and product.available %}
       <div class="collection-card__actions">
-        {% render 'collection-card-actions', product: product, section_id: section_id %}
+        {% if product.metafields.custom.requires_personalization.value == true %}
+          <a
+            class="button collection-card__personalize-button"
+            href="{{ product.url }}#personalize"
+            aria-label="Personalize {{ product.title | escape }}"
+          >
+            PERSONALIZE
+          </a>
+        {% else %}
+          {% render 'collection-card-actions', product: product, section_id: section_id %}
+        {% endif %}
       </div>
     {% endif %}
   </div>

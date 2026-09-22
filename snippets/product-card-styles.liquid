@@ -180,6 +180,15 @@
     height: 0.9rem;
   }
 
+  .product-card--collection .collection-card__personalize-button {
+    min-width: 7.5rem;
+    height: 2.25rem;
+    padding-inline: var(--padding-sm);
+    border-radius: 999px;
+    font-size: 0.75rem;
+    text-decoration: none;
+  }
+
   @media screen and (max-width: 749px) {
     .product-card--collection .product-card__content {
       grid-template-columns: auto minmax(0, 1fr);
@@ -205,6 +214,12 @@
     .product-card--collection .collection-card-actions__button {
       min-width: 2.5rem;
       padding-inline: 0.5rem;
+    }
+
+    .product-card--collection .collection-card__personalize-button {
+      min-width: auto;
+      padding-inline: 0.625rem;
+      font-size: 0.6875rem;
     }
 
     .product-card--collection .collection-card-actions__button .add-to-cart-icon {
