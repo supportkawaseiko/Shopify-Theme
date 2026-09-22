@@ -2,6 +2,7 @@
 
 {%- doc -%}
   @param {string} [product_view_context] - Context value passed through to the card snippet.
+  @param {boolean} [collection_page_card] - Applies the collection page card layout.
 {%- enddoc -%}
 
 {% liquid
@@ -16,6 +17,7 @@
   children: children,
   product: product,
   product_view_context: product_view_context,
+  collection_page_card: collection_page_card,
   section_id: section.id
 %}
 {% render 'quantity-selector-styles' %}

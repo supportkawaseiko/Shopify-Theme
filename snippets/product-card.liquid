@@ -8,6 +8,7 @@
   @param {object} [block] - The block object
   @param {number} [product_card_gap] - The gap between the product card children (overrides block settings)
   @param {string} [product_view_context] - The context in which the product card is being rendered. Used for standard events.
+  @param {boolean} [collection_page_card] - Whether to use the collection page card layout.
   @param {string} [section_id] - The section ID used by collection quick add forms.
 {%- enddoc -%}
 
@@ -61,7 +62,7 @@
 %}
 
 <product-card
-  class="product-card size-style{% if product_view_context == 'collection-page' %} product-card--collection{% endif %}"
+  class="product-card size-style{% if collection_page_card %} product-card--collection{% endif %}"
   style="{% render 'size-style', settings: block_settings %}"
   data-product-id="{{ product.id }}"
   id="product-card-{{ block.id }}"
@@ -115,7 +116,7 @@
     "
   >
     {{ children }}
-    {% if product_view_context == 'collection-page' and product.available %}
+    {% if collection_page_card and product.available %}
       <div class="collection-card__actions">
         {% render 'collection-card-actions', product: product, section_id: section_id %}
       </div>
