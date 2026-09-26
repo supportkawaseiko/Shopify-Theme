@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1500" viewBox="0 0 1200 1500">
+  <rect width="1200" height="1500" fill="#f2e8de"/>
+  <rect x="38" y="38" width="1124" height="1424" fill="none" stroke="#8b1e24" stroke-width="2" opacity=".18"/>
+  <text x="600" y="205" text-anchor="middle" font-family="Arial Narrow,Arial,sans-serif" font-size="116" font-weight="900" letter-spacing="4" fill="#8b1e24">SIZE GUIDE</text>
+  <path d="M250 250h700" stroke="#8b1e24" stroke-width="3" opacity=".38"/>
+  <text x="600" y="294" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" font-weight="700" letter-spacing="7" fill="#30292a">FIND YOUR PERFECT FIT</text>
+  <g transform="translate(70 380)" fill="none" stroke="#3a3435" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M108 86l70-42c24 22 78 22 102 0l70 42 65 115-77 44-40-65v245H160V180l-40 65-77-44z"/>
+    <path d="M178 44c7 47 95 47 102 0"/><path d="M160 425h138M160 180v-55M298 180v-55" stroke-width="2" opacity=".45"/>
+    <path d="M160 210h138M160 198v24M298 198v24" stroke="#8b1e24" stroke-width="4"/>
+    <text x="229" y="190" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#8b1e24" stroke="none">WIDTH</text>
+  </g>
+  <g transform="translate(98 920)" fill="none" stroke="#3a3435" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M80 60l78-42c19 25 71 25 90 0l78 42 54 97-66 39-39-61v260H131V135l-39 61-66-39z"/>
+    <path d="M158 18c5 43 85 43 90 0"/><path d="M131 395h144" stroke-width="2" opacity=".45"/>
+    <path d="M314 64v331M302 64h24M302 395h24" stroke="#8b1e24" stroke-width="4"/>
+    <text x="348" y="230" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#8b1e24" stroke="none" transform="rotate(90 348 230)">LENGTH</text>
+  </g>
+  <g transform="translate(455 390)" font-family="Arial,sans-serif">
+    <g fill="#8b1e24" font-size="23" font-weight="800" text-anchor="middle"><text x="52" y="35">SIZE</text><text x="210" y="24">WIDTH</text><text x="404" y="24">LENGTH</text><text x="622" y="24">SLEEVE</text></g>
+    <g fill="#4f4849" font-size="15" text-anchor="middle"><text x="165" y="55">in</text><text x="255" y="55">cm</text><text x="359" y="55">in</text><text x="449" y="55">cm</text><text x="577" y="55">in</text><text x="667" y="55">cm</text></g>
+    <path d="M0 72h715" stroke="#8b1e24" stroke-width="3" opacity=".65"/>
+    <g stroke="#8b1e24" stroke-width="2" opacity=".35"><path d="M104 0v860M300 0v860M494 0v860"/><path d="M0 182h715M0 292h715M0 402h715M0 512h715M0 622h715M0 732h715M0 842h715"/></g>
+    <g fill="#30292a" font-size="24" text-anchor="middle">
+      <g transform="translate(0 128)"><text x="52" font-weight="800">S</text><text x="165">18.25</text><text x="255">46.3</text><text x="359">26.625</text><text x="449">67.6</text><text x="577">16.25</text><text x="667">41.3</text></g>
+      <g transform="translate(0 238)"><text x="52" font-weight="800">M</text><text x="165">20.25</text><text x="255">51.4</text><text x="359">28</text><text x="449">71.1</text><text x="577">17.75</text><text x="667">45.1</text></g>
+      <g transform="translate(0 348)"><text x="52" font-weight="800">L</text><text x="165">22</text><text x="255">55.9</text><text x="359">29.375</text><text x="449">74.6</text><text x="577">19</text><text x="667">48.3</text></g>
+      <g transform="translate(0 458)"><text x="52" font-weight="800">XL</text><text x="165">24</text><text x="255">61</text><text x="359">30.75</text><text x="449">78.1</text><text x="577">20.5</text><text x="667">52.1</text></g>
+      <g transform="translate(0 568)"><text x="52" font-weight="800">2XL</text><text x="165">26</text><text x="255">66</text><text x="359">31.625</text><text x="449">80.3</text><text x="577">21.75</text><text x="667">55.2</text></g>
+      <g transform="translate(0 678)"><text x="52" font-weight="800">3XL</text><text x="165">27.75</text><text x="255">70.5</text><text x="359">32.5</text><text x="449">82.5</text><text x="577">23.25</text><text x="667">59</text></g>
+      <g transform="translate(0 788)"><text x="52" font-weight="800">4XL</text><text x="165">29.75</text><text x="255">75.5</text><text x="359">33.5</text><text x="449">85.1</text><text x="577">24.62</text><text x="667">62.5</text></g>
+    </g>
+  </g>
+  <path d="M260 1320h680" stroke="#8b1e24" stroke-width="3" opacity=".38"/>
+  <text x="600" y="1364" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="700" letter-spacing="4" fill="#30292a">MEASUREMENTS ARE APPROXIMATE</text>
+  <text x="600" y="1398" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" letter-spacing="3" fill="#30292a">IF BETWEEN SIZES, SIZE UP</text>
+</svg>
