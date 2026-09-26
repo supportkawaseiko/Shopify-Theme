@@ -270,8 +270,8 @@
               "settings": {
                 "metafield_namespace": "custom",
                 "metafield_key": "size_guide",
-                "button_label": "Size guide",
-                "heading": "Size Chart",
+                "button_label": "Size Chart",
+                "heading": "Find Your Perfect Fit",
                 "title_field": "title",
                 "note_field": "note",
                 "image_field": "image",
