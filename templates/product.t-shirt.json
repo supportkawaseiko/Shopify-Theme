@@ -588,15 +588,6 @@
     },
     "17870405177eb26d93": {
       "type": "_blocks",
-      "blocks": {
-        "aftersell_pdp_upsells_VxgifU": {
-          "type": "shopify://apps/aftersell/blocks/pdp-upsells/509ec35d-0632-4dfc-a105-fa799cd9d149",
-          "settings": {}
-        }
-      },
-      "block_order": [
-        "aftersell_pdp_upsells_VxgifU"
-      ],
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,
@@ -850,15 +841,6 @@
     },
     "1787720482a0603e51": {
       "type": "_blocks",
-      "blocks": {
-        "aftersell_pdp_upsells_gJgBdV": {
-          "type": "shopify://apps/aftersell/blocks/pdp-upsells/509ec35d-0632-4dfc-a105-fa799cd9d149",
-          "settings": {}
-        }
-      },
-      "block_order": [
-        "aftersell_pdp_upsells_gJgBdV"
-      ],
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,
