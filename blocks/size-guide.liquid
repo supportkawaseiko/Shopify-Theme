@@ -17,6 +17,11 @@
     assign title = title_field.value | default: title_field | default: title
   endif
 
+  if size_guide != blank and title_field == blank
+    assign title_field = size_guide.ten_size_guide | default: size_guide.label
+    assign title = title_field.value | default: title_field | default: title
+  endif
+
   assign note = blank
   if size_guide != blank and block_settings.note_field != blank
     assign note_field_key = block_settings.note_field | strip
@@ -28,6 +33,11 @@
   if size_guide != blank and block_settings.image_field != blank
     assign image_field_key = block_settings.image_field | strip
     assign image_field = size_guide[image_field_key]
+    assign image = image_field.value | default: image_field
+  endif
+
+  if size_guide != blank and image == blank
+    assign image_field = size_guide.anh_size_guide | default: size_guide.size_chart
     assign image = image_field.value | default: image_field
   endif
 
