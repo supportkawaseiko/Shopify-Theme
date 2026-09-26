@@ -1,37 +1,52 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1500" viewBox="0 0 1200 1500">
-  <rect width="1200" height="1500" fill="#f2e8de"/>
-  <rect x="38" y="38" width="1124" height="1424" fill="none" stroke="#8b1e24" stroke-width="2" opacity=".18"/>
-  <text x="600" y="205" text-anchor="middle" font-family="Arial Narrow,Arial,sans-serif" font-size="116" font-weight="900" letter-spacing="4" fill="#8b1e24">SIZE GUIDE</text>
-  <path d="M250 250h700" stroke="#8b1e24" stroke-width="3" opacity=".38"/>
-  <text x="600" y="294" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" font-weight="700" letter-spacing="7" fill="#30292a">FIND YOUR PERFECT FIT</text>
-  <g transform="translate(70 380)" fill="none" stroke="#3a3435" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M108 86l70-42c24 22 78 22 102 0l70 42 65 115-77 44-40-65v245H160V180l-40 65-77-44z"/>
-    <path d="M178 44c7 47 95 47 102 0"/><path d="M160 425h138M160 180v-55M298 180v-55" stroke-width="2" opacity=".45"/>
-    <path d="M160 210h138M160 198v24M298 198v24" stroke="#8b1e24" stroke-width="4"/>
-    <text x="229" y="190" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#8b1e24" stroke="none">WIDTH</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1400" viewBox="0 0 1400 1400">
+  <rect width="1400" height="1400" fill="#f3e9df"/>
+  <rect x="34" y="34" width="1332" height="1332" fill="none" stroke="#8d232b" stroke-width="2" opacity=".2"/>
+
+  <text x="700" y="154" text-anchor="middle" font-family="Arial Narrow,Arial,sans-serif" font-size="102" font-weight="900" letter-spacing="5" fill="#8d232b">SIZE GUIDE</text>
+  <path d="M350 198h700" stroke="#8d232b" stroke-width="3" opacity=".35"/>
+  <text x="700" y="240" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="700" letter-spacing="7" fill="#302a2b">FIND YOUR PERFECT FIT</text>
+
+  <g transform="translate(58 345)" fill="none" stroke="#373133" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M62 88l91-48c17 20 42 30 70 30s53-10 70-30l91 48 62 127-78 39-42-78v218H120V176l-42 78-78-39z"/>
+    <path d="M153 40c10 66 130 66 140 0"/>
+    <path d="M120 394h206M120 176v-56M326 176v-56" stroke-width="2" opacity=".42"/>
+    <path d="M120 207h206M120 194v26M326 194v26" stroke="#8d232b" stroke-width="4"/>
+    <text x="223" y="182" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#8d232b" stroke="none">WIDTH</text>
   </g>
-  <g transform="translate(98 920)" fill="none" stroke="#3a3435" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M80 60l78-42c19 25 71 25 90 0l78 42 54 97-66 39-39-61v260H131V135l-39 61-66-39z"/>
-    <path d="M158 18c5 43 85 43 90 0"/><path d="M131 395h144" stroke-width="2" opacity=".45"/>
-    <path d="M314 64v331M302 64h24M302 395h24" stroke="#8b1e24" stroke-width="4"/>
-    <text x="348" y="230" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#8b1e24" stroke="none" transform="rotate(90 348 230)">LENGTH</text>
+
+  <g transform="translate(78 835)" fill="none" stroke="#373133" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M42 88l91-48c23 21 47 30 76 30s53-9 76-30l91 48 62 127-78 39-42-78v218H100V176l-42 78-78-39z"/>
+    <path d="M133 40c15 42 46 62 76 62s61-20 76-62"/>
+    <path d="M100 394h218M100 176v-56M318 176v-56" stroke-width="2" opacity=".42"/>
+    <path d="M359 88v306M346 88h26M346 394h26" stroke="#8d232b" stroke-width="4"/>
+    <text x="394" y="242" font-family="Arial,sans-serif" font-size="17" font-weight="700" fill="#8d232b" stroke="none" transform="rotate(90 394 242)">LENGTH</text>
   </g>
-  <g transform="translate(455 390)" font-family="Arial,sans-serif">
-    <g fill="#8b1e24" font-size="23" font-weight="800" text-anchor="middle"><text x="52" y="35">SIZE</text><text x="210" y="24">WIDTH</text><text x="404" y="24">LENGTH</text><text x="622" y="24">SLEEVE</text></g>
-    <g fill="#4f4849" font-size="15" text-anchor="middle"><text x="165" y="55">in</text><text x="255" y="55">cm</text><text x="359" y="55">in</text><text x="449" y="55">cm</text><text x="577" y="55">in</text><text x="667" y="55">cm</text></g>
-    <path d="M0 72h715" stroke="#8b1e24" stroke-width="3" opacity=".65"/>
-    <g stroke="#8b1e24" stroke-width="2" opacity=".35"><path d="M104 0v860M300 0v860M494 0v860"/><path d="M0 182h715M0 292h715M0 402h715M0 512h715M0 622h715M0 732h715M0 842h715"/></g>
-    <g fill="#30292a" font-size="24" text-anchor="middle">
-      <g transform="translate(0 128)"><text x="52" font-weight="800">S</text><text x="165">18.25</text><text x="255">46.3</text><text x="359">26.625</text><text x="449">67.6</text><text x="577">16.25</text><text x="667">41.3</text></g>
-      <g transform="translate(0 238)"><text x="52" font-weight="800">M</text><text x="165">20.25</text><text x="255">51.4</text><text x="359">28</text><text x="449">71.1</text><text x="577">17.75</text><text x="667">45.1</text></g>
-      <g transform="translate(0 348)"><text x="52" font-weight="800">L</text><text x="165">22</text><text x="255">55.9</text><text x="359">29.375</text><text x="449">74.6</text><text x="577">19</text><text x="667">48.3</text></g>
-      <g transform="translate(0 458)"><text x="52" font-weight="800">XL</text><text x="165">24</text><text x="255">61</text><text x="359">30.75</text><text x="449">78.1</text><text x="577">20.5</text><text x="667">52.1</text></g>
-      <g transform="translate(0 568)"><text x="52" font-weight="800">2XL</text><text x="165">26</text><text x="255">66</text><text x="359">31.625</text><text x="449">80.3</text><text x="577">21.75</text><text x="667">55.2</text></g>
-      <g transform="translate(0 678)"><text x="52" font-weight="800">3XL</text><text x="165">27.75</text><text x="255">70.5</text><text x="359">32.5</text><text x="449">82.5</text><text x="577">23.25</text><text x="667">59</text></g>
-      <g transform="translate(0 788)"><text x="52" font-weight="800">4XL</text><text x="165">29.75</text><text x="255">75.5</text><text x="359">33.5</text><text x="449">85.1</text><text x="577">24.62</text><text x="667">62.5</text></g>
+
+  <g transform="translate(510 330)" font-family="Arial,sans-serif">
+    <rect width="830" height="894" fill="#f8f0e8" stroke="#8d232b" stroke-width="2" opacity=".98"/>
+    <rect width="830" height="112" fill="#8d232b"/>
+    <g fill="#fff" font-weight="800" text-anchor="middle">
+      <text x="50" y="68" font-size="21">SIZE</text>
+      <text x="200" y="42" font-size="21">WIDTH</text><text x="400" y="42" font-size="21">LENGTH</text><text x="665" y="42" font-size="21">SLEEVE CENTER BACK</text>
+      <text x="150" y="82" font-size="14">IN</text><text x="250" y="82" font-size="14">CM</text>
+      <text x="350" y="82" font-size="14">IN</text><text x="450" y="82" font-size="14">CM</text>
+      <text x="582.5" y="82" font-size="14">IN</text><text x="747.5" y="82" font-size="14">CM</text>
+    </g>
+    <g stroke="#cda6a1" stroke-width="2">
+      <path d="M100 0v894M200 60v834M300 0v894M400 60v834M500 0v894M665 60v834"/>
+      <path d="M0 112h830M0 223.7h830M0 335.4h830M0 447.1h830M0 558.8h830M0 670.5h830M0 782.2h830"/>
+    </g>
+    <g fill="#302a2b" font-size="22" text-anchor="middle" dominant-baseline="middle">
+      <g transform="translate(0 168)"><text x="50" font-weight="800">S</text><text x="150">18.25</text><text x="250">46.3</text><text x="350">26.625</text><text x="450">67.6</text><text x="582.5">16.25</text><text x="747.5">41.3</text></g>
+      <g transform="translate(0 279.7)"><text x="50" font-weight="800">M</text><text x="150">20.25</text><text x="250">51.4</text><text x="350">28</text><text x="450">71.1</text><text x="582.5">17.75</text><text x="747.5">45.1</text></g>
+      <g transform="translate(0 391.4)"><text x="50" font-weight="800">L</text><text x="150">22</text><text x="250">55.9</text><text x="350">29.375</text><text x="450">74.6</text><text x="582.5">19</text><text x="747.5">48.3</text></g>
+      <g transform="translate(0 503.1)"><text x="50" font-weight="800">XL</text><text x="150">24</text><text x="250">61</text><text x="350">30.75</text><text x="450">78.1</text><text x="582.5">20.5</text><text x="747.5">52.1</text></g>
+      <g transform="translate(0 614.8)"><text x="50" font-weight="800">2XL</text><text x="150">26</text><text x="250">66</text><text x="350">31.625</text><text x="450">80.3</text><text x="582.5">21.75</text><text x="747.5">55.2</text></g>
+      <g transform="translate(0 726.5)"><text x="50" font-weight="800">3XL</text><text x="150">27.75</text><text x="250">70.5</text><text x="350">32.5</text><text x="450">82.5</text><text x="582.5">23.25</text><text x="747.5">59</text></g>
+      <g transform="translate(0 838.2)"><text x="50" font-weight="800">4XL</text><text x="150">29.75</text><text x="250">75.5</text><text x="350">33.5</text><text x="450">85.1</text><text x="582.5">24.62</text><text x="747.5">62.5</text></g>
     </g>
   </g>
-  <path d="M260 1320h680" stroke="#8b1e24" stroke-width="3" opacity=".38"/>
-  <text x="600" y="1364" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" font-weight="700" letter-spacing="4" fill="#30292a">MEASUREMENTS ARE APPROXIMATE</text>
-  <text x="600" y="1398" text-anchor="middle" font-family="Arial,sans-serif" font-size="17" letter-spacing="3" fill="#30292a">IF BETWEEN SIZES, SIZE UP</text>
+
+  <path d="M350 1282h700" stroke="#8d232b" stroke-width="3" opacity=".35"/>
+  <text x="700" y="1323" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="700" letter-spacing="4" fill="#302a2b">MEASUREMENTS ARE APPROXIMATE · IF BETWEEN SIZES, SIZE UP</text>
 </svg>
