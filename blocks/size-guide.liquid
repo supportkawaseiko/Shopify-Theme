@@ -11,16 +11,6 @@
   endif
 
   assign title = block_settings.heading
-  if size_guide != blank and block_settings.title_field != blank
-    assign title_field_key = block_settings.title_field | strip
-    assign title_field = size_guide[title_field_key]
-    assign title = title_field.value | default: title_field | default: title
-  endif
-
-  if size_guide != blank and title_field == blank
-    assign title_field = size_guide.ten_size_guide | default: size_guide.label
-    assign title = title_field.value | default: title_field | default: title
-  endif
 
   assign note = blank
   if size_guide != blank and block_settings.note_field != blank
@@ -527,18 +517,12 @@
     {
       "type": "text",
       "id": "heading",
-      "label": "Fallback heading",
+      "label": "Popup heading",
       "default": "Size Chart"
     },
     {
       "type": "header",
       "content": "Metaobject fields"
-    },
-    {
-      "type": "text",
-      "id": "title_field",
-      "label": "Title field key",
-      "default": "title"
     },
     {
       "type": "text",
