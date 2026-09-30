@@ -201,7 +201,7 @@
   }
 
   .variant-option__button-label {
-    --variant-picker-stroke-color: var(--color-variant-border);
+    --variant-picker-stroke-color: color-mix(in srgb, var(--color-foreground) 35%, transparent);
 
     cursor: pointer;
     display: flex;
@@ -210,7 +210,7 @@
     position: relative;
     padding-block: var(--padding-sm);
     padding-inline: var(--padding-lg);
-    border: var(--options-border-width) solid var(--color-variant-border);
+    border: var(--options-border-width) solid color-mix(in srgb, var(--color-foreground) 35%, transparent);
     border-radius: var(--options-border-radius);
     overflow: clip;
     justify-content: center;
@@ -218,21 +218,21 @@
     min-width: fit-content;
     white-space: nowrap;
     background-color: var(--color-variant-background);
-    color: var(--color-variant-text);
+    color: var(--color-foreground);
     gap: 0;
 
     &:hover,
     &:hover:has([aria-disabled='true']):has([data-option-available='false']) {
-      --variant-picker-stroke-color: var(--color-selected-variant-border);
+      --variant-picker-stroke-color: var(--color-primary-button-background);
 
       background-color: color-mix(
         in srgb,
-        var(--color-selected-variant-background) 14%,
+        var(--color-primary-button-background) 12%,
         var(--color-variant-background)
       );
-      border-color: var(--color-selected-variant-border);
-      color: var(--color-variant-text);
-      box-shadow: inset 0 0 0 1px var(--color-selected-variant-border);
+      border-color: var(--color-primary-button-background);
+      color: var(--color-foreground);
+      box-shadow: inset 0 0 0 1px var(--color-primary-button-background);
     }
 
     /* we need something like overflow-clip-margin to use the pseudoelement but it doesn't work in Safari */
@@ -336,7 +336,7 @@
   }
 
   .variant-option__button-label__pill {
-    background: var(--color-selected-variant-background);
+    background: var(--color-primary-button-background);
     position: absolute;
     top: calc(var(--options-border-width) * -1);
     bottom: calc(var(--options-border-width) * -1);
@@ -392,28 +392,28 @@
   }
 
   .variant-option__button-label:has(:checked) {
-    --variant-picker-stroke-color: var(--color-selected-variant-border);
+    --variant-picker-stroke-color: var(--color-primary-button-background);
 
-    color: var(--color-selected-variant-text);
-    border-color: var(--color-selected-variant-border);
-    box-shadow: inset 0 0 0 1px var(--color-selected-variant-border);
+    color: var(--color-primary-button-text);
+    border-color: var(--color-primary-button-background);
+    box-shadow: inset 0 0 0 1px var(--color-primary-button-background);
   }
 
   .variant-option__button-label:has(:checked):hover {
-    border-color: var(--color-selected-variant-hover-border);
-    color: var(--color-selected-variant-hover-text);
+    border-color: var(--color-primary-button-hover-background);
+    color: var(--color-primary-button-hover-text);
 
     .variant-option__button-label__pill {
-      background-color: var(--color-selected-variant-hover-background);
+      background-color: var(--color-primary-button-hover-background);
     }
   }
 
   .variant-option__button-label:has([data-option-available='false']) {
-    color: rgb(var(--color-variant-text-rgb) / var(--opacity-60));
+    color: var(--color-foreground-muted);
   }
 
   .variant-option__button-label--has-swatch:hover {
-    outline: var(--focus-outline-width) solid var(--color-variant-hover-border);
+    outline: 2px solid var(--color-primary-button-background);
     outline-offset: var(--focus-outline-offset);
   }
 
@@ -428,7 +428,7 @@
   }
 
   .variant-option__button-label--has-swatch:has(:checked) {
-    --focus-outline: var(--focus-outline-width) solid var(--color-selected-variant-border);
+    --focus-outline: 2px solid var(--color-primary-button-background);
 
     outline: var(--focus-outline);
     outline-offset: var(--focus-outline-offset);
@@ -457,15 +457,15 @@
   }
 
   .variant-option__button-label:has([data-option-available='false']):has(:checked) {
-    --variant-strikethrough-color: rgb(var(--color-selected-variant-text-rgb) / var(--opacity-subdued-text));
+    --variant-strikethrough-color: rgb(var(--color-background-rgb) / var(--opacity-60));
 
-    background-color: var(--color-selected-variant-background);
-    color: rgb(var(--color-selected-variant-text-rgb) / var(--opacity-subdued-text));
+    background-color: var(--color-primary-button-background);
+    color: rgb(var(--color-background-rgb) / var(--opacity-80));
   }
 
   .variant-option__button-label:has([data-option-available='false']):has(:checked):hover {
-    background-color: var(--color-selected-variant-hover-background);
-    color: var(--color-selected-variant-hover-text);
+    background-color: var(--color-primary-button-hover-background);
+    color: var(--color-primary-button-hover-text);
   }
 
   .variant-option__button-label input {
