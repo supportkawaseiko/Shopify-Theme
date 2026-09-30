@@ -5,6 +5,10 @@
   assign shipping_metafield = blank
   assign eta_value = blank
   assign is_eta_list = false
+  assign country_code_key = block_settings.country_code_field | default: 'country_code' | strip
+  assign use_shopify_countries = block_settings.use_shopify_countries
+  assign selected_eta = blank
+  assign selected_eta_index = 0
 
   if metafield_namespace != blank and metafield_key != blank
     assign shipping_metafield = closest.product.metafields[metafield_namespace][metafield_key]
@@ -12,6 +16,25 @@
 
     if shipping_metafield.type contains 'list.'
       assign is_eta_list = true
+    endif
+  endif
+
+  if eta_value != blank
+    if is_eta_list
+      assign selected_eta = eta_value.first
+
+      for eta in eta_value
+        assign eta_country_code_field = eta[country_code_key]
+        assign eta_country_code = eta_country_code_field.value | default: eta_country_code_field | strip | upcase
+
+        if eta_country_code == localization.country.iso_code
+          assign selected_eta = eta
+          assign selected_eta_index = forloop.index0
+          break
+        endif
+      endfor
+    else
+      assign selected_eta = eta_value
     endif
   endif
 -%}
@@ -40,29 +63,70 @@
           class="shipping-eta__destination-trigger"
           aria-label="{{ block_settings.destination_label | escape }}"
         >
-          {%- if is_eta_list -%}
-            {%- for eta in eta_value -%}
-              {%- if forloop.first -%}
-                {% render 'shipping-eta-entry', eta: eta, settings: block_settings, mode: 'selected', selected: true %}
-              {%- endif -%}
-            {%- endfor -%}
-          {%- else -%}
-            {% render 'shipping-eta-entry', eta: eta_value, settings: block_settings, mode: 'selected', selected: true %}
-          {%- endif -%}
+          {% render 'shipping-eta-entry',
+            eta: selected_eta,
+            country: localization.country,
+            settings: block_settings,
+            mode: 'selected',
+            selected: true
+          %}
           <span class="shipping-eta__chevron" aria-hidden="true">
             {{- 'icon-caret.svg' | inline_asset_content -}}
           </span>
         </summary>
 
-        {%- if is_eta_list -%}
+        {%- if use_shopify_countries and localization.available_countries.size > 1 -%}
+          <div class="shipping-eta__destination-options" role="listbox">
+            {%- for country in localization.available_countries -%}
+              {%- liquid
+                assign country_eta = selected_eta
+                assign country_eta_index = 0
+
+                if is_eta_list
+                  assign country_eta = eta_value.first
+
+                  for eta in eta_value
+                    assign eta_country_code_field = eta[country_code_key]
+                    assign eta_country_code = eta_country_code_field.value | default: eta_country_code_field | strip | upcase
+
+                    if eta_country_code == country.iso_code
+                      assign country_eta = eta
+                      assign country_eta_index = forloop.index0
+                      break
+                    endif
+                  endfor
+                endif
+
+                assign is_selected_country = false
+                if country.iso_code == localization.country.iso_code
+                  assign is_selected_country = true
+                endif
+              -%}
+              {% render 'shipping-eta-entry',
+                eta: country_eta,
+                country: country,
+                settings: block_settings,
+                mode: 'option',
+                index: country_eta_index,
+                selected: is_selected_country
+              %}
+            {%- endfor -%}
+          </div>
+        {%- elsif is_eta_list -%}
           <div class="shipping-eta__destination-options" role="listbox">
             {%- for eta in eta_value -%}
+              {%- liquid
+                assign is_selected_eta = false
+                if forloop.index0 == selected_eta_index
+                  assign is_selected_eta = true
+                endif
+              -%}
               {% render 'shipping-eta-entry',
                 eta: eta,
                 settings: block_settings,
                 mode: 'option',
                 index: forloop.index0,
-                selected: forloop.first
+                selected: is_selected_eta
               %}
             {%- endfor -%}
           </div>
@@ -73,12 +137,18 @@
     <div class="shipping-eta__panels">
       {%- if is_eta_list -%}
         {%- for eta in eta_value -%}
+          {%- liquid
+            assign is_selected_eta = false
+            if forloop.index0 == selected_eta_index
+              assign is_selected_eta = true
+            endif
+          -%}
           {% render 'shipping-eta-entry',
             eta: eta,
             settings: block_settings,
             mode: 'panel',
             index: forloop.index0,
-            selected: forloop.first
+            selected: is_selected_eta
           %}
         {%- endfor -%}
       {%- else -%}
@@ -497,6 +567,19 @@
     {
       "type": "header",
       "content": "Metaobject fields"
+    },
+    {
+      "type": "text",
+      "id": "country_code_field",
+      "label": "Country ISO code field key",
+      "default": "country_code",
+      "info": "Use two-letter ISO codes such as US, GB, AU or CA. The first ETA entry is used as the fallback for countries without a match."
+    },
+    {
+      "type": "checkbox",
+      "id": "use_shopify_countries",
+      "label": "Use countries from Shopify Markets",
+      "default": true
     },
     {
       "type": "text",

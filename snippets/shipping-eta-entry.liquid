@@ -171,6 +171,10 @@
 
   assign entry_name = eta.system.handle | replace: '-', ' ' | capitalize
   assign region_label = country_name | default: entry_name | default: 'Destination'
+  if country != blank
+    assign region_label = country.name
+    assign flag = country
+  endif
   assign standard_label = settings.standard_method_label | default: 'Standard Shipping'
   assign express_label = settings.express_method_label | default: 'Express Shipping'
   assign modal_heading = settings.delivery_modal_heading | default: 'Delivery Method'
