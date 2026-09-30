@@ -40,6 +40,7 @@
         "image_DF36Ei": {
           "type": "image",
           "name": "t:names.image",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/customversal-comparison.png",
             "link": "",
