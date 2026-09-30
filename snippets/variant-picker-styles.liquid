@@ -41,12 +41,17 @@
   }
 
   .variant-option__select-wrapper:hover {
-    border-color: var(--color-variant-hover-border);
-    color: var(--color-variant-hover-text);
+    border-color: var(--color-selected-variant-border);
+    color: var(--color-variant-text);
+    box-shadow: 0 0 0 1px var(--color-selected-variant-border);
   }
 
   .variant-option__select-wrapper:hover .variant-option__select {
-    background-color: var(--color-variant-hover-background);
+    background-color: color-mix(
+      in srgb,
+      var(--color-selected-variant-background) 14%,
+      var(--color-variant-background)
+    );
   }
 
   .variant-option__select:focus-visible {
@@ -218,11 +223,16 @@
 
     &:hover,
     &:hover:has([aria-disabled='true']):has([data-option-available='false']) {
-      --variant-picker-stroke-color: var(--color-variant-hover-border);
+      --variant-picker-stroke-color: var(--color-selected-variant-border);
 
-      background-color: var(--color-variant-hover-background);
-      border-color: var(--color-variant-hover-border);
-      color: var(--color-variant-hover-text);
+      background-color: color-mix(
+        in srgb,
+        var(--color-selected-variant-background) 14%,
+        var(--color-variant-background)
+      );
+      border-color: var(--color-selected-variant-border);
+      color: var(--color-variant-text);
+      box-shadow: inset 0 0 0 1px var(--color-selected-variant-border);
     }
 
     /* we need something like overflow-clip-margin to use the pseudoelement but it doesn't work in Safari */
@@ -386,6 +396,7 @@
 
     color: var(--color-selected-variant-text);
     border-color: var(--color-selected-variant-border);
+    box-shadow: inset 0 0 0 1px var(--color-selected-variant-border);
   }
 
   .variant-option__button-label:has(:checked):hover {
