@@ -15,6 +15,7 @@
         "image_bBhhkC": {
           "type": "image",
           "name": "t:names.image",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/il_794xN.6656586022_fthb.jpg",
             "link": "",
