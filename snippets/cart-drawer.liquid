@@ -137,6 +137,19 @@
 {%- endif -%}
 
 {% stylesheet %}
+  #cart-drawer .theme-drawer__dialog {
+    --color: #2b2325;
+    --color-rgb: 43 35 37;
+    --color-foreground: #2b2325;
+    --color-foreground-rgb: 43 35 37;
+    --color-foreground-muted: rgb(43 35 37 / 0.72);
+    --color-foreground-subdued: rgb(43 35 37 / 0.72);
+    --color-border: #cdbfc1;
+    --color-border-rgb: 205 191 193;
+
+    color: var(--color-foreground);
+  }
+
   cart-drawer-component {
     --cart-drawer-padding: var(--theme-drawer-padding);
     --font-paragraph--line-height: 1;
