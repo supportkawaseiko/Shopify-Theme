@@ -248,6 +248,8 @@
               "settings": {
                 "metafield_namespace": "custom",
                 "metafield_key": "shipping_eta",
+                "country_code_field": "country_code",
+                "use_shopify_countries": true,
                 "country_name_field": "country_name",
                 "flag_field": "flag",
                 "processing_min_field": "processing_min_days",
@@ -328,7 +330,7 @@
             "teeinblue_product_personalizer_product_app_block_M87nAH": {
               "type": "shopify://apps/teeinblue-product-personalizer/blocks/product-app-block/67212f31-32b0-450c-97dd-7e182a5fac7b",
               "settings": {
-                "enable_design_mode": true,
+                "enable_design_mode": false,
                 "loading_background_color": "#000000",
                 "show_price": true,
                 "show_available_product": true,
