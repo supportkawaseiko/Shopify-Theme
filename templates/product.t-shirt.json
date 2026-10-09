@@ -135,6 +135,19 @@
             "padding-inline-end": 0
           },
           "blocks": {
+            "teeinblue_product_personalizer_product_app_block_CXgBi9": {
+              "type": "shopify://apps/teeinblue-product-personalizer/blocks/product-app-block/67212f31-32b0-450c-97dd-7e182a5fac7b",
+              "settings": {
+                "enable_design_mode": true,
+                "loading_background_color": "#000000",
+                "show_price": true,
+                "show_available_product": true,
+                "show_color": true,
+                "show_size": true,
+                "show_form": true,
+                "show_action_buttons": true
+              }
+            },
             "group_icgrde": {
               "type": "group",
               "name": "t:names.header",
@@ -327,19 +340,6 @@
               },
               "blocks": {}
             },
-            "teeinblue_product_personalizer_product_app_block_M87nAH": {
-              "type": "shopify://apps/teeinblue-product-personalizer/blocks/product-app-block/67212f31-32b0-450c-97dd-7e182a5fac7b",
-              "settings": {
-                "enable_design_mode": false,
-                "loading_background_color": "#000000",
-                "show_price": true,
-                "show_available_product": true,
-                "show_color": true,
-                "show_size": true,
-                "show_form": true,
-                "show_action_buttons": true
-              }
-            },
             "buy_buttons_eYQEYi": {
               "type": "buy-buttons",
               "settings": {
@@ -467,12 +467,12 @@
             }
           },
           "block_order": [
+            "teeinblue_product_personalizer_product_app_block_CXgBi9",
             "group_icgrde",
             "divider_VJhene",
             "shipping_eta",
             "variant_picker_R3rGDr",
             "size_guide",
-            "teeinblue_product_personalizer_product_app_block_M87nAH",
             "buy_buttons_eYQEYi",
             "text_aEtTtq",
             "ai_gen_block_0558575_EUwxiw"
