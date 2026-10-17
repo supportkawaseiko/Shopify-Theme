@@ -37,8 +37,8 @@ test('submits only email consent to the Club list using a public client endpoint
   assert.equal(data.attributes.profile.data.attributes.email, 'member@example.com');
   assert.equal(data.attributes.profile.data.attributes.subscriptions.email.marketing.consent, 'SUBSCRIBED');
   assert.equal(request[1].headers.Authorization, undefined);
-  assert.match(f.status.textContent, /confirm your email/i);
-  assert.doesNotMatch(f.status.textContent, /HIPPOLORD|already confirmed/i);
+  assert.match(f.status.textContent, /check your inbox for your welcome code/i);
+  assert.doesNotMatch(f.status.textContent, /HIPPOLORD|confirm your email|after confirmation/i);
   assert.equal(f.fields.hidden, true);
   await f.submit();
   assert.equal(f.form.resetCalled, true);
