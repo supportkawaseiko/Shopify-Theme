@@ -63,7 +63,7 @@
         this.completed = true;
         this.form.reset();
         this.fields.hidden = true;
-        this.showMessage('Check your inbox to confirm your email. Your discount code will arrive after confirmation. Already a member? Check your previous Club welcome email.');
+        this.showMessage('Thanks for joining! Check your inbox for your welcome code. Already a member? Check your previous Club welcome email.');
       } catch {
         this.showMessage('We could not complete your request. Please try again in a moment.', true);
       } finally {
