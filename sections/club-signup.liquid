@@ -2,7 +2,7 @@
 
 {% liquid
   assign club_collection = section.settings.collection | default: collections.all
-  assign privacy_url = shop.privacy_policy.url | default: '/policies/privacy-policy'
+  assign privacy_url = pages['privacy-policy'].url | default: shop.privacy_policy.url | default: '/policies/privacy-policy'
 %}
 
 <section class="cv-club" aria-labelledby="ClubTitle-{{ section.id }}">
@@ -79,7 +79,7 @@
   .cv-club *, .cv-club *::before, .cv-club *::after { box-sizing: border-box; }
   .cv-club h1, .cv-club h2, .cv-club p { margin: 0; color: inherit; letter-spacing: 0; }
   .cv-club h1, .cv-club h2 { font-family: var(--font-heading--family); font-weight: var(--font-heading--weight, 700); }
-  .cv-club__intro { padding: 56px 24px 48px; background: #fbf5f7; text-align: center; }
+  .cv-club__intro { padding: 40px 24px 32px; background: #fbf5f7; text-align: center; }
   .cv-club .cv-club__eyebrow { color: var(--club-accent); font-size: 14px; margin-bottom: 16px; }
   .cv-club h1 { font-size: 52px; line-height: 1.1; overflow-wrap: anywhere; }
   .cv-club .cv-club__offer { margin: 20px auto 12px; font-size: 24px; line-height: 1.4; font-weight: 600; }
