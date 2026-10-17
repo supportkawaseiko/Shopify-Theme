@@ -1,0 +1,148 @@
+<script src="{{ 'club-signup.js' | asset_url }}" defer="defer"></script>
+
+{% liquid
+  assign club_collection = section.settings.collection | default: collections.all
+  assign privacy_url = shop.privacy_policy.url | default: '/policies/privacy-policy'
+%}
+
+<section class="cv-club" aria-labelledby="ClubTitle-{{ section.id }}">
+  <div class="cv-club__intro">
+    <p class="cv-club__eyebrow">A little thank-you, just for you.</p>
+    <h1 id="ClubTitle-{{ section.id }}">{{ section.settings.heading | escape }}</h1>
+    <p class="cv-club__offer">{{ section.settings.offer | escape }}</p>
+    <p class="cv-club__description">Join the Club for member-only offers and first access to new personalized gifts.</p>
+
+    <club-signup
+      class="cv-club__signup"
+      data-enabled="{{ section.settings.enable_signup }}"
+      data-public-key="{{ section.settings.public_key | escape }}"
+      data-list-id="{{ section.settings.list_id | escape }}"
+    >
+      <form aria-label="Join Customversal Club">
+        <fieldset disabled>
+          <legend class="visually-hidden">Club email registration</legend>
+          <label class="cv-club__label" for="ClubEmail-{{ section.id }}">Email address</label>
+          <div class="cv-club__input-row">
+            <input
+              id="ClubEmail-{{ section.id }}"
+              name="email"
+              type="email"
+              autocomplete="email"
+              autocapitalize="off"
+              spellcheck="false"
+              placeholder="Enter your email"
+              aria-describedby="ClubConsent-{{ section.id }}"
+              required
+            >
+            <button type="submit">{{ section.settings.button_label | escape }}</button>
+          </div>
+          <label class="cv-club__consent" id="ClubConsent-{{ section.id }}">
+            <input type="checkbox" name="consent" required>
+            <span>I agree to receive marketing emails from Customversal. Unsubscribe anytime. <a href="{{ privacy_url }}">Privacy policy</a>.</span>
+          </label>
+        </fieldset>
+        {% unless section.settings.enable_signup %}
+          <p class="cv-club__notice">{{ section.settings.paused_message | escape }}</p>
+        {% endunless %}
+        <p class="cv-club__status" data-club-status role="status" aria-live="polite" tabindex="-1" hidden></p>
+        <noscript><p>Please enable JavaScript to join the Club.</p></noscript>
+      </form>
+    </club-signup>
+    <p class="cv-club__confirmation">Confirm your email. Then look out for your welcome code.</p>
+  </div>
+
+  <div class="cv-club__benefits" aria-label="Club benefits">
+    <div><span class="cv-club__number">01</span><h2>20% off your next order</h2><p>A little extra for your next thoughtful gift.</p></div>
+    <div><span class="cv-club__number">02</span><h2>Member-only offers</h2><p>Special treats, delivered to your inbox.</p></div>
+    <div><span class="cv-club__number">03</span><h2>First access</h2><p>Be first to discover new personalized favorites.</p></div>
+  </div>
+
+  {% if club_collection.products.size > 0 %}
+    <div class="cv-club__gifts">
+      <div class="cv-club__gifts-heading"><h2>Made personal. Made for you.</h2><a href="{{ club_collection.url }}">Explore the collection <span aria-hidden="true">&rarr;</span></a></div>
+      <div class="cv-club__gallery">
+        {% for product in club_collection.products limit: 3 %}
+          {% if product.featured_image != blank %}
+            <a class="cv-club__product" href="{{ product.url }}">
+              {{ product.featured_image | image_url: width: 900 | image_tag: widths: '300, 450, 600, 900', sizes: '(min-width: 750px) 33vw, 80vw', loading: 'lazy', alt: product.title }}
+              <span>{{ product.title | escape }}</span>
+            </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+</section>
+
+{% stylesheet %}
+  .cv-club { --club-ink: #2b2325; --club-accent: #88283f; --club-muted: #665c60; color: var(--club-ink); background: #fff; font-family: var(--font-body--family); letter-spacing: 0; }
+  .cv-club *, .cv-club *::before, .cv-club *::after { box-sizing: border-box; }
+  .cv-club h1, .cv-club h2, .cv-club p { margin: 0; color: inherit; letter-spacing: 0; }
+  .cv-club h1, .cv-club h2 { font-family: var(--font-heading--family); font-weight: var(--font-heading--weight, 700); }
+  .cv-club__intro { padding: 56px 24px 48px; background: #fbf5f7; text-align: center; }
+  .cv-club .cv-club__eyebrow { color: var(--club-accent); font-size: 14px; margin-bottom: 16px; }
+  .cv-club h1 { font-size: 52px; line-height: 1.1; overflow-wrap: anywhere; }
+  .cv-club .cv-club__offer { margin: 20px auto 12px; font-size: 24px; line-height: 1.4; font-weight: 600; }
+  .cv-club .cv-club__description { max-width: 460px; margin: auto; font-size: 16px; line-height: 1.6; color: var(--club-muted); }
+  .cv-club__signup { display: block; max-width: 576px; margin: 28px auto 0; text-align: left; }
+  .cv-club fieldset { padding: 0; border: 0; margin: 0; min-width: 0; }
+  .cv-club [hidden] { display: none !important; }
+  .cv-club__label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+  .cv-club__input-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; }
+  .cv-club input[type='email'] { width: 100%; min-width: 0; height: 52px; border: 1px solid #ab979e; border-radius: 4px; background: #fff; color: var(--club-ink); padding: 12px 16px; font: inherit; font-size: 16px; }
+  .cv-club input::placeholder { color: #76666d; opacity: 1; }
+  .cv-club button { min-height: 52px; padding: 12px 24px; border: 1px solid var(--club-accent); border-radius: 6px; background: var(--club-accent); color: #fff; font: inherit; font-size: 15px; font-weight: 600; cursor: pointer; line-height: 1.4; }
+  .cv-club button:hover:not(:disabled) { background: #6d1e32; }
+  .cv-club button:disabled { cursor: not-allowed; }
+  .cv-club :focus-visible { outline: 2px solid var(--club-accent); outline-offset: 4px; }
+  .cv-club__consent { display: flex; gap: 10px; align-items: flex-start; margin-top: 16px; color: var(--club-muted); font-size: 12px; line-height: 1.6; cursor: pointer; }
+  .cv-club input[type='checkbox'] { width: 18px; height: 18px; flex: 0 0 18px; margin: 1px 0 0; appearance: auto; accent-color: var(--club-accent); }
+  .cv-club a { color: var(--club-accent); text-underline-offset: 3px; }
+  .cv-club .cv-club__confirmation { margin-top: 20px; font-size: 12px; line-height: 1.5; color: var(--club-muted); }
+  .cv-club .cv-club__notice { margin-top: 16px; color: var(--club-accent); font-size: 14px; }
+  .cv-club .cv-club__status { padding: 24px 0; font-size: 17px; line-height: 1.6; }
+  .cv-club__benefits { max-width: 1120px; margin: auto; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); padding: 40px 24px; gap: 40px; border-bottom: 1px solid #eadde1; }
+  .cv-club__number { display: block; color: var(--club-accent); font-size: 12px; margin-bottom: 12px; }
+  .cv-club__benefits h2 { font-size: 18px; line-height: 1.4; margin-bottom: 8px; }
+  .cv-club__benefits p { color: var(--club-muted); font-size: 14px; line-height: 1.6; }
+  .cv-club__gifts { max-width: 1120px; margin: auto; padding: 40px 24px 64px; }
+  .cv-club__gifts-heading { display: flex; gap: 16px; align-items: baseline; justify-content: space-between; margin-bottom: 24px; }
+  .cv-club__gifts-heading h2 { font-size: 24px; line-height: 1.3; }
+  .cv-club__gifts-heading a { font-size: 14px; }
+  .cv-club__gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+  .cv-club__product { display: block; min-width: 0; text-decoration: none; }
+  .cv-club__product img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: contain; background: #f6f6f6; }
+  .cv-club__product span { display: block; color: var(--club-ink); font-size: 14px; line-height: 1.5; margin-top: 12px; overflow-wrap: anywhere; }
+  @media (max-width: 749px) {
+    .cv-club__intro { padding: 36px 20px 32px; }
+    .cv-club h1 { font-size: 36px; }
+    .cv-club .cv-club__offer { font-size: 21px; margin-top: 16px; }
+    .cv-club__signup { margin-top: 24px; }
+    .cv-club__input-row { grid-template-columns: minmax(0, 1fr); }
+    .cv-club__benefits { grid-template-columns: minmax(0, 1fr); gap: 24px; padding: 32px 20px; }
+    .cv-club__number { float: left; margin: 4px 16px 0 0; }
+    .cv-club__benefits p { padding-left: 32px; }
+    .cv-club__gifts { padding: 32px 20px 48px; }
+    .cv-club__gifts-heading { align-items: flex-start; flex-direction: column; }
+    .cv-club__gifts-heading h2 { font-size: 22px; }
+    .cv-club__gallery { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Customversal Club",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Customversal Club" },
+    { "type": "text", "id": "offer", "label": "Offer", "default": "Get 20% off your next order." },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Join & Get 20% Off" },
+    { "type": "collection", "id": "collection", "label": "Featured collection" },
+    { "type": "header", "content": "Klaviyo registration" },
+    { "type": "checkbox", "id": "enable_signup", "label": "Enable Club registration", "default": false, "info": "Enable only after the Shopify discount and Klaviyo welcome flow are ready." },
+    { "type": "text", "id": "paused_message", "label": "Paused message", "default": "Club sign-ups are opening soon." },
+    { "type": "text", "id": "public_key", "label": "Klaviyo public site ID", "default": "Xb5DNt" },
+    { "type": "text", "id": "list_id", "label": "Double opt-in Club list ID", "default": "SKEVyV" }
+  ],
+  "presets": [{ "name": "Customversal Club" }]
+}
+{% endschema %}
