@@ -1004,7 +1004,7 @@
       },
       "name": "t:names.featured_product_information",
       "settings": {
-        "product": "look-whos-getting-married-custom-childhood-photo-shirt-personalized-bride-groom-wedding-t-shirt-custom-couple-photo-tee",
+        "product": "looks-who-getting-married-bride-shirt-custom-outfit-for-bride-shower-with-custom-name-and-photo-gift-for-bride-to-be-at-bachelorette-party",
         "content_width": "content-center-aligned",
         "desktop_media_position": "left",
         "equal_columns": true,
@@ -1017,34 +1017,6 @@
     },
     "17871211509f0d62ce": {
       "type": "_blocks",
-      "blocks": {
-        "loox_reviews_loox_card_carousel_section_rjmDG9": {
-          "type": "shopify://apps/loox-reviews/blocks/loox-card-carousel-section/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
-          "settings": {
-            "maxWidth": 1100,
-            "borderRadius": 8,
-            "itemsPerView": 4,
-            "mobileItemsPerView": 1,
-            "maxNumberOfCharacters": 100,
-            "imageRatio": "0.72",
-            "reviewerNameColor": "#000000",
-            "textColor": "#000000",
-            "itemBackgroundColor": "#ffffff",
-            "starsColor": "",
-            "starsBackgroundColor": "#ffffff",
-            "arrows_backgroundColor": "#ffffff",
-            "arrows_iconColor": "#9a9a9a",
-            "shadow": "offset-dark",
-            "border_active": false,
-            "border_width": 2,
-            "border_color": "#000000",
-            "productIds": ""
-          }
-        }
-      },
-      "block_order": [
-        "loox_reviews_loox_card_carousel_section_rjmDG9"
-      ],
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,
