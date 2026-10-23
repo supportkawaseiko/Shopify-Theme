@@ -1002,6 +1002,7 @@
           ]
         }
       },
+      "disabled": true,
       "name": "t:names.featured_product_information",
       "settings": {
         "product": "looks-who-getting-married-bride-shirt-custom-outfit-for-bride-shower-with-custom-name-and-photo-gift-for-bride-to-be-at-bachelorette-party",
