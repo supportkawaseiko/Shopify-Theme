@@ -465,7 +465,9 @@
       "settings": {
         "collection_list": [
           "test",
-          "for-birthday"
+          "for-birthday",
+          "for-family",
+          "christmas"
         ],
         "layout_type": "grid",
         "carousel_on_mobile": false,
