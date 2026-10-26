@@ -93,7 +93,10 @@
         assign should_break_columns = true
         assign span_class = ''
 
-        if menu_content_type == 'collection_images'
+        if menu_content_type == 'directory'
+          assign should_break_columns = false
+          assign column_span = 1
+        elsif menu_content_type == 'collection_images'
           assign should_break_columns = false
           # For collection image mode, we have an 8-column grid when 4 or fewer parent links are used. Set column span to 2 in that case, otherwise use 1 column
           if parent_link.links.size <= 4
@@ -166,6 +169,8 @@
       assign next_linklist = parent_link.links[forloop.index]
 
       if forloop.last
+        assign open_column_span = false
+      elsif menu_content_type == 'directory'
         assign open_column_span = false
       elsif menu_content_type == 'collection_images'
         assign open_column_span = false
