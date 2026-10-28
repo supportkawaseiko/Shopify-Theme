@@ -1,0 +1,28 @@
+<footer class="section section--page-width cv-footer">
+  <div class="cv-footer__grid">
+    <div><a href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }} home">{% if settings.logo != blank %}{{ settings.logo | image_url: width: 480 | image_tag: loading: 'lazy', class: 'cv-footer__logo', widths: '240,480', sizes: '240px' }}{% else %}{{ shop.name | escape }}{% endif %}</a><p>Personalized gifts.<br>Made for your moments.</p></div>
+    {% for block in section.blocks %}
+      <div {{ block.shopify_attributes }}><h2>{{ block.settings.heading | escape }}</h2><ul class="list-unstyled">{% for link in block.settings.menu.links %}<li><a href="{{ link.url }}">{{ link.title | escape }}</a></li>{% endfor %}</ul></div>
+    {% endfor %}
+    <div><h2>We're here to help</h2><a href="mailto:{{ section.settings.email | escape }}">{{ section.settings.email | escape }}</a><p><a href="{{ section.settings.help_link }}">Help & FAQs</a></p><p><a class="cv-footer__club" href="{{ section.settings.club_link }}">Join Customversal Club →</a></p></div>
+  </div>
+  <div class="cv-footer__bottom"><span>© {{ 'now' | date: '%Y' }} {{ shop.name | escape }}. All rights reserved.</span><div aria-label="Accepted payment methods">{% for type in shop.enabled_payment_types %}{{ type | payment_type_svg_tag }}{% endfor %}</div></div>
+</footer>
+{% stylesheet %}
+  .cv-footer { background: #f3efea; color: #302c35; padding-block: 40px 20px; font-size: 14px; line-height: 1.6; }
+  .cv-footer__grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr 1.3fr; gap: 32px; }
+  .cv-footer__logo { width: 230px; height: auto; max-height: 90px; object-fit: contain; object-position: left; }
+  .cv-footer h2 { font: 600 16px/1.4 var(--font-body--family); margin: 0 0 16px; }
+  .cv-footer ul { padding: 0; margin: 0; }
+  .cv-footer li { margin-bottom: 8px; }
+  .cv-footer a { color: inherit; text-decoration: none; }
+  .cv-footer a:hover { text-decoration: underline; }
+  .cv-footer__club { display: inline-block; border: 1px solid; border-radius: 24px; padding: 10px 16px; }
+  .cv-footer__bottom { margin-top: 32px; border-top: 1px solid #d9d1cc; padding-top: 20px; display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+  .cv-footer__bottom svg { width: 38px; height: 24px; }
+  .cv-footer__bottom > div { display: flex; flex-wrap: wrap; gap: 6px; }
+  @media(max-width:749px) { .cv-footer__grid { grid-template-columns: 1fr 1fr; gap: 28px 16px; } .cv-footer__grid > :first-child, .cv-footer__grid > :last-child { grid-column: 1 / -1; } .cv-footer__bottom { flex-direction: column; align-items: flex-start; } }
+{% endstylesheet %}
+{% schema %}
+{"name":"Gift shop footer","enabled_on":{"groups":["footer"]},"settings":[{"type":"text","id":"email","label":"Support email","default":"support@customversal.com"},{"type":"url","id":"help_link","label":"Help link"},{"type":"url","id":"club_link","label":"Club link"}],"blocks":[{"type":"menu","name":"Menu","settings":[{"type":"text","id":"heading","label":"Heading"},{"type":"link_list","id":"menu","label":"Menu"}]}],"max_blocks":3,"presets":[{"name":"Gift shop footer"}]}
+{% endschema %}

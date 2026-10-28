@@ -129,7 +129,11 @@
     endif
   endif
   capture search
-    render 'search', style: search_style, class: search_class, display_style: section.settings.actions_display_style
+    if section.settings.expanded_search and section.settings.show_search
+      render 'gift-header-search'
+    else
+      render 'search', style: search_style, class: search_class, display_style: section.settings.actions_display_style
+    endif
   endcapture
 
   # Skip drawer search under specific conditions:
@@ -1184,6 +1188,7 @@
   "tag": "header",
   "class": "header-section",
   "settings": [
+    { "type": "checkbox", "id": "expanded_search", "label": "Wide desktop search field", "default": false },
     {
       "type": "header",
       "content": "t:content.logo"

@@ -1,0 +1,26 @@
+<section class="section section--page-width cv-reviews" data-review-shop="{{ shop.permanent_domain }}">
+  <div>
+    <h2>{{ section.settings.heading | escape }}</h2>
+    <loox-dynamic-carousel-widget class="loox-widget" data-widget="dynamic-carousel-widget" show-review-text style="width:100%"></loox-dynamic-carousel-widget>
+    {% if request.design_mode %}<p class="cv-reviews__editor">This section displays your published Loox reviews. Manage featured reviews in Loox.</p>{% endif %}
+  </div>
+</section>
+{% javascript %}
+  if (!document.querySelector('script[src*="loox.io/widget/loox.js"]')) {
+    const section = document.querySelector('[data-review-shop]');
+    if (section) {
+      const script = document.createElement('script');
+      script.src = 'https://loox.io/widget/loox.js?shop=' + encodeURIComponent(section.dataset.reviewShop);
+      script.async = true;
+      document.head.append(script);
+    }
+  }
+{% endjavascript %}
+{% stylesheet %}
+  .cv-reviews { padding-block: 32px; }
+  .cv-reviews h2 { font-family: var(--font-body--family); font-size: 30px; font-weight: 500; margin: 0 0 20px; }
+  .cv-reviews__editor { padding: 16px; border: 1px dashed #aaa; font-size: 14px; }
+{% endstylesheet %}
+{% schema %}
+{"name":"Customer reviews","disabled_on":{"groups":["header","footer"]},"settings":[{"type":"text","id":"heading","label":"Heading","default":"Happy Customers"}],"presets":[{"name":"Customer reviews"}]}
+{% endschema %}

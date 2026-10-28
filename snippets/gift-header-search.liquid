@@ -1,0 +1,19 @@
+<form action="{{ routes.search_url }}" method="get" role="search" class="cv-header-search">
+  <label class="visually-hidden" for="GiftHeaderSearch">Search gifts</label>
+  <input id="GiftHeaderSearch" name="q" type="search" placeholder="Find the perfect personalized gift" value="{{ search.terms | escape }}">
+  <input type="hidden" name="options[prefix]" value="last">
+  <button aria-label="Search" type="submit"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="7"/><path d="m15 15 6 6"/></svg></button>
+</form>
+<span class="cv-mobile-search">{% render 'search', style: 'modal' %}</span>
+{% stylesheet %}
+  .cv-header-search { display: flex; border: 1.5px solid #423942; border-radius: 30px; width: 100%; min-width: 220px; height: 46px; padding: 3px; }
+  .cv-header-search input { width: 100%; min-width: 0; border: 0; background: transparent; padding: 8px 14px; color: inherit; font: inherit; font-size: 14px; outline-offset: -3px; border-radius: 24px; }
+  .cv-header-search button { width: 38px; flex-shrink: 0; border: 0; border-radius: 50%; background: #88283f; color: #fff; display: grid; place-items: center; cursor: pointer; }
+  .cv-mobile-search { display: none; }
+  @media(min-width:750px) {
+    .header__row--top .header__columns:has(.cv-header-search) { grid-template-columns: auto minmax(220px,1fr) auto; }
+    .header__column:has(> .cv-header-search) { width: 100%; }
+    .header__row--top:has(.cv-header-search) .header-logo { max-width: 230px; }
+  }
+  @media(max-width:749px) { .cv-header-search { display: none; } .cv-mobile-search { display: contents; } }
+{% endstylesheet %}

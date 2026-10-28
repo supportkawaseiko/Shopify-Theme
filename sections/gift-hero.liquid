@@ -1,0 +1,105 @@
+<gift-hero class="cv-hero" aria-label="Featured gifts" aria-roledescription="carousel">
+  <div class="cv-hero__track">
+    {% for block in section.blocks %}
+      {% liquid
+        assign hero_image = block.settings.image | default: block.settings.collection.image | default: block.settings.collection.products.first.featured_image
+        assign hero_link = block.settings.link | default: block.settings.collection.url | default: routes.all_products_collection_url
+        assign image_loading = 'lazy'
+        if forloop.first
+          assign image_loading = 'eager'
+        endif
+      %}
+      <div class="cv-hero__slide" data-slide {{ block.shopify_attributes }} style="--hero-background: {{ block.settings.background }}; --hero-color: {{ block.settings.color }};">
+        <div class="cv-hero__copy">
+          <p>{{ block.settings.eyebrow | escape }}</p>
+          {% if forloop.first %}<h1>{{ block.settings.heading | escape }}</h1>{% else %}<h2>{{ block.settings.heading | escape }}</h2>{% endif %}
+          <p class="cv-hero__description">{{ block.settings.description | escape }}</p>
+          <a href="{{ hero_link }}">{{ block.settings.button | escape }} <span aria-hidden="true">→</span></a>
+        </div>
+        {% if hero_image != blank %}
+          <picture class="cv-hero__media">
+            {% if block.settings.mobile_image != blank %}
+              <source media="(max-width: 749px)" srcset="{{ block.settings.mobile_image | image_url: width: 400 }} 400w, {{ block.settings.mobile_image | image_url: width: 750 }} 750w, {{ block.settings.mobile_image | image_url: width: 1100 }} 1100w" sizes="100vw" width="{{ block.settings.mobile_image.width }}" height="{{ block.settings.mobile_image.height }}">
+            {% endif %}
+            {{ hero_image | image_url: width: 1600 | image_tag: widths: '400, 750, 1100, 1600', sizes: '(min-width: 750px) 52vw, 100vw', loading: image_loading }}
+          </picture>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+  {% if section.blocks.size > 1 %}
+    <div class="cv-hero__navigation" hidden>
+      <button type="button" data-direction="-1" aria-label="Previous featured collection">‹</button>
+      <span class="cv-hero__status" aria-live="polite">1 / {{ section.blocks.size }}</span>
+      <button type="button" data-direction="1" aria-label="Next featured collection">›</button>
+    </div>
+  {% endif %}
+</gift-hero>
+{% stylesheet %}
+  .cv-hero { display: block; position: relative; color: #fff; }
+  .cv-hero__track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .cv-hero__slide { flex: 0 0 100%; display: grid; grid-template-columns: 48% 52%; min-width: 0; scroll-snap-align: start; background: var(--hero-background); color: var(--hero-color); }
+  .cv-hero__copy { align-self: center; text-align: center; padding: 40px 60px; }
+  .cv-hero__copy > p:first-child { text-transform: uppercase; letter-spacing: 3px; font-size: 12px; }
+  .cv-hero__copy :is(h1,h2) { font: 400 clamp(36px,4.4vw,66px)/1.05 Georgia,serif; letter-spacing: -1px; margin: 16px 0; color: inherit; }
+  .cv-hero__description { font-size: 18px; line-height: 1.5; margin: 0 0 24px; }
+  .cv-hero__copy a { display: inline-flex; gap: 20px; color: #302c35; background: #fff; padding: 14px 24px; border-radius: 30px; text-decoration: none; font-size: 14px; font-weight: 600; }
+  .cv-hero__media { display: block; min-width: 0; }
+  .cv-hero__media img { display: block; width: 100%; height: 450px; object-fit: cover; }
+  .cv-hero__navigation { position: absolute; bottom: 16px; left: 24px; display: flex; align-items: center; gap: 12px; color: #302c35; background: #ffffffeb; border-radius: 30px; }
+  .cv-hero__navigation[hidden] { display: none; }
+  .cv-hero__navigation button { background: none; border: 0; color: inherit; font-size: 28px; width: 44px; height: 44px; cursor: pointer; }
+  .cv-hero__status { font-size: 13px; }
+  .cv-hero a:focus-visible, .cv-hero button:focus-visible { outline: 3px solid currentColor; outline-offset: 3px; }
+  @media(max-width:749px) {
+    .cv-hero__slide { grid-template-columns: 1fr; }
+    .cv-hero__copy { padding: 30px 24px; }
+    .cv-hero__copy :is(h1,h2) { font-size: 38px; }
+    .cv-hero__description { font-size: 15px; }
+    .cv-hero__media img { height: auto; object-fit: contain; }
+    .cv-hero__navigation { bottom: 12px; left: 12px; }
+  }
+{% endstylesheet %}
+{% javascript %}
+  if (!customElements.get('gift-hero')) customElements.define('gift-hero', class extends HTMLElement {
+    connectedCallback() {
+      this.abort?.abort();
+      this.abort = new AbortController();
+      const signal = this.abort.signal;
+      const track = this.querySelector('.cv-hero__track');
+      const slides = [...this.querySelectorAll('[data-slide]')];
+      const navigation = this.querySelector('.cv-hero__navigation');
+      if (!navigation) return;
+      navigation.hidden = false;
+      const go = index => track.scrollTo({left: slides[index].offsetLeft - slides[0].offsetLeft, behavior: 'instant'});
+      navigation.querySelectorAll('button').forEach(button => button.addEventListener('click', () => {
+        const current = Math.round(track.scrollLeft / track.clientWidth);
+        go((current + Number(button.dataset.direction) + slides.length) % slides.length);
+      }, {signal}));
+      track.addEventListener('scroll', () => {
+        const index = Math.round(track.scrollLeft / track.clientWidth);
+        this.querySelector('.cv-hero__status').textContent = `${index + 1} / ${slides.length}`;
+        slides.forEach((slide, i) => { slide.inert = i !== index; });
+      }, {signal, passive:true});
+      slides.forEach((slide, i) => {
+        slide.inert = i !== 0;
+        slide.addEventListener('shopify:block:select', () => go(i), {signal});
+      });
+    }
+    disconnectedCallback() { this.abort?.abort(); }
+  });
+{% endjavascript %}
+{% schema %}
+{"name":"Gift hero slideshow","disabled_on":{"groups":["header","footer"]},"max_blocks":4,"settings":[],"blocks":[{"type":"slide","name":"Slide","settings":[
+  {"type":"text","id":"eyebrow","label":"Eyebrow","default":"Made personal"},
+  {"type":"text","id":"heading","label":"Heading","default":"Gifts that mean more"},
+  {"type":"text","id":"description","label":"Description"},
+  {"type":"image_picker","id":"image","label":"Image"},
+  {"type":"image_picker","id":"mobile_image","label":"Mobile image","info":"Optional. Use a square or portrait image, e.g. 1080 × 1080 or 1080 × 1350 px. Mobile images display without cropping. Defaults to the desktop image."},
+  {"type":"collection","id":"collection","label":"Collection"},
+  {"type":"url","id":"link","label":"Link override"},
+  {"type":"text","id":"button","label":"Button","default":"Explore now"},
+  {"type":"color","id":"background","label":"Background","default":"#88283f"},
+  {"type":"color","id":"color","label":"Text","default":"#ffffff"}
+]}],"presets":[{"name":"Gift hero slideshow","blocks":[{"type":"slide"},{"type":"slide"}]}]}
+{% endschema %}

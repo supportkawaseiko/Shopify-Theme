@@ -1,0 +1,161 @@
+{% liquid
+  assign banner_image = section.settings.image
+  if banner_image == blank
+    for block in section.blocks
+      if block.settings.collection != blank
+        assign banner_image = block.settings.collection.image | default: block.settings.collection.products.first.featured_image
+        if banner_image != blank
+          break
+        endif
+      endif
+    endfor
+  endif
+%}
+<collection-tabs class="gift-tabs section section--page-width" style="--gift-banner: {{ section.settings.banner_color }}; --gift-accent: {{ section.settings.accent_color }};">
+  <div class="gift-tabs__banner{% if banner_image == blank %} gift-tabs__banner--text{% endif %}">
+    {% if banner_image != blank %}
+      <picture class="gift-tabs__media">
+        {% if section.settings.mobile_image != blank %}
+          <source media="(max-width: 749px)" srcset="{{ section.settings.mobile_image | image_url: width: 400 }} 400w, {{ section.settings.mobile_image | image_url: width: 750 }} 750w, {{ section.settings.mobile_image | image_url: width: 1100 }} 1100w" sizes="100vw" width="{{ section.settings.mobile_image.width }}" height="{{ section.settings.mobile_image.height }}">
+        {% endif %}
+        {{ banner_image | image_url: width: 1200 | image_tag: class: 'gift-tabs__image', widths: '360, 600, 900, 1200', sizes: '(min-width: 750px) 35vw, 100vw', loading: 'lazy' }}
+      </picture>
+    {% endif %}
+    <div class="gift-tabs__intro">
+      <h2>{{ section.settings.heading | escape }}</h2>
+      {% if section.settings.description != blank %}<p>{{ section.settings.description | escape }}</p>{% endif %}
+      <div class="gift-tabs__controls" aria-label="{{ section.settings.heading | escape }}">
+        {% for block in section.blocks %}
+          <button type="button" id="GiftTab-{{ section.id }}-{{ block.id }}" aria-controls="GiftPanel-{{ section.id }}-{{ block.id }}" data-gift-tab="{{ block.id }}" {{ block.shopify_attributes }}>
+            {{ block.settings.label | default: block.settings.collection.title | default: 'Collection' | escape }}
+          </button>
+        {% endfor %}
+        {% if section.settings.all_link != blank %}<a class="gift-tabs__all" href="{{ section.settings.all_link }}">{{ section.settings.all_label | escape }} <span aria-hidden="true">&rarr;</span></a>{% endif %}
+      </div>
+    </div>
+  </div>
+  {% for block in section.blocks %}
+    <div class="gift-tabs__panel" id="GiftPanel-{{ section.id }}-{{ block.id }}" aria-labelledby="GiftTab-{{ section.id }}-{{ block.id }}" data-gift-panel="{{ block.id }}">
+      {% if block.settings.collection != blank and block.settings.collection.products_count > 0 %}
+        <ul class="gift-tabs__products list-unstyled">
+          {% for product in block.settings.collection.products limit: section.settings.product_limit %}
+            <li>{% render 'resource-card', resource: product, resource_type: 'product', image_aspect_ratio: '1', image_hover: true, image_sizes: '(min-width: 1200px) 16vw, (min-width: 750px) 25vw, 50vw' %}</li>
+          {% endfor %}
+        </ul>
+        <a class="gift-tabs__more" href="{{ block.settings.collection.url }}">{{ section.settings.more_label | escape }} <span aria-hidden="true">&rarr;</span></a>
+      {% elsif request.design_mode %}
+        <p class="gift-tabs__empty">Choose a collection with products for this tab.</p>
+      {% else %}
+        <p class="gift-tabs__empty">New gifts are on their way.</p>
+      {% endif %}
+    </div>
+  {% endfor %}
+</collection-tabs>
+
+{% stylesheet %}
+  .gift-tabs { padding-block: 32px; color: #2b2325; }
+  .gift-tabs__banner { display: grid; grid-template-columns: minmax(0, 36fr) minmax(0, 64fr); background: var(--gift-banner); border-radius: 8px; overflow: hidden; }
+  .gift-tabs__banner--text { grid-template-columns: 1fr; }
+  .gift-tabs__media { display: block; min-width: 0; }
+  .gift-tabs__image { display: block; width: 100%; height: 100%; min-height: 280px; max-height: 340px; object-fit: cover; }
+  .gift-tabs__intro { align-self: center; padding: 32px; text-align: center; min-width: 0; }
+  .gift-tabs__intro h2 { margin: 0 0 12px; font-family: Georgia, 'Times New Roman', serif; font-size: 44px; font-weight: 400; line-height: 1.15; letter-spacing: 0; overflow-wrap: anywhere; }
+  .gift-tabs__intro p { margin: 0 0 24px; font-size: 16px; line-height: 1.5; }
+  .gift-tabs__controls { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+  .gift-tabs__controls button, .gift-tabs__all, .gift-tabs__more { font: inherit; font-size: 14px; line-height: 1.4; letter-spacing: 0; border: 1px solid currentColor; border-radius: 24px; padding: 12px 18px; min-height: 44px; background: transparent; color: inherit; cursor: pointer; text-decoration: none; }
+  .gift-tabs__controls button[aria-selected='true'] { background: var(--gift-accent); border-color: var(--gift-accent); color: #fff; }
+  .gift-tabs__controls button[aria-selected='true']::before { content: '✓'; margin-right: 6px; }
+  .gift-tabs__controls :is(button,a):focus-visible, .gift-tabs__more:focus-visible { outline: 2px solid var(--gift-accent); outline-offset: 3px; }
+  .gift-tabs__panel { padding-top: 18px; text-align: center; }
+  .gift-tabs__panel[hidden] { display: none; }
+  .gift-tabs__products { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px; margin: 0; padding: 0; text-align: left; --resource-card-corner-radius: 6px; }
+  .gift-tabs__products > li { min-width: 0; }
+  .gift-tabs__products .resource-card__title { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; font-size: 14px; line-height: 1.4; }
+  .gift-tabs__more { display: inline-flex; gap: 12px; margin-top: 24px; }
+  .gift-tabs__empty { padding: 32px; }
+  @media (max-width: 1199px) { .gift-tabs__products { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (max-width: 749px) {
+    .gift-tabs { padding-block: 24px; }
+    .gift-tabs__banner { grid-template-columns: 1fr; }
+    .gift-tabs__image { height: auto; min-height: 0; max-height: none; object-fit: contain; }
+    .gift-tabs__intro { padding: 24px 16px; }
+    .gift-tabs__intro h2 { font-size: 28px; }
+    .gift-tabs__products { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 12px; }
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  if (!customElements.get('collection-tabs')) {
+    customElements.define('collection-tabs', class extends HTMLElement {
+      connectedCallback() {
+        this.abort?.abort();
+        this.abort = new AbortController();
+        const options = { signal: this.abort.signal };
+        const buttons = [...this.querySelectorAll('[data-gift-tab]')];
+        const panels = [...this.querySelectorAll('[data-gift-panel]')];
+        if (!buttons.length) return;
+        // Keep the See all link outside the tablist accessibility tree.
+        const tablist = this.querySelector('[role="tablist"]') || document.createElement('div');
+        tablist.setAttribute('role', 'tablist');
+        tablist.setAttribute('aria-label', this.querySelector('h2').textContent);
+        tablist.style.display = 'contents';
+        if (!tablist.parentNode) buttons[0].before(tablist);
+        buttons.forEach(button => tablist.append(button));
+        const select = (button, focus = false) => {
+          buttons.forEach(tab => {
+            tab.setAttribute('role', 'tab');
+            tab.setAttribute('aria-selected', String(tab === button));
+            tab.tabIndex = tab === button ? 0 : -1;
+          });
+          panels.forEach(panel => {
+            panel.setAttribute('role', 'tabpanel');
+            panel.tabIndex = 0;
+            panel.hidden = panel.dataset.giftPanel !== button.dataset.giftTab;
+          });
+          if (focus) button.focus();
+        };
+        buttons.forEach((button, index) => {
+          button.addEventListener('click', () => select(button), options);
+          button.addEventListener('keydown', event => {
+            let next;
+            if (event.key === 'ArrowRight') next = (index + 1) % buttons.length;
+            if (event.key === 'ArrowLeft') next = (index - 1 + buttons.length) % buttons.length;
+            if (event.key === 'Home') next = 0;
+            if (event.key === 'End') next = buttons.length - 1;
+            if (next === undefined) return;
+            event.preventDefault();
+            select(buttons[next], true);
+          }, options);
+          button.addEventListener('shopify:block:select', () => select(button), options);
+        });
+        select(buttons[0]);
+      }
+      disconnectedCallback() { this.abort?.abort(); }
+    });
+  }
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Banner collection tabs",
+  "disabled_on": { "groups": ["header", "footer"] },
+  "max_blocks": 6,
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Find your moment" },
+    { "type": "text", "id": "description", "label": "Description", "default": "Personalized gifts for the people and moments you love." },
+    { "type": "image_picker", "id": "image", "label": "Banner image", "info": "Defaults to an image from the first collection." },
+    { "type": "image_picker", "id": "mobile_image", "label": "Mobile banner image", "info": "Optional. Recommended: 1080 × 1080 px. Mobile images display without cropping. Defaults to the desktop banner." },
+    { "type": "color", "id": "banner_color", "label": "Banner background", "default": "#F8E7ED" },
+    { "type": "color", "id": "accent_color", "label": "Selected tab", "default": "#88283F" },
+    { "type": "url", "id": "all_link", "label": "See all link" },
+    { "type": "text", "id": "all_label", "label": "See all label", "default": "See all" },
+    { "type": "text", "id": "more_label", "label": "Collection link label", "default": "View more" },
+    { "type": "range", "id": "product_limit", "label": "Products per tab", "min": 2, "max": 12, "step": 1, "default": 6 }
+  ],
+  "blocks": [{ "type": "collection", "name": "Collection tab", "settings": [
+    { "type": "text", "id": "label", "label": "Tab label" },
+    { "type": "collection", "id": "collection", "label": "Collection" }
+  ] }],
+  "presets": [{ "name": "Banner collection tabs", "blocks": [{ "type": "collection" }, { "type": "collection" }] }]
+}
+{% endschema %}

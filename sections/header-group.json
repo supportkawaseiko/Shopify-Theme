@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "type": "header",
   "name": "t:names.header",
@@ -41,7 +32,8 @@
         "divider_color": "{{ settings.color_palette.color2 }}",
         "padding-block-start": 15,
         "padding-block-end": 15
-      }
+      },
+      "disabled": true
     },
     "header_section": {
       "type": "header",
@@ -66,7 +58,7 @@
             "type_font_primary_size": "0.875rem",
             "menu_font_style": "inverse",
             "type_font_primary_link": "body",
-            "type_case_primary_link": "uppercase",
+            "type_case_primary_link": "none",
             "menu_style": "directory",
             "featured_products_aspect_ratio": "4 / 5",
             "featured_collections_aspect_ratio": "16 / 9",
@@ -82,12 +74,12 @@
         }
       },
       "settings": {
-        "logo_position": "center",
+        "logo_position": "left",
         "menu_position": "center",
         "menu_row": "bottom",
         "customer_account_menu": "customer-account-main-menu",
         "show_search": true,
-        "search_position": "left",
+        "search_position": "center",
         "search_row": "top",
         "show_country": true,
         "country_selector_style": true,
@@ -98,7 +90,7 @@
         "localization_row": "top",
         "section_width": "page-width",
         "section_height": "compact",
-        "enable_sticky_header": "always",
+        "enable_sticky_header": "scroll-up",
         "divider_width": 0,
         "divider_size": "page-width",
         "divider_color": "",
@@ -123,7 +115,8 @@
         "text_color_transparent_product": "",
         "enable_transparent_header_collection": false,
         "collection_inverse_logo": false,
-        "text_color_transparent_collection": ""
+        "text_color_transparent_collection": "",
+        "expanded_search": true
       }
     }
   },
