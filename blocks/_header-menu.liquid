@@ -127,12 +127,20 @@
                 {% assign list_id = 'MegaMenuList-' | append: forloop.index %}
                 <div class="mega-menu section section--full-width-margin section--{{ section.settings.section_width }}">
                   {% if menu_content_type == 'directory' %}
-                    <h2 class="mega-menu__directory-title">{{ link.title | escape }}</h2>
+                    <div class="mega-menu__directory-heading">
+                      <h2 class="mega-menu__directory-title">{{ link.title | escape }}</h2>
+                      {% assign catalog_url = link.url %}
+                      {% if catalog_url == blank or catalog_url == '#' %}{% assign catalog_url = routes.all_products_collection_url %}{% endif %}
+                      <a class="mega-menu__directory-catalog" href="{{ catalog_url }}">Explore all Catalogs <span aria-hidden="true">»</span></a>
+                    </div>
                   {% endif %}
                   <div
                     class="mega-menu__grid"
                     data-menu-grid-id="{{ list_id }}"
                   >
+                    {% if menu_content_type == 'directory' %}
+                      {% render 'mega-menu-directory', parent_link: link, id: list_id %}
+                    {% else %}
                     {% render 'mega-menu-list',
                       parent_link: link,
                       id: list_id,
@@ -144,6 +152,7 @@
                       content_aspect_ratio: ratio,
                       image_border_radius: image_border_radius
                     %}
+                    {% endif %}
                   </div>
                 </div>
               </div>
@@ -390,6 +399,15 @@
   }
 
   /** mega menu **/
+  .menu-list__list-item:not([slot='overflow']) > .menu-list__submenu:has(.menu-list__submenu-inner--directory) {
+    top: 100%;
+    clip-path: none;
+  }
+
+  .menu-list__submenu-inner.menu-list__submenu-inner--directory {
+    transform: none;
+  }
+
   .menu-list__submenu-inner--directory {
     background: #fff;
     color: #373039;
@@ -401,10 +419,18 @@
     --menu-vertical-gap: 24px;
   }
 
-  .mega-menu__directory-title {
+  .mega-menu__directory-heading {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
     margin: 0 0 16px;
     padding: 0 12px 14px;
     border-bottom: 1px solid #ece9e9;
+  }
+
+  .mega-menu__directory-title {
+    margin: 0;
     font-family: Georgia, 'Times New Roman', serif;
     font-size: 26px;
     font-weight: 400;
@@ -412,6 +438,25 @@
     letter-spacing: 0;
     color: #373039;
   }
+
+  .mega-menu__directory-catalog {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 8px 14px;
+    border: 1px solid #373039;
+    border-radius: 24px;
+    color: #373039;
+    font: 12px/1.4 Arial, Helvetica, sans-serif;
+    text-decoration: none;
+  }
+  .mega-menu__directory-catalog:hover { background: #f6f3f1; }
+  .mega-menu__directory-catalog:focus-visible { outline: 2px solid #88283f; outline-offset: 3px; }
+  .mega-menu__directory-columns { display: grid; grid-column: 1 / -1; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 16px; margin: 0; padding: 0; }
+  .mega-menu__directory-column { min-width: 0; }
+  .mega-menu__directory-group + .mega-menu__directory-group { border-top: 1px dashed #ece9e9; margin-top: 16px; padding-top: 14px; }
+  @media(max-width:989px) { .mega-menu__directory-columns { grid-template-columns: repeat(3,minmax(0,1fr)); } }
 
   .menu-list__submenu-inner--directory .mega-menu__link {
     font-family: Arial, Helvetica, sans-serif;

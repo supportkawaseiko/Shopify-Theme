@@ -1,0 +1,37 @@
+{% doc %}
+  Renders navigation groups in five columns, preserving Shopify menu order.
+  @param {object} parent_link - Top-level navigation link
+  @param {string} id - Menu list identifier
+{% enddoc %}
+{% liquid
+  assign base_group_count = parent_link.links.size | divided_by: 5
+  assign extra_group_count = parent_link.links.size | modulo: 5
+  assign group_offset = 0
+%}
+<ul class="mega-menu__directory-columns list-unstyled" data-menu-list-id="{{ id }}">
+  {% for column in (0..4) %}
+    {% liquid
+      assign groups_per_column = base_group_count
+      if column < extra_group_count
+        assign groups_per_column = groups_per_column | plus: 1
+      endif
+    %}
+    {% if group_offset < parent_link.links.size %}
+      <li class="mega-menu__directory-column">
+        {% for group in parent_link.links offset: group_offset limit: groups_per_column %}
+          <div class="mega-menu__directory-group">
+            <a href="{{ group.url }}" class="mega-menu__link mega-menu__link--parent"><span class="wrap-text">{{ group.title | escape }}</span></a>
+            {% if group.links != blank %}
+              <ul class="list-unstyled">
+                {% for item in group.links %}
+                  <li><a class="mega-menu__link" href="{{ item.url }}"><span class="wrap-text">{{ item.title | escape }}</span></a></li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </li>
+    {% endif %}
+    {% assign group_offset = group_offset | plus: groups_per_column %}
+  {% endfor %}
+</ul>
