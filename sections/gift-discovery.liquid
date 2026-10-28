@@ -1,21 +1,50 @@
-<section class="section section--page-width cv-discovery cv-discovery--{{ section.settings.layout }}">
+{% liquid
+  assign product_tag = section.settings.product_tag | strip
+  assign source_collection = section.settings.collection | default: collections.all
+  assign products_link = section.settings.link
+  if product_tag != blank
+    assign tag_handle = product_tag | handleize
+    assign tag_url = source_collection.url | append: '/' | append: tag_handle
+    assign products_link = tag_url
+  endif
+%}
+<gift-discovery class="section section--page-width cv-discovery cv-discovery--{{ section.settings.layout }}">
   <div class="cv-discovery__heading">
     <h2>{{ section.settings.heading | escape }}</h2>
     {% if section.settings.description != blank %}<p>{{ section.settings.description | escape }}</p>{% endif %}
-    {% if section.settings.link != blank %}<a class="cv-pill" href="{{ section.settings.link }}">View all <span aria-hidden="true">→</span></a>{% endif %}
+    {% if products_link != blank %}<a class="cv-pill" href="{{ products_link }}">View all <span aria-hidden="true">→</span></a>{% endif %}
   </div>
   {% if section.settings.layout == 'products' %}
+    {% if product_tag != blank %}
+      <div data-tag-products="{{ tag_url | escape }}">
+        <p data-tag-status role="status"><a href="{{ tag_url }}">Browse {{ product_tag | escape }} gifts →</a></p>
+        <ul class="cv-discovery__products list-unstyled" data-tag-grid></ul>
+      </div>
+    {% else %}
     <ul class="cv-discovery__products list-unstyled">
-      {% for product in section.settings.collection.products limit: 8 %}
+      {% for product in source_collection.products limit: 8 %}
         <li>{% render 'resource-card', resource: product, resource_type: 'product', image_aspect_ratio: '1', image_hover: true, image_sizes: '(min-width: 750px) 25vw, 50vw' %}</li>
       {% endfor %}
     </ul>
+    {% endif %}
   {% else %}
     <div class="cv-discovery__items">
       {% for block in section.blocks %}
         {% liquid
           assign card_image = block.settings.image | default: block.settings.product.featured_image | default: block.settings.collection.image | default: block.settings.collection.products.first.featured_image
           assign card_link = block.settings.link | default: block.settings.collection.url
+          assign item_tag = block.settings.product_tag | strip
+          assign auto_tag_image = false
+          if item_tag != blank
+            assign item_collection = block.settings.collection | default: collections.all
+            assign item_tag_handle = item_tag | handleize
+            assign item_tag_url = item_collection.url | append: '/' | append: item_tag_handle
+            assign card_link = block.settings.link | default: item_tag_url
+            assign card_image = block.settings.image | default: block.settings.product.featured_image
+            if card_image == blank
+              assign auto_tag_image = true
+            endif
+          endif
         %}
         {% if section.settings.layout == 'confidence' %}
           <article class="cv-confidence" {{ block.shopify_attributes }}>
@@ -33,15 +62,68 @@
         {% elsif card_link != blank %}
           <a class="cv-discovery__item{% if section.settings.layout == 'recipients' %} cv-pill{% endif %}" href="{{ card_link }}" {{ block.shopify_attributes }}>
             {% unless section.settings.layout == 'recipients' %}
-              {% if card_image != blank %}{{ card_image | image_url: width: 600 | image_tag: loading: 'lazy', widths: '180, 300, 450, 600', sizes: '(min-width: 750px) 16vw, 40vw' }}{% endif %}
+              {% if card_image != blank %}{{ card_image | image_url: width: 600 | image_tag: loading: 'lazy', widths: '180, 300, 450, 600', sizes: '(min-width: 750px) 16vw, 40vw' }}{% elsif auto_tag_image %}<span class="cv-discovery__tag-image" data-tag-image="{{ item_tag_url | escape }}" aria-hidden="true"></span>{% endif %}
             {% endunless %}
-            <span>{{ block.settings.title | default: block.settings.collection.title | escape }}</span>
+            <span>{{ block.settings.title | default: item_tag | default: block.settings.collection.title | escape }}</span>
           </a>
         {% endif %}
       {% endfor %}
     </div>
   {% endif %}
-</section>
+</gift-discovery>
+{% javascript %}
+  if (!customElements.get('gift-discovery')) {
+    const requests = new Map();
+    function loadProducts(path) {
+      const url = new URL(path, location.origin);
+      if (url.origin !== location.origin) return Promise.reject(new Error('Invalid collection URL'));
+      url.searchParams.set('section_id', 'gift-tag-products');
+      const preview = new URL(location.href).searchParams.get('preview_theme_id');
+      if (preview) url.searchParams.set('preview_theme_id', preview);
+      const key = url.href;
+      if (!requests.has(key)) {
+        const request = fetch(key).then(response => {
+          if (!response.ok) throw new Error('Collection unavailable');
+          return response.text();
+        }).then(html => {
+          const content = new DOMParser().parseFromString(html, 'text/html').querySelector('[data-gift-tag-results]');
+          if (!content) throw new Error('Missing collection content');
+          return content;
+        }).catch(error => { requests.delete(key); throw error; });
+        requests.set(key, request);
+      }
+      return requests.get(key);
+    }
+    customElements.define('gift-discovery', class extends HTMLElement {
+      connectedCallback() {
+        this.querySelectorAll('[data-tag-products], [data-tag-image]').forEach(async target => {
+          target.setAttribute('aria-busy', 'true');
+          try {
+            const results = await loadProducts(target.dataset.tagProducts || target.dataset.tagImage);
+            if (!target.isConnected) return;
+            if (target.hasAttribute('data-tag-products')) {
+              const items = [...results.querySelectorAll('li')].map(item => item.cloneNode(true));
+              target.querySelector('[data-tag-grid]').replaceChildren(...items);
+              const status = target.querySelector('[data-tag-status]');
+              if (items.length) status.hidden = true;
+              else status.textContent = 'No products found for this tag.';
+            } else {
+              const image = results.querySelector('img');
+              if (image) {
+                const copy = image.cloneNode(true);
+                copy.removeAttribute('class');
+                copy.alt = '';
+                target.replaceChildren(copy);
+              }
+            }
+          } catch {
+            // The server-rendered link remains usable if the request fails.
+          } finally { target.removeAttribute('aria-busy'); }
+        });
+      }
+    });
+  }
+{% endjavascript %}
 {% stylesheet %}
   .cv-discovery { padding-block: 28px; color: #302c35; }
   .cv-discovery__heading { text-align: center; position: relative; margin-bottom: 20px; }
@@ -53,6 +135,8 @@
   .cv-discovery__items { display: grid; grid-template-columns: repeat(6,minmax(0,1fr)); gap: 16px; }
   .cv-discovery__item { color: inherit; text-decoration: none; text-align: center; font-size: 14px; min-width: 0; }
   .cv-discovery__item img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 8px; margin-bottom: 10px; }
+  .cv-discovery__tag-image { display: block; width: 100%; aspect-ratio: 1; background: #eee7e4; border-radius: 8px; margin-bottom: 10px; overflow: hidden; }
+  .cv-discovery--occasions .cv-discovery__tag-image { border-radius: 50%; }
   .cv-discovery--occasions .cv-discovery__item img { border-radius: 50%; }
   .cv-discovery--recipients .cv-discovery__items { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
   .cv-discovery--recipients { padding-block: 40px; }
@@ -86,10 +170,12 @@
     {"type":"text","id":"heading","label":"Heading","default":"Find your perfect gift"},
     {"type":"text","id":"description","label":"Description"},
     {"type":"collection","id":"collection","label":"Product collection"},
+    {"type":"text","id":"product_tag","label":"Product tag","info":"Products layout: enter one exact Shopify tag. Leave collection empty to use all products. Tag also sets the View all destination."},
     {"type":"url","id":"link","label":"View all link"}
   ],
   "blocks":[{"type":"item","name":"Item","settings":[
     {"type":"text","id":"title","label":"Title"},{"type":"collection","id":"collection","label":"Collection"},
+    {"type":"text","id":"product_tag","label":"Product tag","info":"Enter one exact Shopify tag, e.g. Bride. Leave collection empty to use all products. Image is taken from the first matching product unless you choose one. Link override takes priority."},
     {"type":"image_picker","id":"image","label":"Image"},{"type":"product","id":"product","label":"Product image fallback"},{"type":"url","id":"link","label":"Link override"},
     {"type":"textarea","id":"text","label":"Confidence description"},
     {"type":"select","id":"icon","label":"Confidence icon","options":[{"value":"payment","label":"Payment"},{"value":"delivery","label":"Delivery"},{"value":"privacy","label":"Privacy"},{"value":"gift","label":"Gift"}],"default":"gift"}
