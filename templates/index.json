@@ -1,6 +1,188 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "gift_collection_tabs": {
+    "gift_hero": {
+      "type": "gift-hero",
+      "blocks": {
+        "christmas": {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "Customversal • Personalized gifts",
+            "heading": "Christmas, made personal",
+            "description": "Turn your favorite family photos into gifts to remember.",
+            "collection": "christmas",
+            "link": "",
+            "button": "Explore Christmas gifts",
+            "background": "#88283f",
+            "color": "#ffffff"
+          }
+        },
+        "wedding": {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "For your once-in-a-lifetime moments",
+            "heading": "A little more you. A lot more meaning.",
+            "description": "Personalized wedding gifts for the people by your side.",
+            "collection": "test",
+            "link": "",
+            "button": "Explore wedding gifts",
+            "background": "#e8ddd8",
+            "color": "#302c35"
+          }
+        }
+      },
+      "block_order": [
+        "christmas",
+        "wedding"
+      ],
+      "settings": {}
+    },
+    "gift_trending": {
+      "type": "gift-discovery",
+      "blocks": {
+        "wedding": {
+          "type": "item",
+          "settings": {
+            "title": "Wedding",
+            "collection": "test",
+            "product": "",
+            "link": "",
+            "text": "",
+            "icon": "gift"
+          }
+        },
+        "birthday": {
+          "type": "item",
+          "settings": {
+            "title": "Birthday",
+            "collection": "for-birthday",
+            "product": "",
+            "link": "",
+            "text": "",
+            "icon": "gift"
+          }
+        },
+        "family": {
+          "type": "item",
+          "settings": {
+            "title": "Anniversary",
+            "collection": "",
+            "product": "annoying-each-other-since-custom-photo-year-shirt-personalized-couple-names-anniversary-gift",
+            "link": "/products/annoying-each-other-since-custom-photo-year-shirt-personalized-couple-names-anniversary-gift",
+            "text": "",
+            "icon": "gift"
+          }
+        },
+        "christmas": {
+          "type": "item",
+          "settings": {
+            "title": "Christmas",
+            "collection": "christmas",
+            "product": "",
+            "link": "",
+            "text": "",
+            "icon": "gift"
+          }
+        },
+        "bride": {
+          "type": "item",
+          "settings": {
+            "title": "For the Bride",
+            "collection": "test",
+            "product": "custom-bride-to-be-photo-shirt-personalized-childhood-picture-tee-bridal-shower-wedding-gift-for-her",
+            "link": "/collections/test/Bride+bride",
+            "text": "",
+            "icon": "gift"
+          }
+        },
+        "bridesmaids": {
+          "type": "item",
+          "settings": {
+            "title": "For Couples",
+            "collection": "test",
+            "product": "a-perfect-match-custom-photo-shirt-personalized-couple-names-childhood-engagement-gift-1044822",
+            "link": "/products/a-perfect-match-custom-photo-shirt-personalized-couple-names-childhood-engagement-gift-1044822",
+            "text": "",
+            "icon": "gift"
+          }
+        }
+      },
+      "block_order": [
+        "wedding",
+        "birthday",
+        "family",
+        "christmas",
+        "bride",
+        "bridesmaids"
+      ],
+      "settings": {
+        "layout": "categories",
+        "heading": "Customversal’s Gift Finds",
+        "description": "Personalized gifts for your favorite people and the moments you share.",
+        "collection": "",
+        "link": ""
+      }
+    },
+    "gift_featured": {
+      "type": "gift-discovery",
+      "settings": {
+        "layout": "products",
+        "heading": "NEW ARRIVALS",
+        "description": "",
+        "collection": "all",
+        "link": "shopify://collections/all"
+      }
+    },
+    "gift_wedding": {
+      "type": "collection-tabs",
+      "blocks": {
+        "collection_JfWbDi": {
+          "type": "collection",
+          "settings": {
+            "label": "Mother of Bride",
+            "collection": ""
+          }
+        },
+        "wedding": {
+          "type": "collection",
+          "settings": {
+            "label": "Bride",
+            "collection": "test"
+          }
+        },
+        "birthday": {
+          "type": "collection",
+          "settings": {
+            "label": "Bridemaid",
+            "collection": "for-birthday"
+          }
+        }
+      },
+      "block_order": [
+        "collection_JfWbDi",
+        "wedding",
+        "birthday"
+      ],
+      "settings": {
+        "heading": "Wedding",
+        "description": "Celebrate your people. Remember every moment.",
+        "banner_color": "#eee0dc",
+        "accent_color": "#302c35",
+        "all_link": "shopify://collections/test",
+        "all_label": "See all",
+        "more_label": "View more",
+        "product_limit": 6
+      }
+    },
+    "gift_christmas": {
       "type": "collection-tabs",
       "blocks": {
         "christmas": {
@@ -10,6 +192,32 @@
             "collection": "christmas"
           }
         },
+        "all": {
+          "type": "collection",
+          "settings": {
+            "label": "All Gifts",
+            "collection": "all"
+          }
+        }
+      },
+      "block_order": [
+        "christmas",
+        "all"
+      ],
+      "settings": {
+        "heading": "Christmas",
+        "description": "Make the season personal with gifts made just for them.",
+        "banner_color": "#dfe5d8",
+        "accent_color": "#302c35",
+        "all_link": "shopify://collections/christmas",
+        "all_label": "See all",
+        "more_label": "View more",
+        "product_limit": 6
+      }
+    },
+    "gift_birthday": {
+      "type": "collection-tabs",
+      "blocks": {
         "birthday": {
           "type": "collection",
           "settings": {
@@ -17,30 +225,269 @@
             "collection": "for-birthday"
           }
         },
-        "wedding": {
+        "all": {
           "type": "collection",
           "settings": {
-            "label": "Wedding",
-            "collection": "test"
+            "label": "All Gifts",
+            "collection": "all"
           }
         }
       },
       "block_order": [
-        "christmas",
         "birthday",
-        "wedding"
+        "all"
       ],
       "settings": {
-        "heading": "Made for your moments",
-        "description": "Thoughtful, personalized gifts for every reason to celebrate.",
-        "banner_color": "#f8e7ed",
-        "accent_color": "#88283f",
-        "all_link": "shopify://collections/all",
+        "heading": "Birthday",
+        "description": "Their favorite memories. A gift that is truly theirs.",
+        "banner_color": "#f1e3cf",
+        "accent_color": "#302c35",
+        "all_link": "shopify://collections/for-birthday",
         "all_label": "See all",
         "more_label": "View more",
         "product_limit": 6
+      }
+    },
+    "gift_recipients": {
+      "type": "gift-discovery",
+      "blocks": {
+        "bride": {
+          "type": "item",
+          "settings": {
+            "title": "Bride",
+            "collection": "test",
+            "product": "",
+            "link": "/collections/test/Bride+bride",
+            "text": "",
+            "icon": "gift"
+          }
+        },
+        "bridesmaid": {
+          "type": "item",
+          "settings": {
+            "title": "Bridesmaids",
+            "collection": "test",
+            "product": "",
+            "link": "/collections/test/Bridemaid",
+            "text": "",
+            "icon": "gift"
+          }
+        },
+        "mother": {
+          "type": "item",
+          "settings": {
+            "title": "Mother of the Bride",
+            "collection": "test",
+            "product": "",
+            "link": "/collections/test/Motherbride",
+            "text": "",
+            "icon": "gift"
+          }
+        },
+        "family": {
+          "type": "item",
+          "settings": {
+            "title": "Auntie",
+            "collection": "",
+            "product": "",
+            "link": "/products/auntie-est-2026-custom-photo-shirt-personalized-aunt-t-shirt-with-kids-photo",
+            "text": "",
+            "icon": "gift"
+          }
+        },
+        "couples": {
+          "type": "item",
+          "settings": {
+            "title": "Couples",
+            "collection": "test",
+            "product": "",
+            "link": "",
+            "text": "",
+            "icon": "gift"
+          }
+        },
+        "everyone": {
+          "type": "item",
+          "settings": {
+            "title": "Everyone",
+            "collection": "all",
+            "product": "",
+            "link": "",
+            "text": "",
+            "icon": "gift"
+          }
+        }
       },
-      "disabled": true
+      "block_order": [
+        "bride",
+        "bridesmaid",
+        "mother",
+        "family",
+        "couples",
+        "everyone"
+      ],
+      "settings": {
+        "layout": "recipients",
+        "heading": "Who Are You Shopping For Today?",
+        "description": "Start with someone special. Find a gift with their name on it.",
+        "collection": "",
+        "link": ""
+      }
+    },
+    "gift_occasions": {
+      "type": "gift-discovery",
+      "blocks": {
+        "wedding": {
+          "type": "item",
+          "settings": {
+            "title": "Wedding",
+            "collection": "test",
+            "product": "",
+            "link": "",
+            "text": "",
+            "icon": "gift"
+          }
+        },
+        "birthday": {
+          "type": "item",
+          "settings": {
+            "title": "Birthday",
+            "collection": "for-birthday",
+            "product": "",
+            "link": "",
+            "text": "",
+            "icon": "gift"
+          }
+        },
+        "family": {
+          "type": "item",
+          "settings": {
+            "title": "Anniversary",
+            "collection": "",
+            "product": "annoying-each-other-since-custom-photo-year-shirt-personalized-couple-names-anniversary-gift",
+            "link": "/products/annoying-each-other-since-custom-photo-year-shirt-personalized-couple-names-anniversary-gift",
+            "text": "",
+            "icon": "gift"
+          }
+        },
+        "christmas": {
+          "type": "item",
+          "settings": {
+            "title": "Christmas",
+            "collection": "christmas",
+            "product": "",
+            "link": "",
+            "text": "",
+            "icon": "gift"
+          }
+        },
+        "bridal": {
+          "type": "item",
+          "settings": {
+            "title": "Bridal Shower",
+            "collection": "test",
+            "product": "",
+            "link": "/collections/test/Bride+bride",
+            "text": "",
+            "icon": "gift"
+          }
+        },
+        "just": {
+          "type": "item",
+          "settings": {
+            "title": "Just Because",
+            "collection": "all",
+            "product": "auntie-est-2026-custom-photo-shirt-personalized-aunt-t-shirt-with-kids-photo",
+            "link": "",
+            "text": "",
+            "icon": "gift"
+          }
+        }
+      },
+      "block_order": [
+        "wedding",
+        "birthday",
+        "family",
+        "christmas",
+        "bridal",
+        "just"
+      ],
+      "settings": {
+        "layout": "occasions",
+        "heading": "Shop by Occasion",
+        "description": "Big milestones and little reasons to make someone smile.",
+        "collection": "",
+        "link": ""
+      }
+    },
+    "gift_confidence": {
+      "type": "gift-discovery",
+      "blocks": {
+        "payment": {
+          "type": "item",
+          "settings": {
+            "title": "Secure Checkout",
+            "collection": "",
+            "product": "",
+            "link": "",
+            "text": "Choose from the payment methods available at checkout.",
+            "icon": "payment"
+          }
+        },
+        "delivery": {
+          "type": "item",
+          "settings": {
+            "title": "Delivery Information",
+            "collection": "",
+            "product": "",
+            "link": "shopify://pages/delivery",
+            "text": "Find production and delivery details before ordering.",
+            "icon": "delivery"
+          }
+        },
+        "privacy": {
+          "type": "item",
+          "settings": {
+            "title": "Your Privacy Matters",
+            "collection": "",
+            "product": "",
+            "link": "shopify://pages/privacy-policy",
+            "text": "Learn how we handle and protect your personal information.",
+            "icon": "privacy"
+          }
+        },
+        "gift": {
+          "type": "item",
+          "settings": {
+            "title": "Made Personal",
+            "collection": "",
+            "product": "",
+            "link": "",
+            "text": "Add your photos, names and memories to your chosen design.",
+            "icon": "gift"
+          }
+        }
+      },
+      "block_order": [
+        "payment",
+        "delivery",
+        "privacy",
+        "gift"
+      ],
+      "settings": {
+        "layout": "confidence",
+        "heading": "Shop with Confidence",
+        "description": "",
+        "collection": "",
+        "link": ""
+      }
+    },
+    "gift_reviews": {
+      "type": "gift-reviews",
+      "disabled": true,
+      "settings": {
+        "heading": "Happy Customers"
+      }
     },
     "hero_jVaWmY": {
       "type": "hero",
@@ -68,6 +515,7 @@
       "block_order": [
         "button_H9gpTf"
       ],
+      "disabled": true,
       "name": "t:names.hero",
       "settings": {
         "media_type_1": "image",
@@ -99,8 +547,7 @@
         "reflection_opacity": 75,
         "padding-block-start": 100,
         "padding-block-end": 72
-      },
-      "disabled": true
+      }
     },
     "marquee_WXqFfg": {
       "type": "marquee",
@@ -230,6 +677,7 @@
         "text_zKxfHt",
         "divider_Gbm4xn"
       ],
+      "disabled": true,
       "name": "t:names.marquee_section",
       "settings": {
         "movement_direction": "normal",
@@ -237,8 +685,7 @@
         "padding-block-start": 14,
         "padding-block-end": 18,
         "gap_between_elements": 18
-      },
-      "disabled": true
+      }
     },
     "collection_list_Pyyrre": {
       "type": "collection-list",
@@ -496,6 +943,7 @@
       "block_order": [
         "group_E7KNeG"
       ],
+      "disabled": true,
       "name": "t:names.collections_grid",
       "settings": {
         "collection_list": [
@@ -520,8 +968,49 @@
         "background_color": "",
         "padding-block-start": 48,
         "padding-block-end": 48
+      }
+    },
+    "gift_collection_tabs": {
+      "type": "collection-tabs",
+      "blocks": {
+        "christmas": {
+          "type": "collection",
+          "settings": {
+            "label": "Christmas",
+            "collection": "christmas"
+          }
+        },
+        "birthday": {
+          "type": "collection",
+          "settings": {
+            "label": "Birthday",
+            "collection": "for-birthday"
+          }
+        },
+        "wedding": {
+          "type": "collection",
+          "settings": {
+            "label": "Wedding",
+            "collection": "test"
+          }
+        }
       },
-      "disabled": true
+      "block_order": [
+        "christmas",
+        "birthday",
+        "wedding"
+      ],
+      "disabled": true,
+      "settings": {
+        "heading": "Made for your moments",
+        "description": "Thoughtful, personalized gifts for every reason to celebrate.",
+        "banner_color": "#f8e7ed",
+        "accent_color": "#88283f",
+        "all_link": "shopify://collections/all",
+        "all_label": "See all",
+        "more_label": "View more",
+        "product_limit": 6
+      }
     },
     "product_list_fa6P9H": {
       "type": "product-list",
@@ -682,6 +1171,7 @@
           ]
         }
       },
+      "disabled": true,
       "custom_css": [],
       "name": "t:names.product_list",
       "settings": {
@@ -702,8 +1192,7 @@
         "background_color": "#f5e6ea",
         "padding-block-start": 48,
         "padding-block-end": 48
-      },
-      "disabled": true
+      }
     },
     "brand_value_CynVmH": {
       "type": "brand_value",
@@ -763,6 +1252,7 @@
         "value_card_nw7PXH",
         "value_card_yBWWNK"
       ],
+      "disabled": true,
       "name": "Hippolord - Brand values",
       "settings": {
         "eyebrow": "BUILT DIFFERENT",
@@ -784,8 +1274,7 @@
         "padding_top": 64,
         "padding_bottom": 64,
         "enable_hover": true
-      },
-      "disabled": true
+      }
     },
     "featured_product_information_hPpyLN": {
       "type": "featured-product-information",
@@ -1058,6 +1547,7 @@
     },
     "17871211509f0d62ce": {
       "type": "_blocks",
+      "disabled": true,
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,
@@ -1085,398 +1575,6 @@
         "border_radius": 0,
         "padding-block-start": 0,
         "padding-block-end": 0
-      },
-      "disabled": true
-    },
-    "gift_hero": {
-      "type": "gift-hero",
-      "blocks": {
-        "christmas": {
-          "type": "slide",
-          "settings": {
-            "eyebrow": "Customversal • Personalized gifts",
-            "heading": "Christmas, made personal",
-            "description": "Turn your favorite family photos into gifts to remember.",
-            "collection": "christmas",
-            "button": "Explore Christmas gifts",
-            "background": "#88283f",
-            "color": "#ffffff"
-          }
-        },
-        "wedding": {
-          "type": "slide",
-          "settings": {
-            "eyebrow": "For your once-in-a-lifetime moments",
-            "heading": "A little more you. A lot more meaning.",
-            "description": "Personalized wedding gifts for the people by your side.",
-            "collection": "test",
-            "button": "Explore wedding gifts",
-            "background": "#e8ddd8",
-            "color": "#302c35"
-          }
-        }
-      },
-      "block_order": [
-        "christmas",
-        "wedding"
-      ],
-      "settings": {}
-    },
-    "gift_trending": {
-      "type": "gift-discovery",
-      "settings": {
-        "heading": "Customversal’s Gift Finds",
-        "layout": "categories",
-        "description": "Personalized gifts for your favorite people and the moments you share."
-      },
-      "blocks": {
-        "wedding": {
-          "type": "item",
-          "settings": {
-            "title": "Wedding",
-            "collection": "test"
-          }
-        },
-        "birthday": {
-          "type": "item",
-          "settings": {
-            "title": "Birthday",
-            "collection": "for-birthday"
-          }
-        },
-        "family": {
-          "type": "item",
-          "settings": {
-            "title": "Anniversary",
-            "product": "annoying-each-other-since-custom-photo-year-shirt-personalized-couple-names-anniversary-gift",
-            "link": "/products/annoying-each-other-since-custom-photo-year-shirt-personalized-couple-names-anniversary-gift"
-          }
-        },
-        "christmas": {
-          "type": "item",
-          "settings": {
-            "title": "Christmas",
-            "collection": "christmas"
-          }
-        },
-        "bride": {
-          "type": "item",
-          "settings": {
-            "title": "For the Bride",
-            "collection": "test",
-            "link": "/collections/test/Bride+bride",
-            "product": "custom-bride-to-be-photo-shirt-personalized-childhood-picture-tee-bridal-shower-wedding-gift-for-her"
-          }
-        },
-        "bridesmaids": {
-          "type": "item",
-          "settings": {
-            "title": "For Couples",
-            "collection": "test",
-            "link": "/products/a-perfect-match-custom-photo-shirt-personalized-couple-names-childhood-engagement-gift-1044822",
-            "product": "a-perfect-match-custom-photo-shirt-personalized-couple-names-childhood-engagement-gift-1044822"
-          }
-        }
-      },
-      "block_order": [
-        "wedding",
-        "birthday",
-        "family",
-        "christmas",
-        "bride",
-        "bridesmaids"
-      ]
-    },
-    "gift_featured": {
-      "type": "gift-discovery",
-      "settings": {
-        "heading": "Discover Your Next Gift",
-        "layout": "products",
-        "collection": "all",
-        "link": "shopify://collections/all"
-      },
-      "blocks": {},
-      "block_order": []
-    },
-    "gift_wedding": {
-      "type": "collection-tabs",
-      "settings": {
-        "heading": "Wedding",
-        "description": "Celebrate your people. Remember every moment.",
-        "banner_color": "#eee0dc",
-        "accent_color": "#302c35",
-        "all_link": "shopify://collections/test",
-        "all_label": "See all",
-        "more_label": "View more",
-        "product_limit": 6
-      },
-      "blocks": {
-        "wedding": {
-          "type": "collection",
-          "settings": {
-            "label": "Wedding",
-            "collection": "test"
-          }
-        },
-        "birthday": {
-          "type": "collection",
-          "settings": {
-            "label": "Celebrations",
-            "collection": "for-birthday"
-          }
-        }
-      },
-      "block_order": [
-        "wedding",
-        "birthday"
-      ]
-    },
-    "gift_christmas": {
-      "type": "collection-tabs",
-      "settings": {
-        "heading": "Christmas",
-        "description": "Make the season personal with gifts made just for them.",
-        "banner_color": "#dfe5d8",
-        "accent_color": "#302c35",
-        "all_link": "shopify://collections/christmas",
-        "all_label": "See all",
-        "more_label": "View more",
-        "product_limit": 6
-      },
-      "blocks": {
-        "christmas": {
-          "type": "collection",
-          "settings": {
-            "label": "Christmas",
-            "collection": "christmas"
-          }
-        },
-        "all": {
-          "type": "collection",
-          "settings": {
-            "label": "All Gifts",
-            "collection": "all"
-          }
-        }
-      },
-      "block_order": [
-        "christmas",
-        "all"
-      ]
-    },
-    "gift_birthday": {
-      "type": "collection-tabs",
-      "settings": {
-        "heading": "Birthday",
-        "description": "Their favorite memories. A gift that is truly theirs.",
-        "banner_color": "#f1e3cf",
-        "accent_color": "#302c35",
-        "all_link": "shopify://collections/for-birthday",
-        "all_label": "See all",
-        "more_label": "View more",
-        "product_limit": 6
-      },
-      "blocks": {
-        "birthday": {
-          "type": "collection",
-          "settings": {
-            "label": "Birthday",
-            "collection": "for-birthday"
-          }
-        },
-        "all": {
-          "type": "collection",
-          "settings": {
-            "label": "All Gifts",
-            "collection": "all"
-          }
-        }
-      },
-      "block_order": [
-        "birthday",
-        "all"
-      ]
-    },
-    "gift_recipients": {
-      "type": "gift-discovery",
-      "settings": {
-        "heading": "Who Are You Shopping For Today?",
-        "layout": "recipients",
-        "description": "Start with someone special. Find a gift with their name on it."
-      },
-      "blocks": {
-        "bride": {
-          "type": "item",
-          "settings": {
-            "title": "Bride",
-            "collection": "test",
-            "link": "/collections/test/Bride+bride"
-          }
-        },
-        "bridesmaid": {
-          "type": "item",
-          "settings": {
-            "title": "Bridesmaids",
-            "collection": "test",
-            "link": "/collections/test/Bridemaid"
-          }
-        },
-        "mother": {
-          "type": "item",
-          "settings": {
-            "title": "Mother of the Bride",
-            "collection": "test",
-            "link": "/collections/test/Motherbride"
-          }
-        },
-        "family": {
-          "type": "item",
-          "settings": {
-            "title": "Auntie",
-            "link": "/products/auntie-est-2026-custom-photo-shirt-personalized-aunt-t-shirt-with-kids-photo"
-          }
-        },
-        "couples": {
-          "type": "item",
-          "settings": {
-            "title": "Couples",
-            "collection": "test"
-          }
-        },
-        "everyone": {
-          "type": "item",
-          "settings": {
-            "title": "Everyone",
-            "collection": "all"
-          }
-        }
-      },
-      "block_order": [
-        "bride",
-        "bridesmaid",
-        "mother",
-        "family",
-        "couples",
-        "everyone"
-      ]
-    },
-    "gift_occasions": {
-      "type": "gift-discovery",
-      "settings": {
-        "heading": "Shop by Occasion",
-        "layout": "occasions",
-        "description": "Big milestones and little reasons to make someone smile."
-      },
-      "blocks": {
-        "wedding": {
-          "type": "item",
-          "settings": {
-            "title": "Wedding",
-            "collection": "test"
-          }
-        },
-        "birthday": {
-          "type": "item",
-          "settings": {
-            "title": "Birthday",
-            "collection": "for-birthday"
-          }
-        },
-        "family": {
-          "type": "item",
-          "settings": {
-            "title": "Anniversary",
-            "product": "annoying-each-other-since-custom-photo-year-shirt-personalized-couple-names-anniversary-gift",
-            "link": "/products/annoying-each-other-since-custom-photo-year-shirt-personalized-couple-names-anniversary-gift"
-          }
-        },
-        "christmas": {
-          "type": "item",
-          "settings": {
-            "title": "Christmas",
-            "collection": "christmas"
-          }
-        },
-        "bridal": {
-          "type": "item",
-          "settings": {
-            "title": "Bridal Shower",
-            "collection": "test",
-            "link": "/collections/test/Bride+bride"
-          }
-        },
-        "just": {
-          "type": "item",
-          "settings": {
-            "title": "Just Because",
-            "collection": "all",
-            "product": "auntie-est-2026-custom-photo-shirt-personalized-aunt-t-shirt-with-kids-photo"
-          }
-        }
-      },
-      "block_order": [
-        "wedding",
-        "birthday",
-        "family",
-        "christmas",
-        "bridal",
-        "just"
-      ]
-    },
-    "gift_confidence": {
-      "type": "gift-discovery",
-      "settings": {
-        "heading": "Shop with Confidence",
-        "layout": "confidence"
-      },
-      "blocks": {
-        "payment": {
-          "type": "item",
-          "settings": {
-            "title": "Secure Checkout",
-            "icon": "payment",
-            "text": "Choose from the payment methods available at checkout."
-          }
-        },
-        "delivery": {
-          "type": "item",
-          "settings": {
-            "title": "Delivery Information",
-            "icon": "delivery",
-            "text": "Find production and delivery details before ordering.",
-            "link": "shopify://pages/delivery"
-          }
-        },
-        "privacy": {
-          "type": "item",
-          "settings": {
-            "title": "Your Privacy Matters",
-            "icon": "privacy",
-            "text": "Learn how we handle and protect your personal information.",
-            "link": "shopify://pages/privacy-policy"
-          }
-        },
-        "gift": {
-          "type": "item",
-          "settings": {
-            "title": "Made Personal",
-            "icon": "gift",
-            "text": "Add your photos, names and memories to your chosen design."
-          }
-        }
-      },
-      "block_order": [
-        "payment",
-        "delivery",
-        "privacy",
-        "gift"
-      ]
-    },
-    "gift_reviews": {
-      "type": "gift-reviews",
-      "disabled": true,
-      "settings": {
-        "heading": "Happy Customers"
       }
     }
   },
