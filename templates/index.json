@@ -10,6 +10,7 @@
 {
   "sections": {
     "gift_hero": {
+      "name": "Hero slideshow",
       "type": "gift-hero",
       "blocks": {
         "christmas": {
@@ -46,6 +47,7 @@
       "settings": {}
     },
     "gift_trending": {
+      "name": "Gift categories",
       "type": "gift-discovery",
       "blocks": {
         "wedding": {
@@ -132,6 +134,7 @@
       }
     },
     "gift_featured": {
+      "name": "New arrivals",
       "type": "gift-discovery",
       "settings": {
         "layout": "products",
@@ -142,6 +145,7 @@
       }
     },
     "gift_wedding": {
+      "name": "Wedding collections",
       "type": "collection-tabs",
       "blocks": {
         "collection_JfWbDi": {
@@ -183,6 +187,7 @@
       }
     },
     "gift_christmas": {
+      "name": "Christmas collections",
       "type": "collection-tabs",
       "blocks": {
         "christmas": {
@@ -216,6 +221,7 @@
       }
     },
     "gift_birthday": {
+      "name": "Birthday collections",
       "type": "collection-tabs",
       "blocks": {
         "birthday": {
@@ -249,6 +255,7 @@
       }
     },
     "gift_recipients": {
+      "name": "Shop by recipient",
       "type": "gift-discovery",
       "blocks": {
         "bride": {
@@ -335,6 +342,7 @@
       }
     },
     "gift_occasions": {
+      "name": "Shop by occasion",
       "type": "gift-discovery",
       "blocks": {
         "wedding": {
@@ -421,6 +429,7 @@
       }
     },
     "gift_confidence": {
+      "name": "Shop with Confidence",
       "type": "gift-discovery",
       "blocks": {
         "payment": {
@@ -483,6 +492,7 @@
       }
     },
     "gift_reviews": {
+      "name": "Customer reviews",
       "type": "gift-reviews",
       "disabled": true,
       "settings": {
