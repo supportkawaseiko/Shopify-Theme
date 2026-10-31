@@ -1,0 +1,56 @@
+/* Match the homepage gift sections without affecting product review widgets. */
+.jdgm-horizon-widget:has(.jdgm-cards-carousel) {
+  width: 100%;
+  min-width: 0;
+}
+.jdgm-widget.jdgm-cards-carousel {
+  --jdgm-primary-color: #88283f;
+  width: 100%;
+  max-width: 1400px !important;
+  margin-inline: auto;
+  padding-block: 40px;
+  color: #373039;
+  font-family: var(--font-body--family), Arial, sans-serif;
+}
+.jdgm-cards-carousel .jdgm-title {
+  font-family: var(--font-body--family), Arial, sans-serif !important;
+  font-size: clamp(26px, 3vw, 30px) !important;
+  font-weight: 400 !important;
+  line-height: 1.25;
+  color: #373039 !important;
+  margin-bottom: 12px;
+}
+.jdgm-cards-carousel .jdgm-header { margin-bottom: 28px; }
+.jdgm-cards-carousel .jdgm-card {
+  background: #fff !important;
+  border: 1px solid #e2d7d8 !important;
+  border-radius: 12px !important;
+  box-shadow: none !important;
+  color: #373039 !important;
+}
+.jdgm-cards-carousel .jdgm-text {
+  font-family: var(--font-body--family), Arial, sans-serif !important;
+  font-size: 15px !important;
+  line-height: 1.65 !important;
+  color: #373039 !important;
+}
+.jdgm-cards-carousel .jdgm-reviewer-name { color: #373039 !important; font-weight: 600; }
+.jdgm-cards-carousel .jdgm-product-name,
+.jdgm-cards-carousel .jdgm-rating-text { color: #655b60 !important; font-size: 13px; }
+.jdgm-cards-carousel .jdgm-star,
+.jdgm-cards-carousel .jdgm-rating-star { color: #88283f !important; }
+.jdgm-cards-carousel .jdgm-card .jdgm-star { font-size: 18px !important; }
+.jdgm-cards-carousel .jdgm-arrow {
+  color: #88283f !important;
+  background: #fff !important;
+  border: 1px solid #e2d7d8 !important;
+  border-radius: 50%;
+  min-width: 44px;
+  min-height: 44px;
+}
+.jdgm-cards-carousel .jdgm-arrow:hover { background: #f7eef0 !important; }
+.jdgm-cards-carousel :is(button, a):focus-visible { outline: 2px solid #88283f; outline-offset: 3px; }
+@media (max-width: 749px) {
+  .jdgm-widget.jdgm-cards-carousel { padding-block: 28px; }
+  .jdgm-cards-carousel .jdgm-header { margin-bottom: 20px; }
+}
