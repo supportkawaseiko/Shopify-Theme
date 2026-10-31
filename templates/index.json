@@ -10,7 +10,6 @@
 {
   "sections": {
     "gift_hero": {
-      "name": "Hero slideshow",
       "type": "gift-hero",
       "blocks": {
         "christmas": {
@@ -44,10 +43,10 @@
         "christmas",
         "wedding"
       ],
+      "name": "Hero slideshow",
       "settings": {}
     },
     "gift_trending": {
-      "name": "Gift categories",
       "type": "gift-discovery",
       "blocks": {
         "wedding": {
@@ -55,6 +54,7 @@
           "settings": {
             "title": "Wedding",
             "collection": "test",
+            "product_tag": "",
             "product": "",
             "link": "",
             "text": "",
@@ -66,6 +66,7 @@
           "settings": {
             "title": "Birthday",
             "collection": "for-birthday",
+            "product_tag": "",
             "product": "",
             "link": "",
             "text": "",
@@ -77,6 +78,7 @@
           "settings": {
             "title": "Anniversary",
             "collection": "",
+            "product_tag": "",
             "product": "annoying-each-other-since-custom-photo-year-shirt-personalized-couple-names-anniversary-gift",
             "link": "/products/annoying-each-other-since-custom-photo-year-shirt-personalized-couple-names-anniversary-gift",
             "text": "",
@@ -88,6 +90,7 @@
           "settings": {
             "title": "Christmas",
             "collection": "christmas",
+            "product_tag": "",
             "product": "",
             "link": "",
             "text": "",
@@ -99,6 +102,7 @@
           "settings": {
             "title": "For the Bride",
             "collection": "test",
+            "product_tag": "",
             "product": "custom-bride-to-be-photo-shirt-personalized-childhood-picture-tee-bridal-shower-wedding-gift-for-her",
             "link": "/collections/test/Bride+bride",
             "text": "",
@@ -110,6 +114,7 @@
           "settings": {
             "title": "For Couples",
             "collection": "test",
+            "product_tag": "",
             "product": "a-perfect-match-custom-photo-shirt-personalized-couple-names-childhood-engagement-gift-1044822",
             "link": "/products/a-perfect-match-custom-photo-shirt-personalized-couple-names-childhood-engagement-gift-1044822",
             "text": "",
@@ -125,27 +130,29 @@
         "bride",
         "bridesmaids"
       ],
+      "name": "Gift categories",
       "settings": {
         "layout": "categories",
         "heading": "Customversal’s Gift Finds",
         "description": "Personalized gifts for your favorite people and the moments you share.",
         "collection": "",
+        "product_tag": "",
         "link": ""
       }
     },
     "gift_featured": {
-      "name": "New arrivals",
       "type": "gift-discovery",
+      "name": "New arrivals",
       "settings": {
         "layout": "products",
         "heading": "NEW ARRIVALS",
         "description": "",
         "collection": "all",
+        "product_tag": "",
         "link": "shopify://collections/all"
       }
     },
     "gift_wedding": {
-      "name": "Wedding collections",
       "type": "collection-tabs",
       "blocks": {
         "collection_JfWbDi": {
@@ -175,6 +182,7 @@
         "wedding",
         "birthday"
       ],
+      "name": "Wedding collections",
       "settings": {
         "heading": "Wedding",
         "description": "Celebrate your people. Remember every moment.",
@@ -187,7 +195,6 @@
       }
     },
     "gift_christmas": {
-      "name": "Christmas collections",
       "type": "collection-tabs",
       "blocks": {
         "christmas": {
@@ -209,6 +216,7 @@
         "christmas",
         "all"
       ],
+      "name": "Christmas collections",
       "settings": {
         "heading": "Christmas",
         "description": "Make the season personal with gifts made just for them.",
@@ -221,7 +229,6 @@
       }
     },
     "gift_birthday": {
-      "name": "Birthday collections",
       "type": "collection-tabs",
       "blocks": {
         "birthday": {
@@ -243,6 +250,7 @@
         "birthday",
         "all"
       ],
+      "name": "Birthday collections",
       "settings": {
         "heading": "Birthday",
         "description": "Their favorite memories. A gift that is truly theirs.",
@@ -255,7 +263,6 @@
       }
     },
     "gift_recipients": {
-      "name": "Shop by recipient",
       "type": "gift-discovery",
       "blocks": {
         "bride": {
@@ -263,6 +270,7 @@
           "settings": {
             "title": "Bride",
             "collection": "test",
+            "product_tag": "",
             "product": "",
             "link": "/collections/test/Bride+bride",
             "text": "",
@@ -274,6 +282,7 @@
           "settings": {
             "title": "Bridesmaids",
             "collection": "test",
+            "product_tag": "",
             "product": "",
             "link": "/collections/test/Bridemaid",
             "text": "",
@@ -285,6 +294,7 @@
           "settings": {
             "title": "Mother of the Bride",
             "collection": "test",
+            "product_tag": "",
             "product": "",
             "link": "/collections/test/Motherbride",
             "text": "",
@@ -296,6 +306,7 @@
           "settings": {
             "title": "Auntie",
             "collection": "",
+            "product_tag": "",
             "product": "",
             "link": "/products/auntie-est-2026-custom-photo-shirt-personalized-aunt-t-shirt-with-kids-photo",
             "text": "",
@@ -307,6 +318,7 @@
           "settings": {
             "title": "Couples",
             "collection": "test",
+            "product_tag": "",
             "product": "",
             "link": "",
             "text": "",
@@ -318,6 +330,7 @@
           "settings": {
             "title": "Everyone",
             "collection": "all",
+            "product_tag": "",
             "product": "",
             "link": "",
             "text": "",
@@ -333,16 +346,17 @@
         "couples",
         "everyone"
       ],
+      "name": "Shop by recipient",
       "settings": {
         "layout": "recipients",
         "heading": "Who Are You Shopping For Today?",
         "description": "Start with someone special. Find a gift with their name on it.",
         "collection": "",
+        "product_tag": "",
         "link": ""
       }
     },
     "gift_occasions": {
-      "name": "Shop by occasion",
       "type": "gift-discovery",
       "blocks": {
         "wedding": {
@@ -350,6 +364,7 @@
           "settings": {
             "title": "Wedding",
             "collection": "test",
+            "product_tag": "",
             "product": "",
             "link": "",
             "text": "",
@@ -361,6 +376,7 @@
           "settings": {
             "title": "Birthday",
             "collection": "for-birthday",
+            "product_tag": "",
             "product": "",
             "link": "",
             "text": "",
@@ -372,6 +388,7 @@
           "settings": {
             "title": "Anniversary",
             "collection": "",
+            "product_tag": "",
             "product": "annoying-each-other-since-custom-photo-year-shirt-personalized-couple-names-anniversary-gift",
             "link": "/products/annoying-each-other-since-custom-photo-year-shirt-personalized-couple-names-anniversary-gift",
             "text": "",
@@ -383,6 +400,7 @@
           "settings": {
             "title": "Christmas",
             "collection": "christmas",
+            "product_tag": "",
             "product": "",
             "link": "",
             "text": "",
@@ -394,6 +412,7 @@
           "settings": {
             "title": "Bridal Shower",
             "collection": "test",
+            "product_tag": "",
             "product": "",
             "link": "/collections/test/Bride+bride",
             "text": "",
@@ -405,6 +424,7 @@
           "settings": {
             "title": "Just Because",
             "collection": "all",
+            "product_tag": "",
             "product": "auntie-est-2026-custom-photo-shirt-personalized-aunt-t-shirt-with-kids-photo",
             "link": "",
             "text": "",
@@ -420,16 +440,17 @@
         "bridal",
         "just"
       ],
+      "name": "Shop by occasion",
       "settings": {
         "layout": "occasions",
         "heading": "Shop by Occasion",
         "description": "Big milestones and little reasons to make someone smile.",
         "collection": "",
+        "product_tag": "",
         "link": ""
       }
     },
     "gift_confidence": {
-      "name": "Shop with Confidence",
       "type": "gift-discovery",
       "blocks": {
         "payment": {
@@ -437,6 +458,7 @@
           "settings": {
             "title": "Secure Checkout",
             "collection": "",
+            "product_tag": "",
             "product": "",
             "link": "",
             "text": "Choose from the payment methods available at checkout.",
@@ -448,6 +470,7 @@
           "settings": {
             "title": "Delivery Information",
             "collection": "",
+            "product_tag": "",
             "product": "",
             "link": "shopify://pages/delivery",
             "text": "Find production and delivery details before ordering.",
@@ -459,6 +482,7 @@
           "settings": {
             "title": "Your Privacy Matters",
             "collection": "",
+            "product_tag": "",
             "product": "",
             "link": "shopify://pages/privacy-policy",
             "text": "Learn how we handle and protect your personal information.",
@@ -470,6 +494,7 @@
           "settings": {
             "title": "Made Personal",
             "collection": "",
+            "product_tag": "",
             "product": "",
             "link": "",
             "text": "Add your photos, names and memories to your chosen design.",
@@ -483,20 +508,14 @@
         "privacy",
         "gift"
       ],
+      "name": "Shop with Confidence",
       "settings": {
         "layout": "confidence",
         "heading": "Shop with Confidence",
         "description": "",
         "collection": "",
+        "product_tag": "",
         "link": ""
-      }
-    },
-    "gift_reviews": {
-      "name": "Customer reviews",
-      "type": "gift-reviews",
-      "disabled": true,
-      "settings": {
-        "heading": "Happy Customers"
       }
     },
     "hero_jVaWmY": {
@@ -1586,6 +1605,77 @@
         "padding-block-start": 0,
         "padding-block-end": 0
       }
+    },
+    "1793418763458dd40e": {
+      "type": "_blocks",
+      "blocks": {
+        "judge_me_reviews_cards_carousel_8NzkWw": {
+          "type": "shopify://apps/judge-me-reviews/blocks/cards_carousel/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "show_sample_reviews": true,
+            "reviews_selection": "all",
+            "products": [],
+            "filter_pinned": false,
+            "filter_featured": false,
+            "filter_custom_tags": "",
+            "star_rating": "all",
+            "show_review_media": true,
+            "display_order": "media_first",
+            "no_image_fallback": "review_text_only",
+            "max_reviews": 20,
+            "review_length": "medium",
+            "text_size": "medium",
+            "image_ratio": "1",
+            "reviews_shown": 4,
+            "show_reviewer_name": true,
+            "show_product_name": true,
+            "hide_arrows_mobile": true,
+            "arrows_position": "sides",
+            "max_width": 1100,
+            "corner_styling": "soft",
+            "header_text_color": "#000000",
+            "text_color": "#000000",
+            "card_color": "#F9F9F9",
+            "stars_color": "",
+            "arrows_color": "#000000",
+            "transition_speed": 5,
+            "header_text": "Customers are saying",
+            "show_average_rating": true,
+            "rating_display": "default"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_cards_carousel_8NzkWw"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "background_media": "none",
+        "background_color": "",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_color": "",
+        "border_radius": 0,
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
     }
   },
   "order": [
@@ -1598,7 +1688,6 @@
     "gift_recipients",
     "gift_occasions",
     "gift_confidence",
-    "gift_reviews",
     "hero_jVaWmY",
     "marquee_WXqFfg",
     "collection_list_Pyyrre",
@@ -1606,6 +1695,7 @@
     "product_list_fa6P9H",
     "brand_value_CynVmH",
     "featured_product_information_hPpyLN",
-    "17871211509f0d62ce"
+    "17871211509f0d62ce",
+    "1793418763458dd40e"
   ]
 }
