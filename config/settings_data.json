@@ -115,13 +115,13 @@
         "disabled": false,
         "settings": {}
       },
-      "11532412952436166569": {
-        "type": "shopify://apps/loox-reviews/blocks/loox-inject/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
+      "421424240597080315": {
+        "type": "shopify://apps/teeinblue-product-personalizer/blocks/product-personalizer/67212f31-32b0-450c-97dd-7e182a5fac7b",
         "disabled": false,
         "settings": {}
       },
-      "421424240597080315": {
-        "type": "shopify://apps/teeinblue-product-personalizer/blocks/product-personalizer/67212f31-32b0-450c-97dd-7e182a5fac7b",
+      "14060646107696862457": {
+        "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
         "disabled": false,
         "settings": {}
       }
