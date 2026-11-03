@@ -816,6 +816,48 @@
         "padding-block-start": 0,
         "padding-block-end": 0
       }
+    },
+    "1793695519a59cdedb": {
+      "type": "_blocks",
+      "blocks": {
+        "upsell_com_ex_reconvert_slot_BFipMN": {
+          "type": "shopify://apps/upsell-com-ex-reconvert/blocks/slot/72c64c30-2f7c-4a71-ae4c-efd1d5d1d2e2",
+          "settings": {
+            "slot_id": "1"
+          }
+        }
+      },
+      "block_order": [
+        "upsell_com_ex_reconvert_slot_BFipMN"
+      ],
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "background_media": "none",
+        "background_color": "",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_color": "",
+        "border_radius": 0,
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
     }
   },
   "order": [
@@ -827,6 +869,7 @@
     "17870405177eb26d93",
     "1787121188cf99014f",
     "1787121510c62485b7",
-    "17936949512593551c"
+    "17936949512593551c",
+    "1793695519a59cdedb"
   ]
 }
