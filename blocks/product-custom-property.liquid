@@ -21,25 +21,6 @@
   endif
 -%}
 
-{% capture character_count_label %}
-  <label
-    for="{{ element_id }}"
-    class="__character-label"
-  >
-    <span
-      ref="characterCount"
-      class="__character-count"
-      data-template="{{ 'content.product_custom_property_character_count' | t: used_chars: '[current]', max_chars: '[max]' }}"
-      data-max="{{ block_settings.max_length }}"
-    >
-      {{
-        'content.product_custom_property_character_count'
-        | t: used_chars: 0, max_chars: block_settings.max_length
-      }}
-    </span>
-  </label>
-{% endcapture %}
-
 <div
   class="spacing-style"
   style="{% render 'spacing-style', settings: block_settings %}"
@@ -62,8 +43,8 @@
   {% endif %}
 
   <div class="__field">
-  {% if actual_input_type == 'photo' %}
-    <div class="__input-wrapper">
+    {% if actual_input_type == 'photo' %}
+      <div class="__input-wrapper">
       <input
         type="file"
         id="{{ element_id }}"
@@ -75,8 +56,8 @@
           required aria-required="true"
         {% endif %}
       >
-    </div>
-  {% elsif actual_input_type == 'textarea' %}
+      </div>
+    {% elsif actual_input_type == 'textarea' %}
       <div class="__input-wrapper">
         <textarea
           ref="textInput"
@@ -92,7 +73,6 @@
           {% endif %}
           rows="3"
         ></textarea>
-        {{ character_count_label }}
       </div>
     {% elsif actual_input_type == 'checkbox' %}
       {% render 'checkbox',
@@ -122,7 +102,6 @@
             required aria-required="true"
           {% endif %}
         >
-        {{ character_count_label }}
       </div>
     {% endif %}
   </div>
@@ -161,22 +140,37 @@
   product-custom-property-component input,
   product-custom-property-component textarea {
     width: 100%;
-    /* stylelint-disable-next-line declaration-no-important */
-    color: var(--color-input-text) !important;
+    color: rgb(var(--color-foreground-rgb)) !important;
+    background: rgb(var(--color-background-rgb));
+    border: 1px solid rgb(var(--color-foreground-rgb) / 0.24);
+    border-radius: 8px;
+    box-shadow: none;
+    transition: border-color 160ms ease, box-shadow 160ms ease;
   }
 
-  /* Add padding for inputs with counter inside */
   product-custom-property-component .__input-wrapper input {
-    padding-bottom: calc(var(--padding-sm) * 3);
+    padding-block: 0.85rem;
   }
 
   product-custom-property-component .__input-wrapper textarea {
-    padding-bottom: calc(var(--padding-sm) * 3);
-    scroll-padding-bottom: calc(var(--padding-sm) * 3);
+    padding-block: 0.85rem;
+    scroll-padding-block: 0.85rem;
   }
 
   product-custom-property-component textarea {
     min-height: 80px;
+  }
+
+  product-custom-property-component input::placeholder,
+  product-custom-property-component textarea::placeholder {
+    color: rgb(var(--color-foreground-rgb) / 0.52);
+  }
+
+  product-custom-property-component input:focus,
+  product-custom-property-component textarea:focus {
+    border-color: rgb(var(--color-foreground-rgb) / 0.62);
+    outline: 2px solid rgb(var(--color-foreground-rgb) / 0.1);
+    outline-offset: 1px;
   }
 
   @supports (resize: vertical) {
@@ -187,36 +181,8 @@
     }
   }
 
-  product-custom-property-component .__character-label {
-    position: absolute;
-    left: var(--input-padding-x);
-    bottom: var(--padding-sm);
-    pointer-events: none;
-  }
-
-  product-custom-property-component .__character-count {
-    font-style: italic;
-    /* stylelint-disable-next-line declaration-no-important */
-    color: var(--color-input-text) !important;
-  }
-
-  /* We should consolidate input styles that share the same behavior */
   .custom-property__input {
-    border: var(--style-border-width-inputs) solid var(--color-input-border);
-    border-radius: var(--style-border-radius-inputs);
-
-    /* this is needed to override the styles from field__input */
-    box-shadow: none;
-
-    &:is(:hover, :focus) {
-      /* this is needed to override the styles from field__input */
-      box-shadow: none;
-    }
-
-    &:focus {
-      /* this is needed to override the styles from field__input */
-      outline: var(--focus-outline-width) solid var(--color-input-background);
-    }
+    min-height: 80px;
   }
 {% endstylesheet %}
 
