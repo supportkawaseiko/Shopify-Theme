@@ -265,7 +265,6 @@
                 "metafield_key": "size_guide",
                 "button_label": "Size guide",
                 "heading": "Size Chart",
-                "title_field": "title",
                 "note_field": "note",
                 "image_field": "image",
                 "inches_table_field": "inches_table",
@@ -505,7 +504,6 @@
     },
     "customization_steps": {
       "type": "customization-steps",
-      "disabled": true,
       "blocks": {
         "step_select_product": {
           "type": "step",
@@ -546,6 +544,7 @@
         "step_review_preview",
         "step_checkout"
       ],
+      "disabled": true,
       "settings": {
         "heading": "How to customize your product",
         "subheading": "<p>Follow these four steps to create and review your personalized design before checkout.</p>",
@@ -580,15 +579,6 @@
     },
     "17870405177eb26d93": {
       "type": "_blocks",
-      "blocks": {
-        "aftersell_pdp_upsells_VxgifU": {
-          "type": "shopify://apps/aftersell/blocks/pdp-upsells/509ec35d-0632-4dfc-a105-fa799cd9d149",
-          "settings": {}
-        }
-      },
-      "block_order": [
-        "aftersell_pdp_upsells_VxgifU"
-      ],
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,
@@ -762,24 +752,6 @@
     },
     "1787121188cf99014f": {
       "type": "_blocks",
-      "blocks": {
-        "loox_reviews_loox_dynamic_section_jDfnzC": {
-          "type": "shopify://apps/loox-reviews/blocks/loox-dynamic-section/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
-          "settings": {
-            "reviews_to_display": "",
-            "default_tab": "automatic",
-            "only_photos": false,
-            "aggregated": false,
-            "limit": 20,
-            "hide_thumbnails": false,
-            "maxwidth": 1080,
-            "is_sample": true
-          }
-        }
-      },
-      "block_order": [
-        "loox_reviews_loox_dynamic_section_jDfnzC"
-      ],
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,
