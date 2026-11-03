@@ -89,6 +89,7 @@
           "blocks": {
             "upsell_com_ex_reconvert_product_upsell_FLMVqT": {
               "type": "shopify://apps/upsell-com-ex-reconvert/blocks/product-upsell/72c64c30-2f7c-4a71-ae4c-efd1d5d1d2e2",
+              "disabled": true,
               "settings": {}
             },
             "group_icgrde": {
@@ -191,6 +192,8 @@
               "settings": {
                 "metafield_namespace": "custom",
                 "metafield_key": "shipping_eta",
+                "country_code_field": "country_code",
+                "use_shopify_countries": true,
                 "country_name_field": "country_name",
                 "flag_field": "flag",
                 "processing_min_field": "processing_min_days",
@@ -286,12 +289,14 @@
               "name": "Custom name",
               "settings": {
                 "property_heading": "Custom name",
-                "property_description": "Enter the name for your order.",
+                "property_description": "Please enter your name",
                 "property_key": "Custom name",
                 "input_type": "text",
                 "max_length": 45,
+                "checkbox_label": "Include gift wrapping",
                 "required": true,
-                "placeholder": "Enter name",
+                "placeholder": "Emily",
+                "placeholder_textarea": "Enter your special instructions",
                 "padding-block-start": 0,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
@@ -302,12 +307,17 @@
             "native_custom_photo": {
               "type": "product-custom-property",
               "name": "Custom photo",
+              "disabled": true,
               "settings": {
                 "property_heading": "Custom photo",
                 "property_description": "Upload the photo for your order.",
                 "property_key": "Custom photo",
                 "input_type": "photo",
+                "max_length": 100,
+                "checkbox_label": "Include gift wrapping",
                 "required": true,
+                "placeholder": "Enter your special instructions",
+                "placeholder_textarea": "Enter your special instructions",
                 "padding-block-start": 0,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
@@ -577,37 +587,6 @@
         "padding-block-end": 48
       }
     },
-    "17870405177eb26d93": {
-      "type": "_blocks",
-      "settings": {
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "flex-start",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 12,
-        "section_width": "page-width",
-        "section_height": "",
-        "section_height_custom": 50,
-        "background_media": "none",
-        "background_color": "",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_color": "",
-        "border_radius": 0,
-        "padding-block-start": 0,
-        "padding-block-end": 0
-      }
-    },
     "product_recommendations_qggXJq": {
       "type": "product-recommendations",
       "blocks": {
@@ -748,6 +727,37 @@
         "background_color": "{{ settings.color_palette.background }}",
         "padding-block-start": 48,
         "padding-block-end": 48
+      }
+    },
+    "17870405177eb26d93": {
+      "type": "_blocks",
+      "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
+        "section_width": "page-width",
+        "section_height": "",
+        "section_height_custom": 50,
+        "background_media": "none",
+        "background_color": "",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_color": "",
+        "border_radius": 0,
+        "padding-block-start": 0,
+        "padding-block-end": 0
       }
     },
     "1787121188cf99014f": {
