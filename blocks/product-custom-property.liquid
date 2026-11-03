@@ -62,7 +62,21 @@
   {% endif %}
 
   <div class="__field">
-    {% if actual_input_type == 'textarea' %}
+  {% if actual_input_type == 'photo' %}
+    <div class="__input-wrapper">
+      <input
+        type="file"
+        id="{{ element_id }}"
+        name="{{ property_name }}"
+        class="field__input"
+        accept="image/*"
+        form="{{ product_form_id }}"
+        {% if block_settings.required %}
+          required aria-required="true"
+        {% endif %}
+      >
+    </div>
+  {% elsif actual_input_type == 'textarea' %}
       <div class="__input-wrapper">
         <textarea
           ref="textInput"
@@ -251,6 +265,10 @@
         {
           "value": "checkbox",
           "label": "t:settings.product_custom_property.input_type_checkbox"
+        },
+        {
+          "value": "photo",
+          "label": "Photo upload"
         }
       ],
       "default": "text"
