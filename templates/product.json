@@ -474,32 +474,36 @@
         "step_select_product": {
           "type": "step",
           "settings": {
-            "step_number": "1",
-            "title": "Select your product",
+            "step_number": "",
+            "image": "shopify://shop_images/step_1_select_product.png",
+            "title": "",
             "text": "<p>Choose the product, variant, size, color and quantity that fit your order.</p>"
           }
         },
         "step_personalize_design": {
           "type": "step",
           "settings": {
-            "step_number": "2",
-            "title": "Personalize your design",
+            "step_number": "",
+            "image": "shopify://shop_images/step_2_personalize_design.png",
+            "title": "",
             "text": "<p>Upload your photo and enter the name, text or custom details needed for the design.</p>"
           }
         },
         "step_review_preview": {
           "type": "step",
           "settings": {
-            "step_number": "3",
-            "title": "Review the preview",
+            "step_number": "",
+            "image": "shopify://shop_images/step_3_review_preview.png",
+            "title": "",
             "text": "<p>Check the preview carefully, including spelling, photo placement and selected options.</p>"
           }
         },
         "step_checkout": {
           "type": "step",
           "settings": {
-            "step_number": "4",
-            "title": "Checkout",
+            "step_number": "",
+            "image": "shopify://shop_images/step_4_checkout.png",
+            "title": "",
             "text": "<p>Add the item to your cart, complete payment and watch for your order confirmation.</p>"
           }
         }
