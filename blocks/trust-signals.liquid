@@ -1,0 +1,93 @@
+<div class="trust-signals" {{ block.shopify_attributes }}>
+  <div class="trust-signals__item">
+    <span class="trust-signals__icon" aria-hidden="true">
+      <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M8 7.5 22 3l7 4.5v17L15 29l-7-4.5v-17Z"/>
+        <path d="m8 7.5 7 4.5 14-5.5M15 12v17M11 10.5v10l4 2.5 4-2.5v-10"/>
+        <path d="M19 9.5 25 7"/>
+      </svg>
+    </span>
+    <span>Trusted By Over 500,000 Customers</span>
+  </div>
+  <div class="trust-signals__item">
+    <span class="trust-signals__icon" aria-hidden="true">
+      <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="16" cy="16" r="11"/>
+        <path d="m16 8 2.2 4.5 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5-3.6-3.5 5-.7L16 8Z"/>
+      </svg>
+    </span>
+    <span>4.8-Star Rating On <strong class="trust-signals__trustpilot"><span>★</span> Trustpilot</strong></span>
+  </div>
+  <div class="trust-signals__item">
+    <span class="trust-signals__icon" aria-hidden="true">
+      <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="m16 3 11 5v8c0 6.5-4.7 10.8-11 13-6.3-2.2-11-6.5-11-13V8l11-5Z"/>
+        <path d="m11 16 3 3 7-7"/>
+      </svg>
+    </span>
+    <span>Secure Payment</span>
+  </div>
+  <div class="trust-signals__item">
+    <span class="trust-signals__icon" aria-hidden="true">
+      <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="m16 4 12 6v13l-12 5-12-5V10l12-6Z"/>
+        <path d="m4 10 12 6 12-6M16 16v12M10 7l12 6M8 13l12 6M22 12l-12 6"/>
+      </svg>
+    </span>
+    <span>30-Day Money-Back Guarantee</span>
+  </div>
+</div>
+
+{% stylesheet %}
+  .trust-signals {
+    display: grid;
+    gap: 1rem;
+    margin-block: var(--padding-md);
+    padding: 1rem 1.1rem;
+    background: rgb(var(--color-foreground-rgb) / 0.035);
+    border-radius: 8px;
+    color: rgb(var(--color-foreground-rgb) / 0.9);
+  }
+
+  .trust-signals__item {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    font-size: 0.95rem;
+    line-height: 1.35;
+  }
+
+  .trust-signals__icon {
+    display: inline-flex;
+    flex: 0 0 2rem;
+    width: 2rem;
+    height: 2rem;
+    color: rgb(var(--color-foreground-rgb) / 0.58);
+  }
+
+  .trust-signals__icon svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .trust-signals__trustpilot {
+    font-weight: 500;
+  }
+
+  .trust-signals__trustpilot span {
+    color: #00b67a;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Trust signals",
+  "tag": null,
+  "settings": [],
+  "presets": [
+    {
+      "name": "Trust signals"
+    }
+  ]
+}
+{% endschema %}

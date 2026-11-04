@@ -413,42 +413,8 @@
               "blocks": {}
             },
             "ai_gen_block_0558575_EUwxiw": {
-              "type": "ai_gen_block_0558575",
-              "settings": {
-                "tab_1_title": "Product Details",
-                "tab_1_icon": "tag",
-                "tab_1_content": "<p>Add detailed product information here</p>{{ closest.product.description }}",
-                "tab_1_open": false,
-                "tab_2_title": "Personalization Guide",
-                "tab_2_icon": "star",
-                "tab_2_content": "<p>Select your options, upload your photo, and enter the requested personalization details before adding the product to cart.</p>",
-                "tab_2_open": false,
-                "tab_3_title": "What's Included",
-                "tab_3_icon": "check",
-                "tab_3_content": "<p>Each order includes the selected product and the custom details shown on the product page.</p>",
-                "tab_3_open": false,
-                "tab_4_title": "Shipping & Returns",
-                "tab_4_icon": "truck",
-                "tab_4_content": "<p>Add shipping and return policy information</p>",
-                "tab_4_open": false,
-                "desktop_width_percent": 100,
-                "spacing": 0,
-                "padding": 14,
-                "background_color": "#faf7f0",
-                "header_background_color": "#faf7f0",
-                "header_hover_color": "#f4efe7",
-                "border_color": "#e5ded3",
-                "border_width": 1,
-                "border_radius": 0,
-                "title_color": "#333333",
-                "title_size": 16,
-                "content_color": "#333333",
-                "content_size": 14,
-                "header_icon_color": "#333333",
-                "header_icon_size": 16,
-                "icon_color": "#333333"
-              },
-              "blocks": {}
+              "type": "trust-signals",
+              "settings": {},"blocks": {}
             }
           },
           "block_order": [
