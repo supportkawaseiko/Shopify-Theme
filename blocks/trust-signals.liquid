@@ -1,4 +1,13 @@
-<div class="trust-signals" {{ block.shopify_attributes }}>
+<div
+  class="trust-signals"
+  style="
+    --trust-signals-background: {{ block.settings.background_color }};
+    --trust-signals-text: {{ block.settings.text_color }};
+    --trust-signals-icon: {{ block.settings.icon_color }};
+    --trust-signals-trustpilot: {{ block.settings.trustpilot_color }};
+  "
+  {{ block.shopify_attributes }}
+>
   <div class="trust-signals__item">
     <span class="trust-signals__icon" aria-hidden="true">
       <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -7,7 +16,7 @@
         <path d="M19 9.5 25 7"/>
       </svg>
     </span>
-    <span>Trusted By Over 500,000 Customers</span>
+    <span>{{ block.settings.customer_text | escape }}</span>
   </div>
   <div class="trust-signals__item">
     <span class="trust-signals__icon" aria-hidden="true">
@@ -16,7 +25,12 @@
         <path d="m16 8 2.2 4.5 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5-3.6-3.5 5-.7L16 8Z"/>
       </svg>
     </span>
-    <span>4.8-Star Rating On <strong class="trust-signals__trustpilot"><span>★</span> Trustpilot</strong></span>
+    <span>
+      {{ block.settings.rating_text | escape }}
+      <strong class="trust-signals__trustpilot">
+        <span>★</span> {{ block.settings.trustpilot_text | escape }}
+      </strong>
+    </span>
   </div>
   <div class="trust-signals__item">
     <span class="trust-signals__icon" aria-hidden="true">
@@ -25,7 +39,7 @@
         <path d="m11 16 3 3 7-7"/>
       </svg>
     </span>
-    <span>Secure Payment</span>
+    <span>{{ block.settings.payment_text | escape }}</span>
   </div>
   <div class="trust-signals__item">
     <span class="trust-signals__icon" aria-hidden="true">
@@ -34,7 +48,7 @@
         <path d="m4 10 12 6 12-6M16 16v12M10 7l12 6M8 13l12 6M22 12l-12 6"/>
       </svg>
     </span>
-    <span>30-Day Money-Back Guarantee</span>
+    <span>{{ block.settings.guarantee_text | escape }}</span>
   </div>
 </div>
 
@@ -44,9 +58,9 @@
     gap: 1rem;
     margin-block: var(--padding-md);
     padding: 1rem 1.1rem;
-    background: rgb(var(--color-foreground-rgb) / 0.035);
+    background: var(--trust-signals-background);
     border-radius: 8px;
-    color: rgb(var(--color-foreground-rgb) / 0.9);
+    color: var(--trust-signals-text);
   }
 
   .trust-signals__item {
@@ -62,7 +76,7 @@
     flex: 0 0 2rem;
     width: 2rem;
     height: 2rem;
-    color: rgb(var(--color-foreground-rgb) / 0.58);
+    color: var(--trust-signals-icon);
   }
 
   .trust-signals__icon svg {
@@ -75,7 +89,7 @@
   }
 
   .trust-signals__trustpilot span {
-    color: #00b67a;
+    color: var(--trust-signals-trustpilot);
   }
 {% endstylesheet %}
 
@@ -83,7 +97,62 @@
 {
   "name": "Trust signals",
   "tag": null,
-  "settings": [],
+  "settings": [
+    {
+      "type": "text",
+      "id": "customer_text",
+      "label": "Customer trust text",
+      "default": "Trusted By Over 500,000 Customers"
+    },
+    {
+      "type": "text",
+      "id": "rating_text",
+      "label": "Rating text",
+      "default": "4.8-Star Rating On"
+    },
+    {
+      "type": "text",
+      "id": "trustpilot_text",
+      "label": "Review platform text",
+      "default": "Trustpilot"
+    },
+    {
+      "type": "text",
+      "id": "payment_text",
+      "label": "Payment text",
+      "default": "Secure Payment"
+    },
+    {
+      "type": "text",
+      "id": "guarantee_text",
+      "label": "Guarantee text",
+      "default": "30-Day Money-Back Guarantee"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#f7f8fa"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#10233f"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon color",
+      "default": "#7a8798"
+    },
+    {
+      "type": "color",
+      "id": "trustpilot_color",
+      "label": "Trustpilot star color",
+      "default": "#00b67a"
+    }
+  ],
   "presets": [
     {
       "name": "Trust signals"
