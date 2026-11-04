@@ -33,7 +33,6 @@
       {%- for block in section.blocks -%}
         {%- liquid
           assign block_settings = block.settings
-          assign step_number = block_settings.step_number | default: forloop.index
           assign step_title = block_settings.title
           assign step_text = block_settings.text
           assign step_image = block_settings.image
@@ -57,8 +56,6 @@
           </div>
 
           <div class="customization-steps__content">
-            <span class="customization-steps__number">{{ step_number | escape }}</span>
-
             {%- if step_title != blank -%}
               <h3 class="customization-steps__title">{{ step_title | escape }}</h3>
             {%- endif -%}
