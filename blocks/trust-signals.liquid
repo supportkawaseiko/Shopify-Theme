@@ -1,10 +1,10 @@
 <div
   class="trust-signals"
   style="
-    --trust-signals-background: {{ block.settings.background_color }};
-    --trust-signals-text: {{ block.settings.text_color }};
-    --trust-signals-icon: {{ block.settings.icon_color }};
-    --trust-signals-trustpilot: {{ block.settings.trustpilot_color }};
+    --trust-signals-background: {{ block.settings.background_color | default: '#FFF9F6' }};
+    --trust-signals-text: {{ block.settings.text_color | default: '#2B2325' }};
+    --trust-signals-icon: {{ block.settings.icon_color | default: '#8A8177' }};
+    --trust-signals-trustpilot: {{ block.settings.trustpilot_color | default: '#00B67A' }};
   "
   {{ block.shopify_attributes }}
 >
