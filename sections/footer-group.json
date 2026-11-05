@@ -390,11 +390,19 @@
             "heading": "Customer Care",
             "menu": "footer"
           }
+        },
+        "social": {
+          "type": "social-links",
+          "settings": {
+            "heading": "Follow us"
+          },
+          "blocks": {}
         }
       },
       "block_order": [
         "company",
-        "policies"
+        "policies",
+        "social"
       ],
       "settings": {
         "email": "support@customversal.com",
