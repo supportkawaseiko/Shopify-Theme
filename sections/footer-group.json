@@ -330,7 +330,7 @@
           "type": "social-links",
           "name": "t:names.social_media_links",
           "settings": {
-            "icon_color": "",
+            "icon_color": "#C18282",
             "facebook_url": "https://www.facebook.com/profile.php?id=61594331968300#",
             "instagram_url": "https://www.instagram.com/customversal.official/",
             "youtube_url": "",
