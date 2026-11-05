@@ -12,6 +12,12 @@
     "main": {
       "type": "product-information",
       "blocks": {
+        "upsell_com_ex_reconvert_slot_43qjjX": {
+          "type": "shopify://apps/upsell-com-ex-reconvert/blocks/slot/72c64c30-2f7c-4a71-ae4c-efd1d5d1d2e2",
+          "settings": {
+            "slot_id": "1"
+          }
+        },
         "disclosures_g9mWze": {
           "type": "disclosures",
           "name": "t:names.disclosures",
@@ -411,6 +417,7 @@
         }
       },
       "block_order": [
+        "upsell_com_ex_reconvert_slot_43qjjX",
         "disclosures_g9mWze"
       ],
       "custom_css": [
