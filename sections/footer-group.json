@@ -313,6 +313,7 @@
         "menu_FrxkmK",
         "group_yKzVdF"
       ],
+      "disabled": true,
       "name": "t:names.footer",
       "settings": {
         "section_width": "page-width",
@@ -320,12 +321,32 @@
         "background_color": "#2b2325",
         "padding-block-start": 30,
         "padding-block-end": 30
-      },
-      "disabled": true
+      }
     },
     "footer_utilities_jLGE8U": {
       "type": "footer-utilities",
       "blocks": {
+        "social_links_TgWFTk": {
+          "type": "social-links",
+          "name": "t:names.social_media_links",
+          "settings": {
+            "icon_color": "",
+            "facebook_url": "https://www.facebook.com/profile.php?id=61594331968300#",
+            "instagram_url": "https://www.instagram.com/customversal.official/",
+            "youtube_url": "",
+            "tiktok_url": "",
+            "twitter_url": "",
+            "threads_url": "",
+            "linkedin_url": "",
+            "bluesky_url": "",
+            "snapchat_url": "",
+            "pinterest_url": "",
+            "tumblr_url": "",
+            "vimeo_url": "",
+            "custom_url": ""
+          },
+          "blocks": {}
+        },
         "footer_copyright_jweRK8": {
           "type": "footer-copyright",
           "settings": {
@@ -338,8 +359,10 @@
         }
       },
       "block_order": [
+        "social_links_TgWFTk",
         "footer_copyright_jweRK8"
       ],
+      "disabled": true,
       "name": "t:names.utilities",
       "settings": {
         "section_width": "page-width",
@@ -349,16 +372,10 @@
         "divider_color": "{{ settings.color_palette.color2 }}",
         "padding-block-start": 20,
         "padding-block-end": 48
-      },
-      "disabled": true
+      }
     },
     "gift_footer": {
       "type": "gift-footer",
-      "settings": {
-        "email": "support@customversal.com",
-        "help_link": "shopify://pages/faqs",
-        "club_link": "shopify://pages/club"
-      },
       "blocks": {
         "company": {
           "type": "menu",
@@ -378,7 +395,12 @@
       "block_order": [
         "company",
         "policies"
-      ]
+      ],
+      "settings": {
+        "email": "support@customversal.com",
+        "help_link": "shopify://pages/faqs",
+        "club_link": "shopify://pages/club"
+      }
     }
   },
   "order": [
