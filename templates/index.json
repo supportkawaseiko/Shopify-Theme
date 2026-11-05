@@ -159,21 +159,24 @@
           "type": "collection",
           "settings": {
             "label": "Mother of Bride",
-            "collection": ""
+            "collection": "",
+            "product_tag": ""
           }
         },
         "wedding": {
           "type": "collection",
           "settings": {
             "label": "Bride",
-            "collection": "test"
+            "collection": "test",
+            "product_tag": ""
           }
         },
         "birthday": {
           "type": "collection",
           "settings": {
             "label": "Bridemaid",
-            "collection": "for-birthday"
+            "collection": "for-birthday",
+            "product_tag": ""
           }
         }
       },
@@ -200,15 +203,17 @@
         "christmas": {
           "type": "collection",
           "settings": {
-            "label": "Christmas",
-            "collection": "christmas"
+            "label": "Matching tee",
+            "collection": "christmas",
+            "product_tag": ""
           }
         },
         "all": {
           "type": "collection",
           "settings": {
-            "label": "All Gifts",
-            "collection": "all"
+            "label": "Ornaments",
+            "collection": "all",
+            "product_tag": ""
           }
         }
       },
@@ -235,14 +240,16 @@
           "type": "collection",
           "settings": {
             "label": "Birthday",
-            "collection": "for-birthday"
+            "collection": "for-birthday",
+            "product_tag": ""
           }
         },
         "all": {
           "type": "collection",
           "settings": {
             "label": "All Gifts",
-            "collection": "all"
+            "collection": "all",
+            "product_tag": ""
           }
         }
       },
@@ -1006,21 +1013,24 @@
           "type": "collection",
           "settings": {
             "label": "Christmas",
-            "collection": "christmas"
+            "collection": "christmas",
+            "product_tag": ""
           }
         },
         "birthday": {
           "type": "collection",
           "settings": {
             "label": "Birthday",
-            "collection": "for-birthday"
+            "collection": "for-birthday",
+            "product_tag": ""
           }
         },
         "wedding": {
           "type": "collection",
           "settings": {
             "label": "Wedding",
-            "collection": "test"
+            "collection": "test",
+            "product_tag": ""
           }
         }
       },
