@@ -36,13 +36,27 @@
   </div>
   {% for block in section.blocks %}
     <div class="gift-tabs__panel" id="GiftPanel-{{ section.id }}-{{ block.id }}" aria-labelledby="GiftTab-{{ section.id }}-{{ block.id }}" data-gift-panel="{{ block.id }}">
-      {% if block.settings.collection != blank and block.settings.collection.products_count > 0 %}
+      {% liquid
+        assign tab_tag = block.settings.product_tag | strip
+        assign tab_collection = block.settings.collection
+        assign tab_url = tab_collection.url
+        if tab_tag != blank and tab_collection != blank
+          assign tab_url = tab_collection.url | append: '/' | append: tab_tag | handleize
+        endif
+      %}
+      {% if tab_tag != blank and tab_collection != blank %}
+        <div data-collection-tab-products="{{ tab_url | escape }}">
+          <ul class="gift-tabs__products list-unstyled" data-collection-tab-grid></ul>
+          <p class="gift-tabs__loading" data-collection-tab-loading>Loading products...</p>
+        </div>
+        <a class="gift-tabs__more" href="{{ tab_url }}">{{ section.settings.more_label | escape }} <span aria-hidden="true">&rarr;</span></a>
+      {% elsif block.settings.collection != blank and block.settings.collection.products_count > 0 %}
         <ul class="gift-tabs__products list-unstyled">
           {% for product in block.settings.collection.products limit: section.settings.product_limit %}
             <li>{% render 'resource-card', resource: product, resource_type: 'product', image_aspect_ratio: '1', image_hover: true, image_sizes: '(min-width: 1200px) 16vw, (min-width: 750px) 25vw, 50vw' %}</li>
           {% endfor %}
         </ul>
-        <a class="gift-tabs__more" href="{{ block.settings.collection.url }}">{{ section.settings.more_label | escape }} <span aria-hidden="true">&rarr;</span></a>
+        <a class="gift-tabs__more" href="{{ tab_url }}">{{ section.settings.more_label | escape }} <span aria-hidden="true">&rarr;</span></a>
       {% elsif request.design_mode %}
         <p class="gift-tabs__empty">Choose a collection with products for this tab.</p>
       {% else %}
@@ -129,6 +143,18 @@
           button.addEventListener('shopify:block:select', () => select(button), options);
         });
         select(buttons[0]);
+        this.querySelectorAll('[data-collection-tab-products]').forEach(async target => {
+          const url = new URL(target.dataset.collectionTabProducts, location.origin);
+          url.searchParams.set('section_id', 'gift-tag-products');
+          const response = await fetch(url);
+          if (!response.ok) return;
+          const content = new DOMParser().parseFromString(await response.text(), 'text/html');
+          const items = content.querySelectorAll('[data-gift-tag-results] > li');
+          const grid = target.querySelector('[data-collection-tab-grid]');
+          const loading = target.querySelector('[data-collection-tab-loading]');
+          if (grid) grid.replaceChildren(...[...items].map(item => item.cloneNode(true)));
+          if (loading) loading.remove();
+        });
       }
       disconnectedCallback() { this.abort?.abort(); }
     });
@@ -154,7 +180,8 @@
   ],
   "blocks": [{ "type": "collection", "name": "Collection tab", "settings": [
     { "type": "text", "id": "label", "label": "Tab label" },
-    { "type": "collection", "id": "collection", "label": "Collection" }
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "text", "id": "product_tag", "label": "Product tag", "info": "Optional. Products must belong to this collection and have this exact Shopify tag." }
   ] }],
   "presets": [{ "name": "Banner collection tabs", "blocks": [{ "type": "collection" }, { "type": "collection" }] }]
 }
