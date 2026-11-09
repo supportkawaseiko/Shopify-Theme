@@ -1,0 +1,90 @@
+{% liquid
+  assign hero_image = section.settings.image | default: section.settings.collection.image | default: section.settings.collection.products.first.featured_image
+  assign hero_link = section.settings.link | default: section.settings.collection.url | default: routes.all_products_collection_url
+%}
+<section class="christmas-hero" style="--holiday-bg: {{ section.settings.background }}; --holiday-text: {{ section.settings.text_color }};">
+  <div class="christmas-hero__copy">
+    <p class="christmas-hero__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+    <h1>{{ section.settings.heading | escape }}</h1>
+    <p>{{ section.settings.description | escape }}</p>
+    {% if section.settings.countdown_end != blank %}
+      <christmas-countdown data-end="{{ section.settings.countdown_end | escape }}" hidden>
+        <p>{{ section.settings.countdown_label | escape }}</p>
+        <div class="christmas-hero__timer" role="timer" aria-label="Time remaining">
+          {% assign units = 'Days,Hours,Minutes,Seconds' | split: ',' %}
+          {% for unit in units %}<span><strong data-unit="{{ forloop.index0 }}">00</strong><small>{{ unit }}</small></span>{% endfor %}
+        </div>
+      </christmas-countdown>
+    {% endif %}
+    <a class="christmas-hero__button" href="{{ hero_link }}">{{ section.settings.button_label | escape }} <span aria-hidden="true">→</span></a>
+    {% if section.settings.note != blank %}<p class="christmas-hero__note">{{ section.settings.note | escape }}</p>{% endif %}
+  </div>
+  {% if hero_image != blank %}
+    <picture class="christmas-hero__media">
+      {% if section.settings.mobile_image != blank %}<source media="(max-width: 749px)" srcset="{{ section.settings.mobile_image | image_url: width: 750 }}" width="{{ section.settings.mobile_image.width }}" height="{{ section.settings.mobile_image.height }}">{% endif %}
+      {{ hero_image | image_url: width: 1600 | image_tag: widths: '400, 750, 1100, 1600', sizes: '(min-width: 750px) 50vw, 100vw', loading: 'eager' }}
+    </picture>
+  {% endif %}
+</section>
+{% stylesheet %}
+  .christmas-hero { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,360px),1fr)); background: var(--holiday-bg); color: var(--holiday-text); }
+  .christmas-hero__copy { align-self: center; text-align: center; padding: clamp(32px,5vw,80px) 24px; }
+  .christmas-hero__copy h1 { font: 400 clamp(36px,4.5vw,64px)/1.08 Georgia,serif; color: inherit; margin: 16px auto; max-width: 12ch; }
+  .christmas-hero__copy > p { max-width: 44ch; margin: 16px auto; line-height: 1.6; }
+  .christmas-hero__eyebrow { text-transform: uppercase; letter-spacing: .18em; font-size: 12px; }
+  .christmas-hero__media { min-width: 0; }
+  .christmas-hero__media img { width: 100%; height: 100%; min-height: 440px; object-fit: cover; display: block; }
+  .christmas-hero__button { display: inline-flex; align-items: center; gap: 24px; min-height: 48px; padding: 12px 24px; border-radius: 32px; background: var(--holiday-text); color: var(--holiday-bg); text-decoration: none; font-weight: 600; margin-top: 16px; }
+  .christmas-hero__button:focus-visible { outline: 2px solid currentColor; outline-offset: 5px; }
+  .christmas-hero__note { font-size: 12px; }
+  christmas-countdown { display: block; margin: 24px auto; }
+  christmas-countdown[hidden] { display: none; }
+  christmas-countdown > p { font-size: 14px; }
+  .christmas-hero__timer { display: flex; justify-content: center; gap: 12px; }
+  .christmas-hero__timer > span { border: 1px solid currentColor; border-radius: 8px; min-width: 60px; padding: 8px; }
+  .christmas-hero__timer strong, .christmas-hero__timer small { display: block; }
+  .christmas-hero__timer strong { font-size: 26px; font-variant-numeric: tabular-nums; }
+  .christmas-hero__timer small { font-size: 11px; }
+  @media(max-width:749px) { .christmas-hero { grid-template-columns: 1fr; } .christmas-hero__media img { min-height: 0; height: auto; } }
+{% endstylesheet %}
+{% javascript %}
+  if (!customElements.get('christmas-countdown')) customElements.define('christmas-countdown', class extends HTMLElement {
+    connectedCallback() {
+      clearInterval(this.timer);
+      // Require an explicit timezone so every visitor sees the same deadline.
+      const value = this.dataset.end || '';
+      const end = /(?:Z|[+-]\d{2}:\d{2})$/i.test(value) ? Date.parse(value) : NaN;
+      if (!Number.isFinite(end)) return;
+      const update = () => {
+        const remaining = Math.floor((end - Date.now()) / 1000);
+        this.hidden = remaining <= 0;
+        if (this.hidden) { clearInterval(this.timer); return; }
+        const values = [Math.floor(remaining / 86400), Math.floor(remaining / 3600) % 24, Math.floor(remaining / 60) % 60, remaining % 60];
+        this.querySelectorAll('[data-unit]').forEach((node, i) => { node.textContent = String(values[i]).padStart(2, '0'); });
+      };
+      this.timer = setInterval(update, 1000);
+      update();
+    }
+    disconnectedCallback() { clearInterval(this.timer); }
+  });
+{% endjavascript %}
+{% schema %}
+{
+  "name": "Christmas hero", "disabled_on": {"groups": ["header", "footer"]},
+  "settings": [
+    {"type":"text","id":"eyebrow","label":"Eyebrow","default":"CUSTOMVERSAL · THE CHRISTMAS GIFT GUIDE"},
+    {"type":"text","id":"heading","label":"Heading","default":"A little Christmas magic. Made personal."},
+    {"type":"textarea","id":"description","label":"Description","default":"Their names. Your favorite photos. Gifts that bring everyone a little closer."},
+    {"type":"image_picker","id":"image","label":"Desktop image","info":"Defaults to the collection image or its first product."},
+    {"type":"image_picker","id":"mobile_image","label":"Mobile image"},
+    {"type":"collection","id":"collection","label":"Christmas collection"},
+    {"type":"url","id":"link","label":"Button link override"},
+    {"type":"text","id":"button_label","label":"Button label","default":"Find their Christmas gift"},
+    {"type":"text","id":"countdown_end","label":"Countdown deadline","info":"Optional ISO date with timezone, e.g. 2026-12-15T23:59:59-05:00. Hidden when empty, invalid or expired. Set your actual deadline; this does not guarantee delivery."},
+    {"type":"text","id":"countdown_label","label":"Countdown label","default":"Time left to make it personal"},
+    {"type":"text","id":"note","label":"Delivery note","default":"Check each product for production and delivery estimates."},
+    {"type":"color","id":"background","label":"Background","default":"#88283f"},
+    {"type":"color","id":"text_color","label":"Text","default":"#fff9f5"}
+  ], "presets": [{"name":"Christmas hero"}]
+}
+{% endschema %}

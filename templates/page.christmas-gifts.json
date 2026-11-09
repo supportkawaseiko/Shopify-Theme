@@ -1,0 +1,52 @@
+{
+  "sections": {
+    "christmas_hero": {
+      "type": "christmas-hero",
+      "settings": { "collection": "christmas" }
+    },
+    "best_sellers": {
+      "type": "gift-discovery",
+      "name": "Christmas best sellers",
+      "settings": { "layout": "products", "heading": "Christmas favorites", "description": "Thoughtful little things. Memories that last.", "collection": "christmas", "link": "shopify://collections/christmas" }
+    },
+    "recipients": {
+      "type": "collection-tabs",
+      "name": "Christmas by recipient",
+      "settings": { "heading": "Who is on your gift list?", "description": "Find something personal for every kind of wonderful.", "banner_color": "#eee0dc", "accent_color": "#88283f", "all_link": "shopify://collections/christmas", "all_label": "All Christmas gifts", "more_label": "Explore these gifts", "product_limit": 8 },
+      "blocks": {
+        "all": { "type": "collection", "settings": { "label": "All gifts", "collection": "christmas" } },
+        "family": { "type": "collection", "settings": { "label": "Family" } },
+        "friends": { "type": "collection", "settings": { "label": "Friends" } },
+        "couples": { "type": "collection", "settings": { "label": "Couples" } },
+        "him": { "type": "collection", "settings": { "label": "Him" } },
+        "her": { "type": "collection", "settings": { "label": "Her" } },
+        "dad": { "type": "collection", "settings": { "label": "Dad" } },
+        "mom": { "type": "collection", "settings": { "label": "Mom" } }
+      },
+      "block_order": ["all", "family", "friends", "couples", "him", "her", "dad", "mom"]
+    },
+    "confidence": {
+      "type": "gift-discovery",
+      "settings": { "layout": "confidence", "heading": "Made personal. Given with love." },
+      "blocks": {
+        "personal": { "type": "item", "settings": { "title": "Your memories, made into gifts", "text": "Bring your favorite names, photos and moments into their everyday life.", "icon": "gift" } },
+        "order": { "type": "item", "settings": { "title": "Made for your order", "text": "Personalized details make every gift feel like it belongs to them.", "icon": "gift" } },
+        "delivery": { "type": "item", "settings": { "title": "Plan your holiday gifting", "text": "Check production and shipping estimates on each product before ordering.", "icon": "delivery" } },
+        "payment": { "type": "item", "settings": { "title": "Secure checkout", "text": "Choose from the payment methods available at checkout.", "icon": "payment" } }
+      },
+      "block_order": ["personal", "order", "delivery", "payment"]
+    },
+    "faq": {
+      "type": "holiday-faq",
+      "settings": {},
+      "blocks": {
+        "personalize": { "type": "question", "settings": { "question": "How do I personalize my Christmas gift?", "answer": "<p>Choose your favorite product, then enter the names or upload the photos requested on its product page. Double-check spelling and your selected options before adding it to your cart.</p>" } },
+        "preview": { "type": "question", "settings": { "question": "Can I preview my personalized design?", "answer": "<p>Some products offer a live preview. For products without a live preview, follow the instructions on the product page and carefully check the details you enter.</p>" } },
+        "shipping": { "type": "question", "settings": { "question": "Will my gift arrive before Christmas?", "answer": "<p>Production and delivery times vary by product and destination. Check the latest estimates on the product page before ordering. A countdown alone does not guarantee a delivery date.</p>" } },
+        "photo": { "type": "question", "settings": { "question": "What kind of photo should I upload?", "answer": "<p>Use a clear, well-lit, high-resolution photo. Avoid screenshots, blurry images or photos where important details are cropped out.</p>" } }
+      },
+      "block_order": ["personalize", "preview", "shipping", "photo"]
+    }
+  },
+  "order": ["christmas_hero", "best_sellers", "recipients", "confidence", "faq"]
+}
