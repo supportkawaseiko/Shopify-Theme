@@ -1,0 +1,10 @@
+<ul data-holiday-tag-results>
+  {% if collection != blank %}
+    {% for product in collection.products limit: 24 %}
+      <li>{% render 'resource-card', resource: product, resource_type: 'product', image_aspect_ratio: '1', image_hover: true, image_sizes: '(min-width: 750px) 20vw, 45vw' %}</li>
+    {% endfor %}
+  {% endif %}
+</ul>
+{% schema %}
+{"name":"Holiday tag results","settings":[]}
+{% endschema %}

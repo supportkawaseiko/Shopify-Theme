@@ -1,0 +1,45 @@
+{% liquid
+  assign tag = tag | strip
+  assign destination = source.url
+  if source != blank and tag != blank
+    assign tag_handle = tag | handleize
+    assign destination = destination | append: '/' | append: tag_handle
+  endif
+  assign feature = banner
+  if source != blank and settings.sort_order != blank and settings.sort_order != 'default'
+    assign destination = destination | append: '?sort_by=' | append: settings.sort_order
+  endif
+  if settings.layout == 'showcase'
+    assign feature = banner | default: source.image | default: source.products.first.featured_image
+  endif
+  assign feature_destination = banner_link | default: destination
+%}
+<div class="holiday-collections__body{% if feature != blank %} holiday-collections__body--feature{% endif %}">
+  {% if feature != blank %}
+    <div class="holiday-collections__feature">
+      {% if feature_destination != blank %}<a href="{{ feature_destination }}" aria-label="{{ banner_label | default: source.title | escape }}">{% endif %}
+      {{ feature | image_url: width: 1000 | image_tag: widths: '360, 600, 1000', sizes: '(min-width: 750px) 30vw, 100vw', loading: 'lazy' }}
+      {% if feature_destination != blank %}</a>{% endif %}
+    </div>
+  {% endif %}
+  <div class="holiday-collections__results">
+    {% if source != blank %}
+      {% if tag != blank or settings.sort_order == 'best-selling' or settings.sort_order == 'created-descending' %}
+        <div data-holiday-source="{{ destination | escape }}" aria-busy="true">
+          <ul class="holiday-collections__products list-unstyled" data-holiday-grid></ul>
+          <p data-holiday-status role="status">Loading gifts…</p>
+          <noscript><a href="{{ destination }}">Browse these gifts</a></noscript>
+        </div>
+      {% else %}
+        <ul class="holiday-collections__products list-unstyled">
+          {% for product in source.products limit: settings.product_limit %}
+            <li>{% render 'resource-card', resource: product, resource_type: 'product', image_aspect_ratio: '1', image_hover: true, image_sizes: '(min-width: 750px) 20vw, 45vw' %}</li>
+          {% else %}<li class="holiday-collections__empty">New gifts are on their way.</li>{% endfor %}
+        </ul>
+      {% endif %}
+      <a class="holiday-collections__link holiday-collections__more" href="{{ destination }}">{{ settings.link_label | escape }} <span aria-hidden="true">→</span></a>
+    {% else %}
+      <p class="holiday-collections__empty">{% if request.design_mode %}Select a collection{% if tag != blank %} and check its product tag{% endif %} in this section or tab's settings.{% else %}New gifts are on their way.{% endif %}</p>
+    {% endif %}
+  </div>
+</div>
