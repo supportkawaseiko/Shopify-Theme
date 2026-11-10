@@ -39,3 +39,48 @@
   .holiday-collections--row .holiday-collections__products { grid-template-columns: none; grid-auto-columns: 44%; }
 }
 @media(prefers-reduced-motion:reduce) { .holiday-collections__products { scroll-behavior: auto; } }
+
+/* Christmas gift-guide composition: compact image pills and a two-column feature. */
+.holiday-collections { width: calc(100% - 64px); max-width: 1600px; padding-block: 48px; }
+.holiday-collections__heading-image { display: inline-block; width: 72px; height: 72px; object-fit: contain; margin-right: 16px; vertical-align: middle; }
+.holiday-collections__header h2 { display: inline; font-size: clamp(28px,3.6vw,48px); }
+.holiday-collections__header { margin-bottom: 20px; }
+.holiday-collections__link { background: rgb(var(--color-foreground-rgb) / .04); }
+.holiday-collections--grid .resource-card { background: #fff; padding: 8px; border-radius: 16px; }
+.holiday-collections__products .resource-card__title { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.holiday-collections--showcase { display: grid; grid-template-columns: minmax(240px,1fr) auto auto; align-items: center; column-gap: 16px; }
+.holiday-collections__top-link { margin-bottom: 20px; }
+.holiday-collections--showcase > .holiday-collections__header { margin: 0 0 20px; }
+.holiday-collections--showcase > .holiday-collections__tabs { justify-content: flex-end; margin-bottom: 20px; max-width: 100%; min-width: 0; }
+.holiday-collections--showcase > .holiday-collections__panel { grid-column: 1 / -1; }
+.holiday-collections--showcase .holiday-collections__tabs button { flex-direction: row; min-width: 44px; border-radius: 40px; padding: 4px; gap: 0; border-width: 1px; }
+.holiday-collections--showcase .holiday-collections__tabs img, .holiday-collections--showcase .holiday-collections__initial { width: 36px; height: 36px; flex-shrink: 0; }
+.holiday-collections--showcase .holiday-collections__tab-label { max-width: 0; opacity: 0; overflow: hidden; white-space: nowrap; }
+.holiday-collections--showcase [aria-selected=true] .holiday-collections__tab-label { max-width: 160px; opacity: 1; padding: 0 12px 0 8px; }
+.holiday-collections__body--feature { grid-template-columns: repeat(6,minmax(0,1fr)); gap: 16px; align-items: start; }
+.holiday-collections__feature { grid-column: span 2; }
+.holiday-collections__results { grid-column: span 4; }
+.holiday-collections__body:not(.holiday-collections__body--feature) .holiday-collections__results { grid-column: auto; }
+.holiday-collections__feature img { min-height: 0; aspect-ratio: 1; object-fit: cover; }
+.holiday-collections--showcase .holiday-collections__body--feature .holiday-collections__products { grid-template-columns: repeat(4,minmax(0,1fr)); }
+.holiday-collections--showcase .holiday-collections__results { max-height: 460px; overflow-y: auto; }
+.holiday-collections--tabs .holiday-collections__header { display: block; text-align: center; margin-bottom: 24px; }
+.holiday-collections--tabs .holiday-collections__heading-image { display: block; width: 160px; height: 160px; margin: 0 auto 24px; }
+.holiday-collections--tabs .holiday-collections__tabs { gap: 16px; }
+.holiday-collections--tabs .holiday-collections__tabs button { flex: 1 0 140px; padding: 6px; }
+.holiday-collections--tabs .holiday-collections__tabs img, .holiday-collections--tabs .holiday-collections__initial { width: 100%; height: auto; aspect-ratio: 1; border-radius: 12px; }
+.holiday-collections--tabs .holiday-collections__tabs button:not([aria-selected=true]) { opacity: .6; }
+.holiday-collections--tabs .holiday-collections__more { display: flex; width: fit-content; margin-inline: auto; }
+.holiday-collections--row .holiday-collections__more, .holiday-collections--grid .holiday-collections__more { display: none; }
+@media(max-width:749px) {
+  .holiday-collections { width: calc(100% - 32px); padding-block: 28px; }
+  .holiday-collections--showcase { display: block; }
+  .holiday-collections__top-link { width: fit-content; }
+  .holiday-collections--showcase > .holiday-collections__tabs { justify-content: flex-start; }
+  .holiday-collections__body--feature { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .holiday-collections__feature, .holiday-collections__results { grid-column: 1 / -1; }
+  .holiday-collections--showcase .holiday-collections__results { max-height: none; overflow: visible; }
+  .holiday-collections--showcase .holiday-collections__body--feature .holiday-collections__products { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .holiday-collections--tabs .holiday-collections__tabs button { flex: 0 0 96px; }
+  .holiday-collections__heading-image { width: 48px; height: 48px; }
+}

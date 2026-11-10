@@ -2,7 +2,7 @@
   assign hero_image = section.settings.image | default: section.settings.collection.image | default: section.settings.collection.products.first.featured_image
   assign hero_link = section.settings.link | default: section.settings.collection.url | default: routes.all_products_collection_url
 %}
-<section class="christmas-hero" style="--holiday-bg: {{ section.settings.background }}; --holiday-text: {{ section.settings.text_color }};">
+<section class="christmas-hero{% if section.settings.compact %} christmas-hero--compact{% endif %}" style="--holiday-bg: {{ section.settings.background }}; --holiday-text: {{ section.settings.text_color }};">
   <div class="christmas-hero__copy">
     <p class="christmas-hero__eyebrow">{{ section.settings.eyebrow | escape }}</p>
     <h1>{{ section.settings.heading | escape }}</h1>
@@ -46,6 +46,13 @@
   .christmas-hero__timer strong { font-size: 26px; font-variant-numeric: tabular-nums; }
   .christmas-hero__timer small { font-size: 11px; }
   @media(max-width:749px) { .christmas-hero { grid-template-columns: 1fr; } .christmas-hero__media img { min-height: 0; height: auto; } }
+  .christmas-hero--compact .christmas-hero__copy { padding: 32px 24px; }
+  .christmas-hero--compact .christmas-hero__copy h1 { font-size: clamp(32px,3.6vw,48px); max-width: none; }
+  .christmas-hero--compact .christmas-hero__media img { min-height: 0; height: 368px; }
+  .christmas-hero--compact .christmas-hero__button { background: #88283f; color: #fff; margin-top: 0; }
+  .christmas-hero--compact .christmas-hero__timer > span { background: #fff; border: 1px solid #eee; box-shadow: 0 4px 12px #0000000d; border-radius: 16px; }
+  .christmas-hero--compact .christmas-hero__eyebrow:empty { display: none; }
+  @media(max-width:749px) { .christmas-hero--compact .christmas-hero__media img { height: auto; } }
 {% endstylesheet %}
 {% javascript %}
   if (!customElements.get('christmas-countdown')) customElements.define('christmas-countdown', class extends HTMLElement {
@@ -72,6 +79,7 @@
 {
   "name": "Christmas hero", "disabled_on": {"groups": ["header", "footer"]},
   "settings": [
+    {"type":"checkbox","id":"compact","label":"Compact gift-guide layout","default":false},
     {"type":"text","id":"eyebrow","label":"Eyebrow","default":"CUSTOMVERSAL · THE CHRISTMAS GIFT GUIDE"},
     {"type":"text","id":"heading","label":"Heading","default":"A little Christmas magic. Made personal."},
     {"type":"textarea","id":"description","label":"Description","default":"Their names. Your favorite photos. Gifts that bring everyone a little closer."},

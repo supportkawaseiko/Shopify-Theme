@@ -43,7 +43,16 @@ if (!customElements.get('holiday-collections')) {
           panel.setAttribute('role', 'tabpanel');
           panel.tabIndex = 0;
           panel.hidden = panel.dataset.holidayPanel !== button.dataset.holidayTab;
-          if (!panel.hidden) load(panel);
+          if (!panel.hidden) {
+            load(panel);
+            const topLink = this.querySelector('[data-holiday-top-link]');
+            const collectionLink = panel.querySelector('.holiday-collections__more');
+            if (topLink) {
+              topLink.hidden = !collectionLink;
+              if (collectionLink) topLink.href = collectionLink.href;
+              else topLink.removeAttribute('href');
+            }
+          }
         });
         if (focus) button.focus();
       };

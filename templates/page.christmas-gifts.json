@@ -2,58 +2,62 @@
   "sections": {
     "christmas_hero": {
       "type": "christmas-hero",
-      "settings": { "collection": "christmas" }
+      "settings": { "collection": "christmas", "compact": true, "heading":"Christmas Gifts", "eyebrow":"", "description":"Bring your favorite memories into their Christmas.", "button_label":"Shop Now", "background":"#ffffff", "text_color":"#2b2325", "countdown_end":"2026-12-25T00:00:00-05:00", "countdown_label":"Christmas countdown", "note":"" }
     },
     "best_sellers": {
       "type": "holiday-collections",
       "name": "Christmas best sellers",
-      "settings": { "layout": "grid", "heading": "Christmas favorites", "description": "Thoughtful little things. Memories that last.", "collection": "christmas", "product_limit": 12, "columns": 6, "sort_order":"best-selling" }
+      "settings": { "layout": "grid", "heading": "Best Sellers", "collection": "christas-ornaments", "product_limit": 12, "columns": 6, "sort_order":"best-selling" }
     },
     "recipients": {
       "type": "holiday-collections",
       "name": "Christmas by recipient",
-      "settings": { "layout": "showcase", "heading": "Who is on your gift list?", "description": "Find something personal for every kind of wonderful.", "surface": "#eee0dc", "accent": "#88283f", "link_label": "Explore these gifts", "product_limit": 8, "columns": 6 },
+      "settings": { "layout": "showcase", "heading": "Gift By Recipient", "surface": "#eee0dc", "accent": "#88283f", "link_label": "See all", "product_limit": 10, "columns": 6 },
       "blocks": {
-        "all": { "type": "collection", "settings": { "label": "All gifts", "collection": "christmas" } },
-        "family": { "type": "collection", "settings": { "label": "Family" } },
-        "friends": { "type": "collection", "settings": { "label": "Friends" } },
-        "couples": { "type": "collection", "settings": { "label": "Couples" } },
+        "family": { "type": "collection", "settings": { "label": "Family", "collection":"family-gifts" } },
+        "friends": { "type": "collection", "settings": { "label": "Friends", "collection":"bestie-gift" } },
+        "couples": { "type": "collection", "settings": { "label": "Couples", "collection":"couple-gifts" } },
         "him": { "type": "collection", "settings": { "label": "Him" } },
         "her": { "type": "collection", "settings": { "label": "Her" } },
         "dad": { "type": "collection", "settings": { "label": "Dad" } },
         "mom": { "type": "collection", "settings": { "label": "Mom" } }
       },
-      "block_order": ["all", "family", "friends", "couples", "him", "her", "dad", "mom"]
+      "block_order": ["family", "friends", "couples", "him", "her", "dad", "mom"]
     },
     "christmas_decor": {
       "type": "holiday-collections", "name": "Christmas decor image tabs",
       "settings": {"layout":"showcase", "heading":"Christmas Decor", "product_limit":8},
       "blocks": {
-        "ornaments":{"type":"collection","settings":{"label":"Ornaments"}},
         "doormats":{"type":"collection","settings":{"label":"Doormats"}},
+        "ornaments":{"type":"collection","settings":{"label":"Ornaments","collection":"christas-ornaments"}},
+        "runner_rugs":{"type":"collection","settings":{"label":"Runner Rugs"}},
+        "towels":{"type":"collection","settings":{"label":"Kitchen Towels"}},
         "signs":{"type":"collection","settings":{"label":"Wood Signs"}},
         "runners":{"type":"collection","settings":{"label":"Table Runners"}}
-      }, "block_order":["ornaments","doormats","signs","runners"]
+      }, "block_order":["doormats","ornaments","runners","runner_rugs","towels","signs"]
     },
     "office": {"type":"holiday-collections", "name":"Office gift product row", "settings":{"layout":"row","heading":"For The Office","product_limit":12}},
-    "first_christmas": {"type":"holiday-collections", "name":"First Christmas product row", "settings":{"layout":"row","heading":"For First Christmas","product_limit":12}},
+    "first_christmas": {"type":"holiday-collections", "name":"First Christmas product row", "settings":{"layout":"row","heading":"For First Christmas","collection":"new-baby-gifts","product_limit":12}},
     "pets": {"type":"holiday-collections", "name":"Pet parent product row", "settings":{"layout":"row","heading":"For Pet Parents","product_limit":12}},
     "categories": {
       "type":"holiday-collections", "name":"Recommended category tabs",
       "settings":{"layout":"tabs","heading":"Recommended Categories","product_limit":12},
       "blocks":{
-        "christmas":{"type":"collection","settings":{"label":"Christmas","collection":"christmas"}},
-        "ceramic":{"type":"collection","settings":{"label":"Ceramic Ornaments"}},
+        "ceramic":{"type":"collection","settings":{"label":"Ceramic Ornaments","collection":"christas-ornaments"}},
         "acrylic":{"type":"collection","settings":{"label":"Acrylic Ornaments"}},
-        "shirts":{"type":"collection","settings":{"label":"Shirts"}},
-        "mugs":{"type":"collection","settings":{"label":"Mugs"}}
-      }, "block_order":["christmas","ceramic","acrylic","shirts","mugs"]
+        "wooden":{"type":"collection","settings":{"label":"Wooden Ornaments"}},
+        "glass":{"type":"collection","settings":{"label":"Glass Ornaments"}},
+        "mugs":{"type":"collection","settings":{"label":"Mugs"}},
+        "sweatpants":{"type":"collection","settings":{"label":"Sweatpants"}},
+        "socks":{"type":"collection","settings":{"label":"Crew Socks"}}
+      }, "block_order":["ceramic","acrylic","wooden","glass","mugs","sweatpants","socks"]
     },
-    "gallery": {"type":"holiday-collections", "name":"Shoppable inspiration gallery", "settings":{"layout":"gallery","heading":"You Might Like This","collection":"christmas","product_limit":12,"columns":4}},
+    "marquee":{"type":"holiday-editorial","settings":{"layout":"marquee","heading":"CHRISTMAS GIFTS","background":"#88283f","color":"#ffffff"}},
+    "gallery": {"type":"holiday-editorial", "name":"Shoppable inspiration gallery", "settings":{"layout":"gallery","heading":"You Might Like This"},"blocks":{"one":{"type":"card","settings":{"collection":"christas-ornaments","title":"Christmas Ornaments"}},"two":{"type":"card","settings":{"collection":"family-gifts","title":"Family Gifts"}},"three":{"type":"card","settings":{"collection":"couple-gifts","title":"Couple Gifts"}}},"block_order":["one","two","three"]},
     "new_arrivals": {"type":"holiday-collections", "name":"Christmas new arrivals", "settings":{"layout":"row","heading":"New Arrivals","collection":"christmas","product_limit":6,"sort_order":"created-descending"}},
     "confidence": {
       "type": "gift-discovery",
-      "settings": { "layout": "confidence", "heading": "Made personal. Given with love." },
+      "settings": { "layout": "confidence", "heading": "Why Choose Customversal!" },
       "blocks": {
         "personal": { "type": "item", "settings": { "title": "Your memories, made into gifts", "text": "Bring your favorite names, photos and moments into their everyday life.", "icon": "gift" } },
         "order": { "type": "item", "settings": { "title": "Made for your order", "text": "Personalized details make every gift feel like it belongs to them.", "icon": "gift" } },
@@ -64,6 +68,7 @@
     },
     "faq": {
       "type": "holiday-faq",
+      "disabled": true,
       "settings": {},
       "blocks": {
         "personalize": { "type": "question", "settings": { "question": "How do I personalize my Christmas gift?", "answer": "<p>Choose your favorite product, then enter the names or upload the photos requested on its product page. Double-check spelling and your selected options before adding it to your cart.</p>" } },
@@ -74,5 +79,5 @@
       "block_order": ["personalize", "preview", "shipping", "photo"]
     }
   },
-  "order": ["christmas_hero", "best_sellers", "recipients", "christmas_decor", "office", "first_christmas", "pets", "categories", "gallery", "new_arrivals", "confidence", "faq"]
+  "order": ["christmas_hero", "best_sellers", "recipients", "christmas_decor", "office", "first_christmas", "pets", "marquee", "categories", "gallery", "new_arrivals", "confidence", "faq"]
 }
