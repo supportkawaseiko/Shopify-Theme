@@ -1845,6 +1845,67 @@
     ]
   },
   {
+    "name": "Product image frame",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "product_frame_enabled",
+        "label": "Enable frame on all product cards",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "product_frame_text",
+        "label": "Banner text / image description",
+        "default": "Get It by Christmas"
+      },
+      {
+        "type": "image_picker",
+        "id": "product_frame_image",
+        "label": "Custom banner or transparent frame",
+        "info": "Optional. Replaces the text banner. For a full frame, upload a transparent PNG matching the product image ratio."
+      },
+      {
+        "type": "select",
+        "id": "product_frame_image_layout",
+        "label": "Custom image layout",
+        "options": [
+          { "value": "banner", "label": "Banner along bottom" },
+          { "value": "full", "label": "Full image frame" }
+        ],
+        "default": "banner"
+      },
+      {
+        "type": "color",
+        "id": "product_frame_background",
+        "label": "Banner background",
+        "default": "#d92335"
+      },
+      {
+        "type": "color",
+        "id": "product_frame_color",
+        "label": "Banner text color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "range",
+        "id": "product_frame_size",
+        "label": "Text banner minimum height",
+        "min": 8,
+        "max": 24,
+        "step": 1,
+        "unit": "%",
+        "default": 12
+      },
+      {
+        "type": "checkbox",
+        "id": "product_frame_festive",
+        "label": "Show Christmas tree and bell",
+        "default": true
+      }
+    ]
+  },
+  {
     "name": "t:names.product_cards",
     "settings": [
       {

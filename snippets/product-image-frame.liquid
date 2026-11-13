@@ -1,0 +1,73 @@
+{% doc %}
+  Shared, non-interactive promotional overlay for product card images.
+  Configure once in Theme settings > Product image frame.
+{% enddoc %}
+{% if settings.product_frame_enabled %}
+  {% if settings.product_frame_image != blank or settings.product_frame_text != blank %}
+    <div
+      class="product-image-frame{% if settings.product_frame_image != blank %} product-image-frame--image product-image-frame--{{ settings.product_frame_image_layout }}{% endif %}"
+      style="--frame-background: {{ settings.product_frame_background }}; --frame-color: {{ settings.product_frame_color }}; --frame-size: {{ settings.product_frame_size }}%;"
+    >
+      {% if settings.product_frame_image != blank %}
+        {{ settings.product_frame_image | image_url: width: 1200 | image_tag: class: 'product-image-frame__image', widths: '200, 400, 600, 800, 1200', sizes: '(min-width: 750px) 25vw, 50vw', loading: 'lazy', alt: settings.product_frame_text }}
+      {% else %}
+        {% if settings.product_frame_festive %}<span class="product-image-frame__decoration" aria-hidden="true">🎄</span>{% endif %}
+        <span class="product-image-frame__text">{{ settings.product_frame_text | escape }}</span>
+        {% if settings.product_frame_festive %}<span class="product-image-frame__decoration" aria-hidden="true">🔔</span>{% endif %}
+      {% endif %}
+    </div>
+  {% endif %}
+{% endif %}
+
+{% stylesheet %}
+  .product-image-frame {
+    position: absolute;
+    inset: auto 0 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25em;
+    min-height: var(--frame-size, 12%);
+    padding: 0.25em 0.4em;
+    background-color: var(--frame-background, #d92335);
+    background-image: repeating-linear-gradient(135deg, transparent 0 8px, rgb(255 255 255 / 0.06) 8px 10px);
+    color: var(--frame-color, #ffffff);
+    font-size: clamp(10px, 6cqw, 24px);
+    font-weight: 700;
+    line-height: 1.2;
+    text-align: center;
+    pointer-events: none;
+  }
+
+  .product-image-frame__text {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .product-image-frame__decoration {
+    flex: 0 0 auto;
+    font-size: 1.15em;
+  }
+
+  .product-image-frame--image {
+    min-height: 0;
+    padding: 0;
+    background: transparent;
+  }
+
+  .product-image-frame__image {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .product-image-frame--full {
+    inset: 0;
+  }
+
+  .product-image-frame--full .product-image-frame__image {
+    height: 100%;
+    object-fit: fill;
+  }
+{% endstylesheet %}

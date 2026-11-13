@@ -229,6 +229,9 @@
       render 'slideshow', ref: 'slideshow', slides: placeholder_slide, slide_count: 1, attributes: 'disabled="true"'
     %}
   {%- endif -%}
+  {% if product != blank and product.media.size > 0 %}
+    {% render 'product-image-frame' %}
+  {% endif %}
   {{ children }}
 </div>
 
