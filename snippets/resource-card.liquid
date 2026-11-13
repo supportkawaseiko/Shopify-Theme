@@ -133,6 +133,9 @@
           {{- resource.title | truncate: 60 -}}
         </div>
       {%- endif -%}
+      {% if resource_type == 'product' and featured_image != blank %}
+        {% render 'product-image-frame' %}
+      {% endif %}
     {%- elsif resource_type == 'collection' -%}
       {%- if resource.products.size > 0 -%}
         <div class="resource-card__image-wrapper">
@@ -223,6 +226,13 @@
   .resource-card[data-resource-type='article'] .resource-card__content,
   .resource-card[data-resource-type='page'] .resource-card__content {
     gap: var(--padding-xs);
+  }
+
+  .resource-card[data-resource-type='product'] .resource-card__media {
+    position: relative;
+    container-type: inline-size;
+    overflow: hidden;
+    border-radius: var(--resource-card-corner-radius);
   }
 
   .resource-card__image {
