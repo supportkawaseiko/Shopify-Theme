@@ -64,6 +64,7 @@
           "type": "_product-details",
           "static": true,
           "settings": {
+            "sidebar_buy_box": true,
             "width": "fill",
             "custom_width": 100,
             "width_mobile": "fill",
@@ -84,8 +85,7 @@
             "padding-block-start": 12,
             "padding-block-end": 24,
             "padding-inline-start": 0,
-            "padding-inline-end": 0,
-            "sidebar_buy_box": true
+            "padding-inline-end": 0
           },
           "blocks": {
             "purchase_content": {
@@ -200,10 +200,10 @@
                       "settings": {
                         "stars_style": "shaded",
                         "show_number": true,
-                        "type_preset": "paragraph",
-                        "alignment": "left",
                         "text_color": "#88283f",
-                        "width": "fit-content"
+                        "type_preset": "paragraph",
+                        "width": "fit-content",
+                        "alignment": "left"
                       },
                       "blocks": {}
                     }
@@ -365,7 +365,6 @@
             "purchase_box": {
               "type": "product-buy-box",
               "settings": {
-                "heading": "Order your gift",
                 "delivery_heading": "Delivery information",
                 "delivery_text": "Review production and delivery estimates before ordering. Shipping is calculated at checkout.",
                 "delivery_link": "/pages/delivery",
