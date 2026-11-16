@@ -5,6 +5,7 @@
   id="ProductInformation-{{ section.id }}"
   class="
     product-details
+    {% if block_settings.sidebar_buy_box %} product-details--buy-box{% endif %}
     {% if block_settings.sticky_details_desktop %} sticky-content--desktop{% endif %}
     {% if block_settings.height == 'fill' -%} full-height--desktop{% endif -%}
   "
@@ -137,6 +138,7 @@
   ],
   "tag": null,
   "settings": [
+    {"type":"checkbox","id":"sidebar_buy_box","label":"Sidebar buy box on wide screens","default":false},
     {
       "type": "header",
       "content": "t:content.size"
