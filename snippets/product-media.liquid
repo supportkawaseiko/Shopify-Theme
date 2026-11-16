@@ -54,6 +54,9 @@
   }}
 
   {% unless preview_image_only %}
+    {% if media.media_type == 'image' %}
+      {% render 'product-image-frame' %}
+    {% endif %}
     {%- case media.media_type -%}
       {% when 'model' %}
         <product-model
@@ -137,3 +140,21 @@
 </div>
 
 {% render 'deferred-media-product-model-styles' %}
+
+{% stylesheet %}
+  .product-media:has(> .product-image-frame) {
+    position: relative;
+    container-type: inline-size;
+  }
+
+  .product-media > .product-image-frame .product-image-frame__image {
+    width: 100%;
+    height: auto;
+    aspect-ratio: auto;
+    object-fit: fill;
+  }
+
+  .product-media > .product-image-frame--full .product-image-frame__image {
+    height: 100%;
+  }
+{% endstylesheet %}

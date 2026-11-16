@@ -1850,7 +1850,7 @@
       {
         "type": "checkbox",
         "id": "product_frame_enabled",
-        "label": "Enable frame on all product cards",
+        "label": "Enable frame on product cards and product pages",
         "default": true
       },
       {
