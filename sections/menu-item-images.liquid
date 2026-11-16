@@ -5,9 +5,9 @@
 {% for block in section.blocks %}
   {% liquid
     assign image_key = block.settings.title | handleize
-    assign image_url = block.settings.image | image_url: width: 192
   %}
   {% if block.settings.enabled and block.settings.image != blank and image_key != blank %}
+    {% assign image_url = block.settings.image | image_url: width: 192 %}
     {% capture target %}header-component .menu-item-label[data-menu-image-key="{{ image_key }}"]{% if block.settings.link != blank %}[data-menu-image-url={{ block.settings.link | json | replace: '\u0026', '&' }}]{% endif %}{% endcapture %}
     <style {{ block.shopify_attributes }}>
       {{ target }} {
