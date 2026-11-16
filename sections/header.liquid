@@ -199,6 +199,10 @@
     assign class = class | append: ' ' | append: collapse_header_paddings_class
   endif
 
+  if section.settings.commerce_header
+    assign class = class | append: ' cv-commerce-header'
+  endif
+
   # Determine transparent background value
   assign top_transparent = false
   assign bottom_transparent = false
@@ -270,6 +274,9 @@
               "
             ></span>
           {% endif %}
+          {% if section.settings.commerce_header %}
+            <span class="cv-ship-to"><span class="cv-ship-to__label">Ship to</span><strong>{{ localization.country.name | escape }}</strong><span class="cv-ship-to__currency">{{ localization.country.currency.iso_code }}{% if show_language %} · {{ localization.language.iso_code | upcase }}{% endif %}</span></span>
+          {% else %}
           <span
             class="currency-code"
             data-testid="localization-currency-code"
@@ -293,6 +300,7 @@
             {{ localization.language.iso_code | upcase }}
           </span>
         {%- endif -%}
+          {% endif %}
         <span class="svg-wrapper icon-caret">
           {{- 'icon-caret.svg' | inline_asset_content -}}
         </span>
@@ -431,6 +439,9 @@
       {% if custom_color_styles %}
         {% render 'contrast-override', background_color: section.settings[row_setting], text_color: section.settings[text_setting], section_id: row_class_id %}
       {% endif %}
+      {% if section.settings.commerce_header and row == 'top' %}
+        {% render 'commerce-header', logo: logo, localization: localization_markup, actions: actions, drawer_menu: drawer_menu %}
+      {% else %}
       {% render 'header-row',
         row: row,
         order: order,
@@ -443,6 +454,7 @@
         search: search,
         drawer_search: drawer_search
       %}
+      {% endif %}
     {% endcapture %}
 
     {% assign content = content | strip %}
@@ -1188,6 +1200,7 @@
   "tag": "header",
   "class": "header-section",
   "settings": [
+    { "type": "checkbox", "id": "commerce_header", "label": "Shopping header with Ship to selector", "default": false },
     { "type": "checkbox", "id": "expanded_search", "label": "Wide desktop search field", "default": false },
     {
       "type": "header",
