@@ -8,7 +8,7 @@
     assign image_url = block.settings.image | image_url: width: 192
   %}
   {% if block.settings.enabled and block.settings.image != blank and image_key != blank %}
-    {% capture target %}header-component .menu-item-label[data-menu-image-key="{{ image_key }}"]{% if block.settings.link != blank %}[data-menu-image-url={{ block.settings.link | json }}]{% endif %}{% endcapture %}
+    {% capture target %}header-component .menu-item-label[data-menu-image-key="{{ image_key }}"]{% if block.settings.link != blank %}[data-menu-image-url={{ block.settings.link | json | replace: '\u0026', '&' }}]{% endif %}{% endcapture %}
     <style {{ block.shopify_attributes }}>
       {{ target }} {
         display: inline-flex;
@@ -29,7 +29,7 @@
         width: {{ block.settings.image_size }}px;
         height: {{ block.settings.image_size }}px;
         border-radius: {{ block.settings.image_radius }}%;
-        background: url({{ image_url | json }}) center / cover no-repeat;
+        background: url({{ image_url | json | replace: '\u0026', '&' }}) center / cover no-repeat;
       }
     </style>
   {% endif %}
