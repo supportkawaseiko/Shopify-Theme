@@ -20,11 +20,11 @@
       <li class="mega-menu__directory-column">
         {% for group in parent_link.links offset: group_offset limit: groups_per_column %}
           <div class="mega-menu__directory-group">
-            <a href="{{ group.url }}" class="mega-menu__link mega-menu__link--parent"><span class="wrap-text">{{ group.title | escape }}</span></a>
+            <a href="{{ group.url }}" class="mega-menu__link mega-menu__link--parent"><span class="wrap-text">{% render 'menu-item-label', link: group %}</span></a>
             {% if group.links != blank %}
               <ul class="list-unstyled">
                 {% for item in group.links %}
-                  <li><a class="mega-menu__link" href="{{ item.url }}"><span class="wrap-text">{{ item.title | escape }}</span></a></li>
+                  <li><a class="mega-menu__link" href="{{ item.url }}"><span class="wrap-text">{% render 'menu-item-label', link: item %}</span></a></li>
                 {% endfor %}
               </ul>
             {% endif %}

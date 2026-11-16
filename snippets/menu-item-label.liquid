@@ -1,0 +1,5 @@
+{% doc %}
+  Shared menu label targeted by the Menu item images header section.
+  @param {object} link - Navigation link.
+{% enddoc %}
+<span class="menu-item-label" data-menu-image-key="{{ link.title | handleize }}" data-menu-image-url="{{ link.url | escape }}">{{ link.title | escape }}</span>

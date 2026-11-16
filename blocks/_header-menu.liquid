@@ -54,7 +54,7 @@
                     aria-current="page"
                   {% endif %}
                 >
-                  {{- link.title -}}
+                  {% render 'menu-item-label', link: link %}
                 </a>
               </li>
             {% endfor %}
@@ -115,7 +115,7 @@
             {% endif %}
             ref="menuitem"
           >
-            <span class="menu-list__link-title">{{- link.title -}}</span>
+            <span class="menu-list__link-title">{% render 'menu-item-label', link: link %}</span>
           </a>
           {%- if link.links != blank -%}
             <div class="menu-list__submenu{{ background_color_classes }}" ref="submenu[]">

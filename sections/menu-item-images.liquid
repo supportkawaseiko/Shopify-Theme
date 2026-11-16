@@ -1,0 +1,66 @@
+{% stylesheet %}
+  .menu-item-images-section { display: contents; }
+{% endstylesheet %}
+
+{% for block in section.blocks %}
+  {% liquid
+    assign image_key = block.settings.title | handleize
+    assign image_url = block.settings.image | image_url: width: 192
+  %}
+  {% if block.settings.enabled and block.settings.image != blank and image_key != blank %}
+    {% capture target %}header-component .menu-item-label[data-menu-image-key="{{ image_key }}"]{% if block.settings.link != blank %}[data-menu-image-url={{ block.settings.link | json }}]{% endif %}{% endcapture %}
+    <style {{ block.shopify_attributes }}>
+      {{ target }} {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        max-width: 100%;
+        min-height: {{ block.settings.image_size }}px;
+        padding-inline-end: 12px;
+        background: {{ block.settings.background }};
+        color: {{ block.settings.text_color }};
+        border-radius: {{ block.settings.pill_radius }}px;
+        vertical-align: middle;
+      }
+      {{ target }}::before {
+        content: '';
+        display: block;
+        flex: 0 0 {{ block.settings.image_size }}px;
+        width: {{ block.settings.image_size }}px;
+        height: {{ block.settings.image_size }}px;
+        border-radius: {{ block.settings.image_radius }}%;
+        background: url({{ image_url | json }}) center / cover no-repeat;
+      }
+    </style>
+  {% endif %}
+{% endfor %}
+
+{% schema %}
+{
+  "name": "Menu item images",
+  "class": "menu-item-images-section",
+  "limit": 1,
+  "enabled_on": { "groups": ["header"] },
+  "settings": [
+    { "type": "paragraph", "content": "Add one block per menu item. Enter its menu label and select an image. Works on desktop and mobile, including submenu links." }
+  ],
+  "blocks": [
+    {
+      "type": "menu_image",
+      "name": "Menu item image",
+      "settings": [
+        { "type": "checkbox", "id": "enabled", "label": "Enable image", "default": true },
+        { "type": "text", "id": "title", "label": "Menu item name", "info": "Use the same name as your navigation item, such as Christmas.", "default": "Christmas" },
+        { "type": "url", "id": "link", "label": "Match link (optional)", "info": "Use this to distinguish menu items with the same name. Select the same destination as the menu item." },
+        { "type": "image_picker", "id": "image", "label": "Menu image" },
+        { "type": "range", "id": "image_size", "label": "Image size", "min": 24, "max": 64, "step": 4, "unit": "px", "default": 40 },
+        { "type": "range", "id": "image_radius", "label": "Image rounding", "min": 0, "max": 50, "step": 5, "unit": "%", "default": 50 },
+        { "type": "color", "id": "background", "label": "Background", "default": "#ffd6d6" },
+        { "type": "color", "id": "text_color", "label": "Text color", "default": "#111111" },
+        { "type": "range", "id": "pill_radius", "label": "Background rounding", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 24 }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Menu item images", "blocks": [{ "type": "menu_image" }] }]
+}
+{% endschema %}
