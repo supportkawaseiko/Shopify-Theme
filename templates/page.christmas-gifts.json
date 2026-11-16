@@ -77,56 +77,12 @@
             "link": "",
             "banner_label": "Explore these gifts"
           }
-        },
-        "him": {
-          "type": "collection",
-          "settings": {
-            "label": "Him",
-            "collection": "",
-            "product_tag": "",
-            "link": "",
-            "banner_label": "Explore these gifts"
-          }
-        },
-        "her": {
-          "type": "collection",
-          "settings": {
-            "label": "Her",
-            "collection": "",
-            "product_tag": "",
-            "link": "",
-            "banner_label": "Explore these gifts"
-          }
-        },
-        "dad": {
-          "type": "collection",
-          "settings": {
-            "label": "Dad",
-            "collection": "",
-            "product_tag": "",
-            "link": "",
-            "banner_label": "Explore these gifts"
-          }
-        },
-        "mom": {
-          "type": "collection",
-          "settings": {
-            "label": "Mom",
-            "collection": "",
-            "product_tag": "",
-            "link": "",
-            "banner_label": "Explore these gifts"
-          }
         }
       },
       "block_order": [
         "family",
         "friends",
-        "couples",
-        "him",
-        "her",
-        "dad",
-        "mom"
+        "couples"
       ],
       "name": "Christmas by recipient",
       "settings": {
@@ -236,6 +192,7 @@
     },
     "office": {
       "type": "holiday-collections",
+      "disabled": true,
       "name": "Office gift product row",
       "settings": {
         "heading": "For The Office",
