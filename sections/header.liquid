@@ -283,6 +283,7 @@
           >
             {{- localization.country.currency.iso_code -}}
           </span>
+          {% endif %}
         {% endif %}
         <span
           class="visually-hidden"
@@ -291,6 +292,7 @@
           {{- 'accessibility.localization_region_and_language' | t -}}
         </span>
 
+        {% unless section.settings.commerce_header %}
         {%- if show_country and show_language -%}
           <span>/</span>
         {%- endif -%}
@@ -300,7 +302,7 @@
             {{ localization.language.iso_code | upcase }}
           </span>
         {%- endif -%}
-          {% endif %}
+        {% endunless %}
         <span class="svg-wrapper icon-caret">
           {{- 'icon-caret.svg' | inline_asset_content -}}
         </span>
