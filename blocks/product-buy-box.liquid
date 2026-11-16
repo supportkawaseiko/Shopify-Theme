@@ -1,14 +1,4 @@
-<aside class="product-buy-box" aria-label="{{ block.settings.heading | escape }}" {{ block.shopify_attributes }}>
-  <h2 class="product-buy-box__heading">{{ block.settings.heading | escape }}</h2>
-  <product-price class="product-buy-box__price" data-block-id="{{ block.id }}" data-product-id="{{ closest.product.id }}">
-    {% render 'price', product_resource: closest.product, show_sale_price_first: true %}
-  </product-price>
-  <div class="product-buy-box__blocks">{% content_for 'blocks' %}</div>
-  <div class="product-buy-box__delivery">
-    <strong>{{ block.settings.delivery_heading | escape }}</strong>
-    <p>{{ block.settings.delivery_text | escape }}</p>
-    {% if block.settings.delivery_link != blank %}<a href="{{ block.settings.delivery_link }}">{{ block.settings.delivery_link_label | escape }}</a>{% endif %}
-  </div>
+<aside class="product-buy-box" aria-label="Purchase options" {{ block.shopify_attributes }}>
   {% if block.settings.show_membership and block.settings.member_link != blank %}
     <div class="product-buy-box__membership">
       {% if block.settings.free_shipping_active %}
@@ -21,11 +11,19 @@
       {% endif %}
     </div>
   {% endif %}
+  <product-price class="product-buy-box__price" data-block-id="{{ block.id }}" data-product-id="{{ closest.product.id }}">
+    {% render 'price', product_resource: closest.product, show_sale_price_first: true %}
+  </product-price>
+  <div class="product-buy-box__blocks">{% content_for 'blocks' %}</div>
+  <div class="product-buy-box__delivery">
+    <strong>{{ block.settings.delivery_heading | escape }}</strong>
+    <p>{{ block.settings.delivery_text | escape }}</p>
+    {% if block.settings.delivery_link != blank %}<a href="{{ block.settings.delivery_link }}">{{ block.settings.delivery_link_label | escape }}</a>{% endif %}
+  </div>
   {% if block.settings.support_link != blank %}<a class="product-buy-box__support" href="{{ block.settings.support_link }}">{{ block.settings.support_label | escape }}</a>{% endif %}
 </aside>
 {% stylesheet %}
   .product-buy-box { display: block; width: 100%; min-width: 0; padding: 20px; border: 1px solid rgb(var(--color-foreground-rgb) / .18); border-radius: 12px; background: var(--color-background); }
-  .product-buy-box__heading { margin: 0 0 12px; font-size: 17px; }
   .product-buy-box__price { display: block; margin-bottom: 20px; }
   .product-buy-box__price .price { font-size: 24px; }
   .product-buy-box__blocks { display: flex; flex-direction: column; gap: 18px; }
@@ -37,7 +35,7 @@
   .product-buy-box__delivery, .product-buy-box__membership { margin-top: 20px; padding-top: 18px; border-top: 1px solid rgb(var(--color-foreground-rgb) / .12); font-size: 14px; line-height: 1.5; }
   .product-buy-box p { margin: 6px 0; }
   .product-buy-box a { color: inherit; text-underline-offset: 3px; }
-  .product-buy-box__membership { padding: 14px; border: 0; border-radius: 8px; background: rgb(var(--color-foreground-rgb) / .04); }
+  .product-buy-box__membership { margin: 0 0 20px; padding: 0 0 16px; border: 0; border-bottom: 1px solid rgb(var(--color-foreground-rgb) / .12); }
   .product-buy-box__support { display: inline-block; margin-top: 18px; font-size: 13px; }
   @media(min-width:1200px) {
     .product-information .product-information__grid:has(.product-details--buy-box) { grid-column: 2 !important; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr) !important; }
@@ -53,7 +51,6 @@
   "name": "Product buy box", "tag": null,
   "blocks": [{"type":"buy-buttons"},{"type":"shipping-eta"},{"type":"trust-signals"}],
   "settings": [
-    {"type":"text","id":"heading","label":"Heading","default":"Order your gift"},
     {"type":"text","id":"delivery_heading","label":"Delivery heading","default":"Delivery information"},
     {"type":"text","id":"delivery_text","label":"Delivery note","default":"Review production and delivery estimates before ordering. Shipping is calculated at checkout."},
     {"type":"url","id":"delivery_link","label":"Delivery link"},
