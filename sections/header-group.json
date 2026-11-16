@@ -44,26 +44,6 @@
         "padding-block-end": 15
       }
     },
-    "menu_item_images": {
-      "type": "menu-item-images",
-      "blocks": {
-        "menu_image_first": {
-          "type": "menu_image",
-          "settings": {
-            "enabled": true,
-            "title": "Christmas",
-            "link": "",
-            "image_size": 40,
-            "image_radius": 50,
-            "background": "#ffd6d6",
-            "text_color": "#111111",
-            "pill_radius": 24
-          }
-        }
-      },
-      "block_order": ["menu_image_first"],
-      "settings": {}
-    },
     "header_section": {
       "type": "header",
       "blocks": {
@@ -147,6 +127,29 @@
         "collection_inverse_logo": false,
         "text_color_transparent_collection": ""
       }
+    },
+    "menu_item_images": {
+      "type": "menu-item-images",
+      "blocks": {
+        "menu_image_first": {
+          "type": "menu_image",
+          "settings": {
+            "enabled": true,
+            "title": "Christmas",
+            "link": "",
+            "image": "shopify://shop_images/1a1089bb-09c5-4745-b2db-31ea87585f53-default-default_238e3260-fd60-4203-baa8-52f6b85c0d3f.jpg",
+            "image_size": 40,
+            "image_radius": 50,
+            "background": "#ffd6d6",
+            "text_color": "#111111",
+            "pill_radius": 24
+          }
+        }
+      },
+      "block_order": [
+        "menu_image_first"
+      ],
+      "settings": {}
     }
   },
   "order": [
