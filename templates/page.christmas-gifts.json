@@ -308,7 +308,8 @@
           "settings": {
             "label": "Ceramic Ornaments",
             "collection": "christas-ornaments",
-            "product_tag": "",
+            "product_tag": "ceramic ornaments",
+            "image": "shopify://shop_images/c87d0dcb-1f07-403b-a8f8-3f7684b19ad1-default-default.jpg",
             "link": "",
             "banner_label": "Explore these gifts"
           }
@@ -317,8 +318,9 @@
           "type": "collection",
           "settings": {
             "label": "Acrylic Ornaments",
-            "collection": "",
-            "product_tag": "",
+            "collection": "christmas",
+            "product_tag": "arcrylic ornaments",
+            "image": "shopify://shop_images/karate-black-belt-acrylic-christmas-ornament-girl-martial-artist-2026-christmas-gift-for-karate-lovers-default-3-default.jpg",
             "link": "",
             "banner_label": "Explore these gifts"
           }
@@ -337,8 +339,8 @@
           "type": "collection",
           "settings": {
             "label": "Glass Ornaments",
-            "collection": "",
-            "product_tag": "",
+            "collection": "christmas",
+            "product_tag": "glass ornament",
             "link": "",
             "banner_label": "Explore these gifts"
           }
