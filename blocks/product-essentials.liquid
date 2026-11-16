@@ -1,0 +1,32 @@
+{% capture guide_group %}{% render 'product-guide-group', product: closest.product %}{% endcapture %}
+{% assign guide_group = guide_group | strip %}
+<div class="product-essentials" data-product-guide-group="{{ guide_group }}" {{ block.shopify_attributes }}>
+  <p class="product-essentials__heading">{{ block.settings.heading | escape }}</p>
+  {% if closest.product.metafields.custom.purchase_notes != blank %}
+    <div class="rte">{{ closest.product.metafields.custom.purchase_notes | metafield_tag }}</div>
+  {% else %}
+    <ul>
+      <li>{% case guide_group %}{% when 'apparel' %}Check the size chart and fit before choosing your size.{% when 'ornaments' %}Check the selected material, size and design details.{% when 'drinkware' %}Check the capacity, material and print options.{% when 'candles' %}Check the scent, size and candle details.{% when 'home' %}Check the dimensions and finish for your space.{% else %}Check the selected options and product details.{% endcase %}</li>
+      <li>{{ block.settings.review_note | escape }}</li>
+    </ul>
+  {% endif %}
+</div>
+{% stylesheet %}
+  .product-essentials { width: 100%; padding: 14px 16px; border: 1px solid rgb(var(--color-foreground-rgb) / .1); border-radius: 10px; background: rgb(var(--color-foreground-rgb) / .025); font-size: 14px; line-height: 1.5; }
+  .product-essentials__heading { margin: 0 0 6px; font-weight: 600; }
+  .product-essentials ul { margin: 0; padding-inline-start: 18px; }
+  .product-essentials li + li { margin-top: 4px; }
+  .product-information:has(.product-essentials) .product-details h1 { font-size: clamp(24px, 2.3vw, 34px); line-height: 1.2; text-wrap: pretty; }
+  .product-information:has(.product-essentials) .product-details .price { font-size: 22px; }
+{% endstylesheet %}
+{% schema %}
+{
+  "name": "Product essentials",
+  "tag": null,
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Before you order" },
+    { "type": "text", "id": "review_note", "label": "Review reminder", "default": "If personalizing, double-check your photo, spelling and selected options before adding to cart." }
+  ],
+  "presets": [{ "name": "Product essentials" }]
+}
+{% endschema %}

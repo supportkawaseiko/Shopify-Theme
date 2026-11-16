@@ -1,0 +1,99 @@
+{% liquid
+  assign guide_product = closest.product | default: product
+  capture guide_group
+    render 'product-guide-group', product: guide_product
+  endcapture
+  assign guide_group = guide_group | strip
+  assign selected_guide = blank
+  for block in section.blocks
+    if block.settings.group == guide_group
+      assign selected_guide = block
+      break
+    endif
+  endfor
+  if selected_guide == blank
+    for block in section.blocks
+      if block.settings.group == 'general'
+        assign selected_guide = block
+        break
+      endif
+    endfor
+  endif
+%}
+<section class="product-buying-guide section section--page-width" data-buying-guide-group="{{ guide_group }}" aria-labelledby="BuyingGuide-{{ section.id }}">
+  <div class="product-buying-guide__inner">
+    <header>
+      <p class="product-buying-guide__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      <h2 id="BuyingGuide-{{ section.id }}">{{ selected_guide.settings.title | default: section.settings.heading | escape }}</h2>
+    </header>
+    {% if selected_guide != blank %}
+      <div class="product-buying-guide__cards" {{ selected_guide.shopify_attributes }}>
+        {% if selected_guide.settings.ordering != blank %}
+          <div class="product-buying-guide__card"><h3>{{ section.settings.ordering_heading | escape }}</h3><div class="rte">{{ selected_guide.settings.ordering }}</div></div>
+        {% endif %}
+        {% if selected_guide.settings.care != blank %}
+          <div class="product-buying-guide__card"><h3>{{ section.settings.care_heading | escape }}</h3><div class="rte">{{ selected_guide.settings.care }}</div></div>
+        {% endif %}
+      </div>
+    {% endif %}
+    {% if section.settings.show_description and guide_product.description != blank %}
+      <details class="product-buying-guide__details" open>
+        <summary>{{ section.settings.description_heading | escape }}<span aria-hidden="true">+</span></summary>
+        <div class="product-buying-guide__description rte">{{ guide_product.description }}</div>
+      </details>
+    {% endif %}
+    <div class="product-buying-guide__links">
+      {% if section.settings.delivery_link != blank %}<a href="{{ section.settings.delivery_link }}">{{ section.settings.delivery_label | escape }} <span aria-hidden="true">↗</span></a>{% endif %}
+      {% if section.settings.help_link != blank %}<a href="{{ section.settings.help_link }}">{{ section.settings.help_label | escape }} <span aria-hidden="true">↗</span></a>{% endif %}
+    </div>
+  </div>
+</section>
+{% stylesheet %}
+  .product-buying-guide { padding-block: 40px; }
+  .product-buying-guide__inner { grid-column: 2; min-width: 0; }
+  .product-buying-guide__eyebrow { margin: 0 0 8px; font-size: 12px; text-transform: uppercase; letter-spacing: .12em; opacity: .7; }
+  .product-buying-guide h2 { margin: 0 0 24px; font-size: clamp(26px, 3vw, 38px); line-height: 1.2; }
+  .product-buying-guide__cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+  .product-buying-guide__card { padding: 24px; border: 1px solid rgb(var(--color-foreground-rgb) / .12); border-radius: 12px; }
+  .product-buying-guide h3 { margin: 0 0 12px; font-size: 18px; }
+  .product-buying-guide .rte { font-size: 15px; line-height: 1.65; overflow-wrap: anywhere; }
+  .product-buying-guide .rte > :first-child { margin-top: 0; }
+  .product-buying-guide .rte > :last-child { margin-bottom: 0; }
+  .product-buying-guide__details { margin-top: 24px; border-block: 1px solid rgb(var(--color-foreground-rgb) / .12); }
+  .product-buying-guide summary { display: flex; justify-content: space-between; gap: 16px; padding-block: 20px; cursor: pointer; font-size: 18px; font-weight: 600; list-style: none; }
+  .product-buying-guide summary::-webkit-details-marker { display: none; }
+  .product-buying-guide details[open] summary span { transform: rotate(45deg); }
+  .product-buying-guide__description { padding-bottom: 24px; }
+  .product-buying-guide__description :is(img, table, iframe, video) { max-width: 100%; }
+  .product-buying-guide__description table { display: block; overflow-x: auto; }
+  .product-buying-guide__links { display: flex; flex-wrap: wrap; gap: 12px 28px; margin-top: 24px; font-size: 14px; }
+  .product-buying-guide__links a { color: inherit; text-underline-offset: 4px; }
+  @media(max-width:749px) { .product-buying-guide { padding-block: 28px; } .product-buying-guide__cards { grid-template-columns: 1fr; gap: 12px; } .product-buying-guide__card { padding: 20px; } }
+{% endstylesheet %}
+{% schema %}
+{
+  "name": "Product buying guide",
+  "enabled_on": { "templates": ["product"] },
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "A closer look" },
+    { "type": "text", "id": "heading", "label": "Fallback heading", "default": "Details that matter" },
+    { "type": "text", "id": "ordering_heading", "label": "Ordering heading", "default": "Choose with confidence" },
+    { "type": "text", "id": "care_heading", "label": "Care heading", "default": "Care & everyday use" },
+    { "type": "checkbox", "id": "show_description", "label": "Show product description", "default": true },
+    { "type": "text", "id": "description_heading", "label": "Description heading", "default": "Product details" },
+    { "type": "url", "id": "delivery_link", "label": "Delivery information link" },
+    { "type": "text", "id": "delivery_label", "label": "Delivery link label", "default": "Production & delivery" },
+    { "type": "url", "id": "help_link", "label": "Help link" },
+    { "type": "text", "id": "help_label", "label": "Help link label", "default": "Questions? We're here to help" }
+  ],
+  "blocks": [{
+    "type": "guide", "name": "Product group", "settings": [
+      { "type": "select", "id": "group", "label": "Product group", "options": [{"value":"apparel","label":"Apparel"},{"value":"ornaments","label":"Ornaments"},{"value":"drinkware","label":"Drinkware"},{"value":"home","label":"Home decor"},{"value":"candles","label":"Candles"},{"value":"general","label":"Other products"}], "default": "general" },
+      { "type": "text", "id": "title", "label": "Heading", "default": "Details that matter" },
+      { "type": "richtext", "id": "ordering", "label": "Before ordering" },
+      { "type": "richtext", "id": "care", "label": "Care and use" }
+    ]
+  }],
+  "presets": [{ "name": "Product buying guide" }]
+}
+{% endschema %}

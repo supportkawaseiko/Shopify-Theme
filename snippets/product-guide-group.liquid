@@ -1,0 +1,36 @@
+{%- doc -%}
+  Resolves a buying-guide group. An explicit product metafield wins over template/type inference.
+  @param {object} product - Product to classify.
+{%- enddoc -%}
+{%- liquid
+  assign group = product.metafields.custom.buying_guide_group.value | downcase | strip
+  assign valid_groups = 'apparel,ornaments,drinkware,home,candles,general' | split: ','
+  unless valid_groups contains group
+    assign type = product.type | downcase
+    assign suffix = product.template_suffix | downcase
+    assign name = product.title | downcase
+    assign group = 'general'
+    if suffix contains 'ornament' or type contains 'ornament'
+      assign group = 'ornaments'
+    elsif suffix == 't-shirt' or type contains 'shirt' or type contains 'hoodie' or type contains 'sweat' or type contains 'apparel'
+      assign group = 'apparel'
+    elsif suffix contains 'mug' or type contains 'mug' or type contains 'tumbler' or type contains 'drinkware'
+      assign group = 'drinkware'
+    elsif suffix contains 'candle' or type contains 'candle'
+      assign group = 'candles'
+    elsif suffix contains 'vase' or type contains 'vase' or type contains 'decor' or type contains 'doormat' or type contains 'poster'
+      assign group = 'home'
+    elsif name contains 'ornament'
+      assign group = 'ornaments'
+    elsif name contains 't-shirt' or name contains ' tee' or name contains 'shirt' or name contains 'hoodie' or name contains 'sweatshirt'
+      assign group = 'apparel'
+    elsif name contains 'mug' or name contains 'tumbler'
+      assign group = 'drinkware'
+    elsif name contains 'candle'
+      assign group = 'candles'
+    elsif name contains 'vase' or name contains 'doormat' or name contains 'wall art' or name contains 'poster'
+      assign group = 'home'
+    endif
+  endunless
+  echo group
+-%}
