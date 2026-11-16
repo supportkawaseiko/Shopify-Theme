@@ -35,9 +35,9 @@
   .product-buy-box__membership { padding: 14px; border: 0; border-radius: 8px; background: rgb(var(--color-foreground-rgb) / .04); }
   .product-buy-box__support { display: inline-block; margin-top: 18px; font-size: 13px; }
   @media(min-width:1200px) {
-    .product-information .product-information__grid:has(.product-details--buy-box) { grid-column: 2; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr) !important; }
+    .product-information .product-information__grid:has(.product-details--buy-box) { grid-column: 2 !important; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr) !important; }
     .product-information .product-information__grid:has(.product-details--buy-box) .product-information__media { grid-column: 1 / 2 !important; padding-inline: 0 24px; }
-    .product-information .product-information__grid .product-details--buy-box { grid-column: 2 / 3; padding: 0; position: static; }
+    .product-information .product-information__grid .product-details--buy-box { grid-column: 2 / 3 !important; padding: 0; position: static; }
     .product-details--buy-box > .group-block > .group-block-content { display: grid; grid-template-columns: minmax(0, 1fr) minmax(260px, .8fr); gap: 24px; align-items: start; }
     .product-details--buy-box > .group-block > .group-block-content > .view-product-title { display: none; }
     .product-details--buy-box .product-buy-box { position: sticky; top: calc(var(--header-height, 0px) + 16px); }
