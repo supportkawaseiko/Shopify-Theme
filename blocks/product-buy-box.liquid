@@ -11,9 +11,14 @@
   </div>
   {% if block.settings.show_membership and block.settings.member_link != blank %}
     <div class="product-buy-box__membership">
-      <strong>{{ block.settings.member_heading | escape }}</strong>
-      {% if block.settings.free_shipping_active %}<p>Members get free shipping on all orders delivered within the United States.</p>{% else %}<p>{{ block.settings.member_text | escape }}</p>{% endif %}
-      <a href="{{ block.settings.member_link }}">{{ block.settings.member_link_label | escape }} <span aria-hidden="true">→</span></a>
+      {% if block.settings.free_shipping_active %}
+        <p class="product-buy-box__member-benefit">Get <strong>{{ block.settings.member_shipping_benefit | default: 'Fast, Free Shipping' | escape }}</strong> with <a href="{{ block.settings.member_link }}">{{ block.settings.member_heading | escape }}</a></p>
+        <p>Free shipping on every US order after signing up.</p>
+      {% else %}
+        <strong>{{ block.settings.member_heading | escape }}</strong>
+        <p>{{ block.settings.member_text | escape }}</p>
+        <a href="{{ block.settings.member_link }}">{{ block.settings.member_link_label | escape }} <span aria-hidden="true">→</span></a>
+      {% endif %}
     </div>
   {% endif %}
   {% if block.settings.support_link != blank %}<a class="product-buy-box__support" href="{{ block.settings.support_link }}">{{ block.settings.support_label | escape }}</a>{% endif %}
@@ -58,6 +63,7 @@
     {"type":"text","id":"member_text","label":"Membership text","default":"Discover member-only offers and benefits."},
     {"type":"url","id":"member_link","label":"Membership link"},
     {"type":"text","id":"member_link_label","label":"Membership link label","default":"Explore the Club"},
+    {"type":"text","id":"member_shipping_benefit","label":"Member shipping benefit","default":"Fast, Free Shipping","info":"Only promise fast shipping if your confirmed delivery service supports it. Use Free Shipping otherwise."},
     {"type":"checkbox","id":"free_shipping_active","label":"Show free US shipping for members","info":"Enable only after Club registration and the member free-shipping discount are active at checkout.","default":false},
     {"type":"url","id":"support_link","label":"Support link"},
     {"type":"text","id":"support_label","label":"Support link label","default":"Questions about your order?"}
