@@ -8,11 +8,22 @@
     {% endunless %}
   </header>
   {% if section.settings.layout == 'showcase' or section.settings.layout == 'tabs' %}
+    {% liquid
+      assign thumbnail_sizes = '36px'
+      assign tab_count = section.blocks.size | at_least: 1
+      if section.settings.layout == 'tabs'
+        capture thumbnail_sizes
+          echo '(min-width: 750px) max(140px, calc((min(100vw, 1600px) - 64px) / '
+          echo tab_count
+          echo ')), 96px'
+        endcapture
+      endif
+    %}
     <div class="holiday-collections__tabs" aria-label="{{ section.settings.heading | escape }}">
       {% for block in section.blocks %}
         {% assign thumbnail = block.settings.image | default: block.settings.collection.image | default: block.settings.collection.products.first.featured_image %}
         <button type="button" id="HolidayTab-{{ section.id }}-{{ block.id }}" aria-controls="HolidayPanel-{{ section.id }}-{{ block.id }}" data-holiday-tab="{{ block.id }}" {{ block.shopify_attributes }}>
-          {% if thumbnail != blank %}{{ thumbnail | image_url: width: 160 | image_tag: widths: '80, 160', sizes: '64px', loading: 'lazy', alt: '' }}{% else %}<span class="holiday-collections__initial" aria-hidden="true">{{ block.settings.label | slice: 0 | escape }}</span>{% endif %}
+          {% if thumbnail != blank %}{{ thumbnail | image_url: width: 960 | image_tag: widths: '80, 160, 240, 320, 480, 640, 960', sizes: thumbnail_sizes, loading: 'lazy', alt: '' }}{% else %}<span class="holiday-collections__initial" aria-hidden="true">{{ block.settings.label | slice: 0 | escape }}</span>{% endif %}
           <span class="holiday-collections__tab-label">{{ block.settings.label | default: block.settings.collection.title | escape }}</span>
         </button>
       {% endfor %}
