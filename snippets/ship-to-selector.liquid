@@ -34,6 +34,8 @@
   .cv-ship-selector__trigger:focus-visible { outline: 2px solid #88283f; outline-offset: 3px; }
   dialog.cv-ship-selector__panel { position: fixed; inset: 0; margin: auto; width: 380px; height: fit-content; max-height: calc(100dvh - 32px); max-width: calc(100vw - 32px); padding: 0; border: 1px solid #d4c4c8; border-radius: 10px; background: #fff; color: #2b2325; box-shadow: 0 10px 32px #2b23252e; font-size: 14px; line-height: 1.5; text-transform: none; }
   .cv-ship-selector__panel::backdrop { background: rgb(0 0 0 / .45); }
+  dialog.cv-ship-selector__panel[open] { animation: cv-ship-fade-in .15s ease-out; }
+  @keyframes cv-ship-fade-in { from { opacity: 0; } to { opacity: 1; } }
   .cv-ship-selector__heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 20px; background: #f4f1f2; border-bottom: 1px solid #e5dce0; }
   .cv-ship-selector__title { margin: 0; color: #2b2325; font-size: 17px; font-weight: 700; }
   .cv-ship-selector__close { display: grid; place-items: center; width: 32px; height: 32px; padding: 6px; border: 0; border-radius: 4px; background: transparent; color: #2b2325; cursor: pointer; }
