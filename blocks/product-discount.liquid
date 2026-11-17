@@ -1,0 +1,50 @@
+{% liquid
+  assign has_offer = false
+  if block.settings.offer_text != blank or block.settings.discount_code != blank
+    assign has_offer = true
+  endif
+%}
+{% if has_offer or request.design_mode %}
+  <div class="product-essentials product-discount" {{ block.shopify_attributes }}>
+    {% if block.settings.heading != blank %}
+      <p class="product-discount__heading">{{ block.settings.heading | escape }}</p>
+    {% endif %}
+    {% if has_offer %}
+      {% if block.settings.offer_text != blank %}<div class="product-discount__text rte">{{ block.settings.offer_text }}</div>{% endif %}
+      {% if block.settings.discount_code != blank %}
+        <p class="product-discount__code">Use code: <strong>{{ block.settings.discount_code | escape }}</strong></p>
+      {% endif %}
+      {% if block.settings.conditions != blank %}<p class="product-discount__conditions">{{ block.settings.conditions | escape }}</p>{% endif %}
+      {% if block.settings.offer_link != blank and block.settings.link_label != blank %}
+        <a class="product-discount__link" href="{{ block.settings.offer_link }}">{{ block.settings.link_label | escape }} <span aria-hidden="true">→</span></a>
+      {% endif %}
+    {% else %}
+      <p class="product-discount__text">Add your discount message or code in this block's settings. This empty block is hidden on the storefront.</p>
+    {% endif %}
+  </div>
+{% endif %}
+{% stylesheet %}
+  .product-discount { width: 100%; padding: 14px 16px; border: 1px solid rgb(var(--color-foreground-rgb) / .15); border-inline-start: 3px solid #88283f; border-radius: 10px; background: rgb(var(--color-foreground-rgb) / .025); font-size: 14px; line-height: 1.5; }
+  .product-discount__heading { margin: 0 0 6px; font-weight: 600; }
+  .product-discount__text p { margin: 0; }
+  .product-discount__code { display: inline-block; margin: 10px 0 0; padding: 5px 10px; border: 1px dashed currentColor; border-radius: 5px; overflow-wrap: anywhere; }
+  .product-discount__conditions { margin: 8px 0 0; font-size: 12px; }
+  .product-discount__link { display: inline-block; margin-top: 8px; color: inherit; text-underline-offset: 3px; }
+  .product-information:has(.product-discount) .product-details h1 { font-size: clamp(24px, 2.3vw, 34px); line-height: 1.2; text-wrap: pretty; }
+  .product-information:has(.product-discount) .product-details .price { font-size: 22px; }
+{% endstylesheet %}
+{% schema %}
+{
+  "name": "Product discount", "tag": null,
+  "settings": [
+    {"type":"text","id":"heading","label":"Heading","default":"Discounts & offers"},
+    {"type":"richtext","id":"offer_text","label":"Discount message"},
+    {"type":"text","id":"discount_code","label":"Discount code","info":"Display only. Create and configure the actual discount in Shopify Discounts."},
+    {"type":"textarea","id":"conditions","label":"Offer conditions"},
+    {"type":"url","id":"offer_link","label":"Offer link"},
+    {"type":"text","id":"link_label","label":"Link label","default":"View offer"},
+    {"type":"paragraph","content":"An empty discount block is visible only in the Theme Editor. Add an offer message or a code to display it to customers."}
+  ],
+  "presets": [{"name":"Product discount"}]
+}
+{% endschema %}
