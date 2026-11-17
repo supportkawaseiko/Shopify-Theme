@@ -443,6 +443,7 @@
                   "type": "shipping-eta",
                   "name": "Shipping ETA",
                   "settings": {
+                    "dates_in_buy_box": true,
                     "metafield_namespace": "custom",
                     "metafield_key": "shipping_eta",
                     "country_code_field": "country_code",

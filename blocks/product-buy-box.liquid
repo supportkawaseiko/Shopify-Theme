@@ -14,51 +14,8 @@
   <product-price class="product-buy-box__price" data-block-id="{{ block.id }}" data-product-id="{{ closest.product.id }}">
     {% render 'price', product_resource: closest.product, show_sale_price_first: true %}
   </product-price>
-  {% liquid
-    assign has_product_eta = false
-    for child in block.blocks
-      if child.type == 'shipping-eta' and child.settings.metafield_namespace != blank and child.settings.metafield_key != blank
-        assign eta_data = closest.product.metafields[child.settings.metafield_namespace][child.settings.metafield_key].value
-        if eta_data != blank
-          assign has_product_eta = true
-        endif
-      endif
-    endfor
-    assign delivery_estimate = block.settings.eta_other
-    assign delivery_business_days = 0
-    case localization.country.iso_code
-      when 'US', 'CA', 'AU'
-        assign delivery_estimate = block.settings.eta_us_ca_au
-        assign delivery_business_days = block.settings.eta_days_us_ca_au | default: 12
-      when 'GB'
-        assign delivery_estimate = block.settings.eta_uk
-        assign delivery_business_days = block.settings.eta_days_uk | default: 17
-    endcase
-    assign delivery_timestamp = 'now' | date: '%s' | plus: 0
-    assign counted_business_days = 0
-    for day in (1..90)
-      if counted_business_days >= delivery_business_days
-        break
-      endif
-      assign delivery_timestamp = delivery_timestamp | plus: 86400
-      assign delivery_weekday = delivery_timestamp | date: '%u' | plus: 0
-      if delivery_weekday < 6
-        assign counted_business_days = counted_business_days | plus: 1
-      endif
-    endfor
-    assign returns_url = block.settings.returns_link | default: pages['refund-replacement'].url | default: shop.refund_policy.url
-  %}
-  {% unless has_product_eta %}
-  <div class="product-buy-box__delivery product-buy-box__delivery--estimate">
-    {% if delivery_business_days > 0 %}
-      <p class="product-buy-box__eta">Estimated delivery <strong><time datetime="{{ delivery_timestamp | date: '%Y-%m-%d' }}">{{ delivery_timestamp | date: '%A, %B %-d' }}</time></strong></p>
-    {% elsif delivery_estimate != blank %}
-      <p class="product-buy-box__eta">Estimated delivery: {{ delivery_estimate | escape }}</p>
-    {% endif %}
-    <p>Deliver to <strong>{{ localization.country.name | escape }}</strong></p>
-    {% if block.settings.delivery_link != blank %}<a href="{{ block.settings.delivery_link }}">{{ block.settings.delivery_link_label | escape }}</a>{% endif %}
-  </div>
-  {% endunless %}
+  {% render 'buy-box-delivery-dates', product: closest.product, buy_box: block %}
+  {% assign returns_url = block.settings.returns_link | default: pages['refund-replacement'].url | default: shop.refund_policy.url %}
   <div class="product-buy-box__blocks">{% content_for 'blocks' %}</div>
   <dl class="product-buy-box__order-details">
     <div><dt>Sold by</dt><dd>{{ shop.name | escape }}</dd></div>
@@ -113,6 +70,10 @@
     {"type":"text","id":"eta_uk","label":"Estimated delivery - United Kingdom","default":"10–17 business days"},
     {"type":"range","id":"eta_days_us_ca_au","label":"Delivery estimate in business days - US, Canada, Australia","min":1,"max":60,"step":1,"default":12,"info":"Includes processing. Skips weekends; public holidays are not included in this calculation."},
     {"type":"range","id":"eta_days_uk","label":"Delivery estimate in business days - United Kingdom","min":1,"max":60,"step":1,"default":17,"info":"Includes processing. Skips weekends; public holidays are not included in this calculation."},
+    {"type":"range","id":"eta_min_us_ca_au","label":"Earliest delivery in business days - US, Canada, Australia","min":1,"max":60,"step":1,"default":4},
+    {"type":"range","id":"eta_min_uk","label":"Earliest delivery in business days - United Kingdom","min":1,"max":60,"step":1,"default":10},
+    {"type":"range","id":"eta_min_us_ca_au","label":"Earliest delivery in business days - US, Canada, Australia","min":1,"max":60,"step":1,"default":4},
+    {"type":"range","id":"eta_min_uk","label":"Earliest delivery in business days - United Kingdom","min":1,"max":60,"step":1,"default":10},
     {"type":"text","id":"eta_other","label":"Estimated delivery - other destinations","default":"See delivery details for your destination"},
     {"type":"text","id":"eta_note","label":"Delivery estimate note","default":"Includes 1–3 business days of processing. Delivery times are estimates, not guarantees."},
     {"type":"checkbox","id":"show_returns","label":"Show returns information","default":true},

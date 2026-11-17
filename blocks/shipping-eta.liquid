@@ -39,7 +39,7 @@
   endif
 -%}
 
-{%- if eta_value != blank -%}
+{%- if eta_value != blank and block_settings.dates_in_buy_box != true -%}
   <script
     src="{{ 'dialog.js' | asset_url }}"
     type="module"
@@ -547,6 +547,7 @@
   "name": "Shipping ETA",
   "tag": null,
   "settings": [
+    {"type":"checkbox","id":"dates_in_buy_box","label":"Show compact dates in parent buy box","default":false,"info":"When nested in Product buy box, use its two delivery date lines instead of the full ETA panel."},
     {
       "type": "header",
       "content": "Product metafield"

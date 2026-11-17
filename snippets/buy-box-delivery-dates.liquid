@@ -1,0 +1,88 @@
+{% liquid
+  assign latest_days = 0
+  assign earliest_days = 0
+  assign business_days = true
+  case localization.country.iso_code
+    when 'US', 'CA', 'AU'
+      assign latest_days = buy_box.settings.eta_days_us_ca_au | default: 12
+      assign earliest_days = buy_box.settings.eta_min_us_ca_au | default: 4
+    when 'GB'
+      assign latest_days = buy_box.settings.eta_days_uk | default: 17
+      assign earliest_days = buy_box.settings.eta_min_uk | default: 10
+  endcase
+  for child in buy_box.blocks
+    if child.type != 'shipping-eta'
+      continue
+    endif
+    assign eta_metafield = product.metafields[child.settings.metafield_namespace][child.settings.metafield_key]
+    assign selected_eta = blank
+    assign country_key = child.settings.country_code_field | default: 'country_code'
+    if eta_metafield.type contains 'list.'
+      for entry in eta_metafield.value
+        assign entry_country = entry[country_key].value | default: entry[country_key] | upcase
+        if entry_country == localization.country.iso_code
+          assign selected_eta = entry
+          break
+        endif
+      endfor
+    else
+      assign entry_country = eta_metafield.value[country_key].value | default: eta_metafield.value[country_key] | upcase
+      if entry_country == blank or entry_country == localization.country.iso_code
+        assign selected_eta = eta_metafield.value
+      endif
+    endif
+    if selected_eta == blank
+      continue
+    endif
+    assign pmin_key = child.settings.processing_min_field | default: 'processing_min_days'
+    assign pmax_key = child.settings.processing_max_field | default: 'processing_max_days'
+    assign tmin_key = child.settings.transit_min_field | default: 'transit_min_days'
+    assign tmax_key = child.settings.transit_max_field | default: 'transit_max_days'
+    assign pmin = selected_eta[pmin_key].value | default: selected_eta[pmin_key]
+    assign pmax = selected_eta[pmax_key].value | default: selected_eta[pmax_key]
+    assign tmin = selected_eta[tmin_key].value | default: selected_eta[tmin_key]
+    assign tmax = selected_eta[tmax_key].value | default: selected_eta[tmax_key]
+    if pmin != blank and pmax != blank and tmin != blank and tmax != blank
+      assign earliest_days = pmin | plus: tmin
+      assign latest_days = pmax | plus: tmax
+      assign business_days = false
+      assign ep_key = child.settings.express_processing_min_field | default: 'express_processing_min_days'
+      assign et_key = child.settings.express_transit_min_field | default: 'express_transit_min_days'
+      assign ep = selected_eta[ep_key].value | default: selected_eta[ep_key]
+      assign et = selected_eta[et_key].value | default: selected_eta[et_key]
+      if ep != blank and et != blank
+        assign express_days = ep | plus: et
+        if express_days < earliest_days
+          assign earliest_days = express_days
+        endif
+      endif
+      break
+    endif
+  endfor
+  assign timestamp = 'now' | date: '%s' | plus: 0
+  assign earliest_timestamp = timestamp
+  assign latest_timestamp = timestamp
+  assign counted_days = 0
+  for day in (1..366)
+    if counted_days >= latest_days
+      break
+    endif
+    assign timestamp = timestamp | plus: 86400
+    assign weekday = timestamp | date: '%u' | plus: 0
+    if business_days == false or weekday < 6
+      assign counted_days = counted_days | plus: 1
+      if counted_days == earliest_days
+        assign earliest_timestamp = timestamp
+      endif
+      assign latest_timestamp = timestamp
+    endif
+  endfor
+%}
+{% if latest_days > 0 and counted_days >= latest_days %}
+  <div class="product-buy-box__delivery product-buy-box__delivery--estimate">
+    <p class="product-buy-box__eta">Estimated delivery <strong><time datetime="{{ latest_timestamp | date: '%Y-%m-%d' }}">{{ latest_timestamp | date: '%A, %B %-d' }}</time></strong></p>
+    {% if earliest_days >= 0 and earliest_days < latest_days %}
+      <p class="product-buy-box__fastest">Or fastest delivery <strong><time datetime="{{ earliest_timestamp | date: '%Y-%m-%d' }}">{{ earliest_timestamp | date: '%A, %B %-d' }}</time></strong></p>
+    {% endif %}
+  </div>
+{% endif %}
