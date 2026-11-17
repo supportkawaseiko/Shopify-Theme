@@ -483,6 +483,7 @@
                 },
                 "ai_gen_block_0558575_EUwxiw": {
                   "type": "trust-signals",
+                  "disabled": true,
                   "settings": {
                     "customer_text": "Trusted By Over 20,000 Customers",
                     "rating_text": "5.0-Star Rating On",
