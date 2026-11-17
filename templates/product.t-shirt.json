@@ -91,7 +91,7 @@
           "blocks": {
             "purchase_content": {
               "type": "group",
-              "name": "Product options & personalization",
+              "name": "Product options & Teeinblue",
               "settings": {
                 "content_direction": "column",
                 "vertical_on_mobile": true,
