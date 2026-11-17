@@ -25,20 +25,37 @@
       endif
     endfor
     assign delivery_estimate = block.settings.eta_other
+    assign delivery_business_days = 0
     case localization.country.iso_code
       when 'US', 'CA', 'AU'
         assign delivery_estimate = block.settings.eta_us_ca_au
+        assign delivery_business_days = block.settings.eta_days_us_ca_au | default: 12
       when 'GB'
         assign delivery_estimate = block.settings.eta_uk
+        assign delivery_business_days = block.settings.eta_days_uk | default: 17
     endcase
+    assign delivery_timestamp = 'now' | date: '%s' | plus: 0
+    assign counted_business_days = 0
+    for day in (1..90)
+      if counted_business_days >= delivery_business_days
+        break
+      endif
+      assign delivery_timestamp = delivery_timestamp | plus: 86400
+      assign delivery_weekday = delivery_timestamp | date: '%u' | plus: 0
+      if delivery_weekday < 6
+        assign counted_business_days = counted_business_days | plus: 1
+      endif
+    endfor
     assign returns_url = block.settings.returns_link | default: pages['refund-replacement'].url | default: shop.refund_policy.url
   %}
   {% unless has_product_eta %}
   <div class="product-buy-box__delivery product-buy-box__delivery--estimate">
-    <strong>{{ block.settings.delivery_heading | escape }}</strong>
+    {% if delivery_business_days > 0 %}
+      <p class="product-buy-box__eta">Estimated delivery <strong><time datetime="{{ delivery_timestamp | date: '%Y-%m-%d' }}">{{ delivery_timestamp | date: '%A, %B %-d' }}</time></strong></p>
+    {% elsif delivery_estimate != blank %}
+      <p class="product-buy-box__eta">Estimated delivery: {{ delivery_estimate | escape }}</p>
+    {% endif %}
     <p>Deliver to <strong>{{ localization.country.name | escape }}</strong></p>
-    {% if delivery_estimate != blank %}<p class="product-buy-box__eta">{{ delivery_estimate | escape }}</p>{% endif %}
-    <p class="product-buy-box__fine-print">{{ block.settings.eta_note | escape }}</p>
     {% if block.settings.delivery_link != blank %}<a href="{{ block.settings.delivery_link }}">{{ block.settings.delivery_link_label | escape }}</a>{% endif %}
   </div>
   {% endunless %}
@@ -68,7 +85,7 @@
   .product-buy-box__membership { margin: 0 0 20px; padding: 0 0 16px; border: 0; border-bottom: 1px solid rgb(var(--color-foreground-rgb) / .12); }
   .product-buy-box__support { display: inline-block; margin-top: 18px; font-size: 13px; }
   .product-buy-box__delivery--estimate { margin: 0 0 20px; padding: 0; border: 0; }
-  .product-buy-box__eta { font-weight: 700; }
+  .product-buy-box__eta { font-weight: 400; }
   .product-buy-box .product-buy-box__fine-print { font-size: 12px; opacity: .8; }
   .product-buy-box__order-details { display: grid; gap: 10px; margin: 20px 0 0; padding-top: 18px; border-top: 1px solid rgb(var(--color-foreground-rgb) / .12); font-size: 13px; line-height: 1.5; }
   .product-buy-box__order-details > div { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 12px; }
@@ -94,6 +111,8 @@
     {"type":"text","id":"delivery_link_label","label":"Delivery link label","default":"View delivery details"},
     {"type":"text","id":"eta_us_ca_au","label":"Estimated delivery - US, Canada, Australia","default":"4–12 business days"},
     {"type":"text","id":"eta_uk","label":"Estimated delivery - United Kingdom","default":"10–17 business days"},
+    {"type":"range","id":"eta_days_us_ca_au","label":"Delivery estimate in business days - US, Canada, Australia","min":1,"max":60,"step":1,"default":12,"info":"Includes processing. Skips weekends; public holidays are not included in this calculation."},
+    {"type":"range","id":"eta_days_uk","label":"Delivery estimate in business days - United Kingdom","min":1,"max":60,"step":1,"default":17,"info":"Includes processing. Skips weekends; public holidays are not included in this calculation."},
     {"type":"text","id":"eta_other","label":"Estimated delivery - other destinations","default":"See delivery details for your destination"},
     {"type":"text","id":"eta_note","label":"Delivery estimate note","default":"Includes 1–3 business days of processing. Delivery times are estimates, not guarantees."},
     {"type":"checkbox","id":"show_returns","label":"Show returns information","default":true},
