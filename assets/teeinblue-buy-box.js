@@ -42,6 +42,7 @@ if (!customElements.get('teeinblue-buy-box')) {
       const minimum = Number(source.min) || 1;
       const maximum = Number(source.max) || Infinity;
       source.value = String(Math.min(maximum, Math.max(minimum, Math.floor(Number(this.quantity.value) || minimum))));
+      this.quantity.value = source.value;
       source.dispatchEvent(new Event('input', { bubbles: true }));
       source.dispatchEvent(new Event('change', { bubbles: true }));
       this.sync();
