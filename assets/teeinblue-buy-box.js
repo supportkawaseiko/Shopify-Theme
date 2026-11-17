@@ -5,6 +5,7 @@ if (!customElements.get('teeinblue-buy-box')) {
       if (!this.root) return;
       this.quantity = this.querySelector('input');
       this.addEventListener('click', this.onClick);
+      this.quantity.addEventListener('input', this.onQuantity);
       this.quantity.addEventListener('change', this.onQuantity);
       this.root.addEventListener('input', this.onSourceInput);
       this.root.addEventListener('change', this.onSourceInput);
@@ -19,6 +20,7 @@ if (!customElements.get('teeinblue-buy-box')) {
     disconnectedCallback() {
       this.observer?.disconnect();
       this.removeEventListener('click', this.onClick);
+      this.quantity?.removeEventListener('input', this.onQuantity);
       this.quantity?.removeEventListener('change', this.onQuantity);
       this.root?.removeEventListener('input', this.onSourceInput);
       this.root?.removeEventListener('change', this.onSourceInput);
@@ -37,6 +39,7 @@ if (!customElements.get('teeinblue-buy-box')) {
     };
 
     onQuantity = () => {
+      if (this.quantity.value === '') return;
       const source = this.sourceForm?.querySelector('.tee-quantity-input');
       if (!source) return;
       const minimum = Number(source.min) || 1;
