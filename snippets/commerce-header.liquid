@@ -23,6 +23,10 @@
   .cv-commerce-top__actions { display: flex; align-items: center; gap: 16px; }
   .cv-commerce-top__actions header-actions { gap: 16px; }
   .cv-commerce-top__destination .localization-wrapper { inset-inline-start: 0; inset-inline-end: auto; }
+  @media (min-width: 750px) {
+    /* Keep the image's aspect ratio when its width is constrained by the shopping header. */
+    .cv-commerce-top__logo .header-logo__image { height: auto; }
+  }
   @media (min-width: 750px) and (max-width: 1099px) {
     .cv-commerce-top { grid-template-columns: 160px auto minmax(140px, 1fr) auto; gap: 12px; }
     .cv-commerce-top__actions header-actions { gap: 6px; }
