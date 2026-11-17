@@ -1,7 +1,9 @@
 <script src="{{ 'teeinblue-buy-box.js' | asset_url }}" defer></script>
 <teeinblue-buy-box {{ block.shopify_attributes }}>
   <label for="TeeSidebarQuantity-{{ block.id }}">Quantity</label>
-  <input id="TeeSidebarQuantity-{{ block.id }}" type="number" min="1" step="1" value="1" inputmode="numeric">
+  <select id="TeeSidebarQuantity-{{ block.id }}">
+    <option value="1">1</option>
+  </select>
   <button type="button" class="button" data-tee-action="cart" disabled>Add to cart</button>
   <button type="button" class="button button-secondary" data-tee-action="buy" disabled>Buy now</button>
 </teeinblue-buy-box>
@@ -13,7 +15,7 @@
   }
   @media (min-width: 1200px) {
     teeinblue-buy-box[data-ready] { display: grid; gap: 12px; }
-    teeinblue-buy-box input { width: 100%; padding: 12px; border: 1px solid rgb(var(--color-foreground-rgb) / .25); border-radius: 6px; color: inherit; background: var(--color-background); }
+    teeinblue-buy-box select { width: 100%; min-height: 48px; padding: 12px; border: 1px solid rgb(var(--color-foreground-rgb) / .25); border-radius: 6px; color: inherit; background-color: var(--color-background); font: inherit; cursor: pointer; }
     teeinblue-buy-box .button { width: 100%; min-width: 0; }
     teeinblue-buy-box .button-secondary { color: var(--color-foreground); background: var(--color-background); }
     teeinblue-buy-box button[hidden] { display: none; }

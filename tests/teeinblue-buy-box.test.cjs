@@ -52,3 +52,12 @@ test('quantity is clamped and passed to Teeinblue through its own input events',
   element.onQuantity();
   assert.equal(source.value, '1');
 });
+
+test('dropdown respects app quantity limits and keeps an existing large quantity', () => {
+  const element = component();
+  assert.deepEqual(Array.from(element.quantityValues({ min: '2', max: '8', step: '2', value: '4' })), [2, 4, 6, 8]);
+  const values = Array.from(element.quantityValues({ min: '1', max: '', step: '1', value: '125' }));
+  assert.equal(values.length, 101);
+  assert.equal(values.at(-1), 125);
+  assert.equal(values[0], 1);
+});

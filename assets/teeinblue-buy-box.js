@@ -3,7 +3,7 @@ if (!customElements.get('teeinblue-buy-box')) {
     connectedCallback() {
       this.root = this.closest('.product-details');
       if (!this.root) return;
-      this.quantity = this.querySelector('input');
+      this.quantity = this.querySelector('select');
       this.addEventListener('click', this.onClick);
       this.quantity.addEventListener('input', this.onQuantity);
       this.quantity.addEventListener('change', this.onQuantity);
@@ -55,6 +55,17 @@ if (!customElements.get('teeinblue-buy-box')) {
       if (this.sourceForm?.contains(event.target)) this.sync();
     };
 
+    quantityValues(source) {
+      const minimum = Math.max(1, Number(source.min) || 1);
+      const maximum = Number(source.max) || Infinity;
+      const step = Math.max(1, Number(source.step) || 1);
+      const current = Number(source.value) || minimum;
+      const values = [];
+      for (let value = minimum; value <= maximum && values.length < 100; value += step) values.push(value);
+      if (current >= minimum && current <= maximum && (current - minimum) % step === 0 && !values.includes(current)) values.push(current);
+      return values;
+    }
+
     sync() {
       this.sourceForm = this.root.querySelector('#tee-artwork-form');
       const sourceCart = this.sourceForm?.querySelector('#teeAtcButton');
@@ -72,8 +83,15 @@ if (!customElements.get('teeinblue-buy-box')) {
         if (label && button.textContent !== label) button.textContent = label;
       }
       const sourceQuantity = this.sourceForm.querySelector('.tee-quantity-input');
-      if (sourceQuantity && document.activeElement !== this.quantity && this.quantity.value !== sourceQuantity.value) {
-        this.quantity.value = sourceQuantity.value || '1';
+      if (sourceQuantity) {
+        const values = this.quantityValues(sourceQuantity);
+        const signature = values.join(',');
+        if (this.quantity.dataset.values !== signature) {
+          this.quantity.replaceChildren(...values.map(value => new Option(String(value), String(value))));
+          this.quantity.dataset.values = signature;
+        }
+        const selected = sourceQuantity.value || String(values[0]);
+        if (this.quantity.value !== selected) this.quantity.value = selected;
       }
       const sourcePrice = this.sourceForm.querySelector('.tee-product-price');
       const price = this.closest('.product-buy-box').querySelector('.product-buy-box__price');
