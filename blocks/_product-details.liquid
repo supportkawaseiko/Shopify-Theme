@@ -6,6 +6,7 @@
   class="
     product-details
     {% if block_settings.sidebar_buy_box %} product-details--buy-box{% endif %}
+    {% if block_settings.teeinblue_sidebar %} product-details--tee-sidebar{% endif %}
     {% if block_settings.sticky_details_desktop %} sticky-content--desktop{% endif %}
     {% if block_settings.height == 'fill' -%} full-height--desktop{% endif -%}
   "
@@ -139,6 +140,7 @@
   "tag": null,
   "settings": [
     {"type":"checkbox","id":"sidebar_buy_box","label":"Sidebar buy box on wide screens","default":false},
+    {"type":"checkbox","id":"teeinblue_sidebar","label":"Teeinblue form in middle with smaller gallery","default":false,"visible_if":"{{ block.settings.sidebar_buy_box }}"},
     {
       "type": "header",
       "content": "t:content.size"

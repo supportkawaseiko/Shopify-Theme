@@ -1,0 +1,25 @@
+<script src="{{ 'teeinblue-buy-box.js' | asset_url }}" defer></script>
+<teeinblue-buy-box {{ block.shopify_attributes }}>
+  <label for="TeeSidebarQuantity-{{ block.id }}">Quantity</label>
+  <input id="TeeSidebarQuantity-{{ block.id }}" type="number" min="1" step="1" value="1" inputmode="numeric">
+  <button type="button" class="button" data-tee-action="cart" disabled>Add to cart</button>
+  <button type="button" class="button button-secondary" data-tee-action="buy" disabled>Buy now</button>
+</teeinblue-buy-box>
+{% stylesheet %}
+  teeinblue-buy-box { display: none; }
+  @media (min-width: 1200px) {
+    teeinblue-buy-box[data-ready] { display: grid; gap: 12px; }
+    teeinblue-buy-box input { width: 100%; padding: 12px; border: 1px solid rgb(var(--color-foreground-rgb) / .25); border-radius: 6px; color: inherit; background: var(--color-background); }
+    teeinblue-buy-box button { width: 100%; }
+    teeinblue-buy-box button[hidden] { display: none; }
+    .product-details--tee-sidebar:has(teeinblue-buy-box[data-ready]) #teeFormActions .tee-form-atc-wrapper { display: none; }
+    .product-information .product-information__grid:has(.product-details--tee-sidebar) { grid-template-columns: minmax(0, .65fr) minmax(0, 1.35fr) !important; }
+    .product-details--tee-sidebar > .group-block > .group-block-content { grid-template-columns: minmax(0, 1.5fr) minmax(260px, .8fr); }
+  }
+{% endstylesheet %}
+{% schema %}
+{
+  "name": "Teeinblue purchase buttons", "tag": null, "settings": [],
+  "presets": [{"name": "Teeinblue purchase buttons"}]
+}
+{% endschema %}
