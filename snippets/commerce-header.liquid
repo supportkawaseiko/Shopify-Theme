@@ -1,7 +1,7 @@
 <div class="cv-commerce-top">
   <div class="cv-commerce-top__menu">{{ drawer_menu }}</div>
   <div class="cv-commerce-top__logo">{{ logo }}</div>
-  <div class="cv-commerce-top__destination">{{ localization }}</div>
+  <div class="cv-commerce-top__destination">{% render 'ship-to-selector' %}</div>
   <div class="cv-commerce-top__search">{% render 'gift-header-search' %}</div>
   <div class="cv-commerce-top__actions">{{ actions }}</div>
 </div>

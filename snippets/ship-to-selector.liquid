@@ -1,0 +1,53 @@
+<details class="cv-ship-selector">
+  <summary class="cv-ship-selector__trigger">
+    <img src="{{ localization.country | image_url: width: 32 }}" width="24" height="18" alt="" loading="eager">
+    <span class="cv-ship-to"><span class="cv-ship-to__label">Ship to</span><strong>{{ localization.country.name | escape }}</strong><span class="cv-ship-to__currency">{{ localization.country.currency.iso_code }} · {{ localization.language.iso_code | upcase }}</span></span>
+    <span class="svg-wrapper icon-caret" aria-hidden="true">{{ 'icon-caret.svg' | inline_asset_content }}</span>
+  </summary>
+  <div class="cv-ship-selector__panel">
+    <strong class="cv-ship-selector__title">Choose your destination</strong>
+    <p>Select a country or region, then update your destination.</p>
+    {% assign destination_form_id = 'ShippingDestination-' | append: section.id %}
+    {% form 'localization', id: destination_form_id, class: 'cv-ship-selector__form' %}
+      <label for="{{ destination_form_id }}-country">Country / region</label>
+      <select name="country_code" id="{{ destination_form_id }}-country">
+        {% for country in localization.available_countries %}
+          <option value="{{ country.iso_code }}"{% if country.iso_code == localization.country.iso_code %} selected{% endif %}>{{ country.name | escape }} — {{ country.currency.iso_code }}</option>
+        {% endfor %}
+      </select>
+      {% if localization.available_languages.size > 1 %}
+        <label for="{{ destination_form_id }}-language">Language</label>
+        <select name="language_code" id="{{ destination_form_id }}-language">
+          {% for language in localization.available_languages %}
+            <option value="{{ language.iso_code }}"{% if language.iso_code == localization.language.iso_code %} selected{% endif %}>{{ language.endonym_name | escape }}</option>
+          {% endfor %}
+        </select>
+      {% endif %}
+      <button type="submit">Update destination</button>
+    {% endform %}
+    <small>Current destination: {{ localization.country.name | escape }}</small>
+  </div>
+</details>
+{% stylesheet %}
+  .cv-ship-selector { position: relative; color: #2b2325; }
+  .cv-ship-selector__trigger { display: flex; align-items: center; gap: 8px; padding: 7px 9px; border: 1px solid #d4c4c8; border-radius: 6px; background: #fff; cursor: pointer; list-style: none; text-transform: none; }
+  .cv-ship-selector__trigger::-webkit-details-marker { display: none; }
+  .cv-ship-selector__trigger > img { object-fit: contain; }
+  .cv-ship-selector__trigger .icon-caret { width: 12px; height: 12px; }
+  .cv-ship-selector[open] .cv-ship-selector__trigger, .cv-ship-selector__trigger:hover { border-color: #88283f; background: #fff4f6; }
+  .cv-ship-selector__trigger:focus-visible { outline: 2px solid #88283f; outline-offset: 3px; }
+  .cv-ship-selector__panel { position: absolute; inset-inline-start: 0; top: calc(100% + 10px); width: 330px; max-width: calc(100vw - 32px); padding: 20px; border: 1px solid #d4c4c8; border-radius: 10px; background: #fff; color: #2b2325; box-shadow: 0 10px 32px #2b23252e; z-index: 100; font-size: 14px; line-height: 1.5; text-transform: none; }
+  .cv-ship-selector__title { display: block; color: #2b2325; font-size: 17px; }
+  .cv-ship-selector__panel p { margin: 6px 0 16px; color: #65575c; }
+  .cv-ship-selector__form { display: grid; gap: 8px; }
+  .cv-ship-selector__form label { color: #2b2325; font-weight: 600; }
+  .cv-ship-selector__form select { width: 100%; min-width: 0; min-height: 44px; padding: 10px; border: 1px solid #a9969c; border-radius: 6px; color: #2b2325; background: #fff; font: inherit; }
+  .cv-ship-selector__form select:focus-visible { outline: 2px solid #88283f; outline-offset: 2px; }
+  .cv-ship-selector__form button { min-height: 44px; margin-top: 8px; padding: 10px 16px; border: 0; border-radius: 6px; color: #fff; background: #88283f; font: inherit; font-weight: 600; cursor: pointer; }
+  .cv-ship-selector__form button:is(:hover, :focus-visible) { background: #651c2e; }
+  .cv-ship-selector__panel small { display: block; margin-top: 14px; color: #65575c; }
+  @media (max-width: 749px) {
+    .cv-ship-selector__trigger { width: 100%; justify-content: flex-start; }
+    .cv-ship-selector__trigger .icon-caret { margin-inline-start: auto; }
+  }
+{% endstylesheet %}
