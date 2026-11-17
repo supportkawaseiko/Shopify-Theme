@@ -1,0 +1,17 @@
+{% assign language_form_id = 'HeaderLanguage-' | append: section.id %}
+<localization-form-component class="cv-header-language">
+  {% form 'localization', id: language_form_id, ref: 'form' %}
+    <label class="visually-hidden" for="{{ language_form_id }}-select">Language</label>
+    <input type="hidden" name="country_code" value="{{ localization.country.iso_code }}">
+    <select id="{{ language_form_id }}-select" name="language_code" ref="languageInput" on:change="/changeLanguage" aria-label="Language">
+      {% for language in localization.available_languages %}
+        <option value="{{ language.iso_code }}" lang="{{ language.iso_code }}"{% if language.iso_code == localization.language.iso_code %} selected{% endif %}>{{ language.iso_code | upcase }}</option>
+      {% endfor %}
+    </select>
+  {% endform %}
+</localization-form-component>
+{% stylesheet %}
+  .cv-header-language select { display: block; min-height: 40px; max-width: 70px; padding: 6px 3px; border: 1px solid transparent; border-radius: 4px; background: transparent; color: #2b2325; font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }
+  .cv-header-language select:is(:hover, :focus-visible) { border-color: #88283f; }
+  .cv-header-language option { color: #2b2325; background: #fff; }
+{% endstylesheet %}
