@@ -286,10 +286,14 @@
                   ]
                 },
                 "product_essentials": {
-                  "type": "product-essentials",
+                  "type": "product-discount",
                   "settings": {
-                    "heading": "Before you order",
-                    "review_note": "If personalizing, double-check your photo, spelling and selected options before adding to cart."
+                    "heading": "Discounts & offers",
+                    "offer_text": "",
+                    "discount_code": "",
+                    "conditions": "",
+                    "offer_link": "",
+                    "link_label": "View offer"
                   },
                   "blocks": {}
                 },
