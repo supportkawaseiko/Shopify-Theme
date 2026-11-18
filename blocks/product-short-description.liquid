@@ -4,10 +4,24 @@
   assign field_key = block.settings.bullets_field | strip
   assign description = closest.product.metafields[namespace][key].value
   assign bullets = description[field_key]
+  assign product_namespace = block.settings.product_bullets_namespace | default: 'custom' | strip
+  assign product_key = block.settings.product_bullets_key | default: 'short_description_bullets' | strip
+  assign product_bullets = closest.product.metafields[product_namespace][product_key]
   capture items
     if bullets.type == 'list.single_line_text_field'
       for bullet in bullets.value
         assign text = bullet | strip
+        if text != blank
+          echo '<li>'
+          echo text | escape
+          echo '</li>'
+        endif
+      endfor
+    endif
+    if product_bullets.type == 'multi_line_text_field'
+      assign lines = product_bullets.value | newline_to_br | split: '<br />'
+      for line in lines
+        assign text = line | strip
         if text != blank
           echo '<li>'
           echo text | escape
@@ -28,6 +42,8 @@
       <p class="product-short-description__placeholder">
         Connect a metaobject to {{ namespace | escape }}.{{ key | escape }} with a
         {{ field_key | escape }} field (List of single line text). Each value becomes one bullet.
+        Add product-specific bullets in {{ product_namespace | escape }}.{{ product_key | escape }}
+        (Multi-line text), one bullet per line. Product-specific bullets follow the shared bullets.
         This empty block is hidden on the storefront.
       </p>
     {% endif %}
@@ -71,7 +87,10 @@
     {"type":"header","content":"Metaobject source"},
     {"type":"text","id":"metafield_namespace","label":"Product metafield namespace","default":"custom"},
     {"type":"text","id":"metafield_key","label":"Product metafield key","default":"short_description","info":"A product metafield referencing one metaobject. The same entry can be assigned to multiple products."},
-    {"type":"text","id":"bullets_field","label":"Bullet points field key","default":"bullet_points","info":"A metaobject field of type List of single line text. Each value is displayed as one bullet."}
+    {"type":"text","id":"bullets_field","label":"Bullet points field key","default":"bullet_points","info":"A metaobject field of type List of single line text. Each value is displayed as one bullet."},
+    {"type":"header","content":"Product-specific bullets"},
+    {"type":"text","id":"product_bullets_namespace","label":"Product bullets namespace","default":"custom"},
+    {"type":"text","id":"product_bullets_key","label":"Product bullets metafield key","default":"short_description_bullets","info":"A product metafield of type Multi-line text. Enter one bullet per line. These bullets appear after the shared bullets."}
   ],
   "presets": [{"name":"Short description","category":"t:categories.product"}]
 }
