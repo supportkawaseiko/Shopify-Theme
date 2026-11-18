@@ -16,7 +16,7 @@ class DiscountCode extends HTMLElement {
     if (!code || this.button.disabled) return;
     this.button.disabled = true;
     try {
-      await navigator.clipboard.writeText(code);
+      if (!(await this.writeText(code))) throw new Error('Clipboard unavailable');
       this.label.textContent = 'Copied!';
       this.status.textContent = `Code ${code} copied.`;
     } catch {
@@ -28,5 +28,28 @@ class DiscountCode extends HTMLElement {
       this.timer = setTimeout(() => { this.label.textContent = code; }, 2000);
     }
   };
+
+  async writeText(code) {
+    try {
+      await navigator.clipboard.writeText(code);
+      return true;
+    } catch {
+      // Theme Editor frames can block the Clipboard API. Keep a user-initiated fallback.
+      const previousFocus = document.activeElement;
+      const input = document.createElement('textarea');
+      input.value = code;
+      input.readOnly = true;
+      input.style.cssText = 'position:fixed;opacity:0;pointer-events:none;';
+      input.setAttribute('aria-hidden', 'true');
+      document.body.append(input);
+      input.select();
+      try {
+        return document.execCommand('copy');
+      } finally {
+        input.remove();
+        previousFocus?.focus();
+      }
+    }
+  }
 }
 if (!customElements.get('discount-code')) customElements.define('discount-code', DiscountCode);

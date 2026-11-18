@@ -13,7 +13,7 @@
 %}
 {% if has_offer or has_rows or request.design_mode %}
   <script src="{{ 'discount-code.js' | asset_url }}" type="module"></script>
-  <div class="product-essentials product-discount" style="--discount-header-background: {{ block.settings.header_background | default: '#88283f' }};" {{ block.shopify_attributes }}>
+  <div class="product-discount" style="--discount-header-background: {{ block.settings.header_background | default: '#88283f' }};" {{ block.shopify_attributes }}>
     {% if block.settings.heading != blank %}
       <p class="product-discount__heading">{{ block.settings.heading | escape }}</p>
     {% endif %}

@@ -3,10 +3,12 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const vm = require('node:vm');
 
-function component(copy) {
+function component(copy, fallback = false) {
   let Registered, reset;
   vm.runInNewContext(fs.readFileSync('assets/discount-code.js','utf8'), {
     HTMLElement: class {}, navigator: { clipboard: { writeText: copy } },
+    document: { activeElement: null, body: { append: () => {} }, execCommand: () => fallback,
+      createElement: () => ({ style: {}, setAttribute: () => {}, select: () => {}, remove: () => {} }) },
     customElements: { get: () => undefined, define: (_, value) => { Registered = value; } },
     clearTimeout: () => {}, setTimeout: fn => { reset = fn; return 1; },
   });
@@ -33,4 +35,8 @@ test('repeat clicks while a copy is pending do not start another request', async
   const { element } = component(() => { count++; return new Promise(resolve => { finish = resolve; }); });
   const first = element.copy(); await element.copy(); assert.equal(count,1);
   finish(); await first;
+});
+test('uses user-initiated copy fallback when a frame blocks Clipboard API', async () => {
+  const { element } = component(async () => { throw new Error('blocked by frame'); }, true);
+  await element.copy(); assert.equal(element.label.textContent,'Copied!');
 });
