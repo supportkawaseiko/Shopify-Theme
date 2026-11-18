@@ -382,11 +382,23 @@
                     "padding-inline-end": 0
                   },
                   "blocks": {}
+                },
+                "short_description": {
+                  "type": "product-short-description",
+                  "name": "Short description",
+                  "settings": {
+                    "heading": "About this item",
+                    "metafield_namespace": "custom",
+                    "metafield_key": "short_description",
+                    "bullets_field": "bullet_points"
+                  },
+                  "blocks": {}
                 }
               },
               "block_order": [
                 "group_icgrde",
                 "product_essentials",
+                "short_description",
                 "divider_VJhene",
                 "variant_picker_R3rGDr",
                 "size_guide",

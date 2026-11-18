@@ -353,11 +353,23 @@
                   "settings": {
                     "slot_id": "7"
                   }
+                },
+                "short_description": {
+                  "type": "product-short-description",
+                  "name": "Short description",
+                  "settings": {
+                    "heading": "About this item",
+                    "metafield_namespace": "custom",
+                    "metafield_key": "short_description",
+                    "bullets_field": "bullet_points"
+                  },
+                  "blocks": {}
                 }
               },
               "block_order": [
                 "group_icgrde",
                 "product_essentials",
+                "short_description",
                 "divider_VJhene",
                 "teeinblue_product_personalizer_product_app_block_YxLFC6",
                 "variant_picker_R3rGDr",

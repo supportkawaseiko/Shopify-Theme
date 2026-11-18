@@ -1,0 +1,78 @@
+{% liquid
+  assign namespace = block.settings.metafield_namespace | strip
+  assign key = block.settings.metafield_key | strip
+  assign field_key = block.settings.bullets_field | strip
+  assign description = closest.product.metafields[namespace][key].value
+  assign bullets = description[field_key]
+  capture items
+    if bullets.type == 'list.single_line_text_field'
+      for bullet in bullets.value
+        assign text = bullet | strip
+        if text != blank
+          echo '<li>'
+          echo text | escape
+          echo '</li>'
+        endif
+      endfor
+    endif
+  endcapture
+%}
+{% if items != blank or request.design_mode %}
+  <section class="product-short-description" {{ block.shopify_attributes }}>
+    {% if block.settings.heading != blank %}
+      <h2 class="product-short-description__heading">{{ block.settings.heading | escape }}</h2>
+    {% endif %}
+    {% if items != blank %}
+      <ul class="product-short-description__list">{{ items }}</ul>
+    {% else %}
+      <p class="product-short-description__placeholder">
+        Connect a metaobject to {{ namespace | escape }}.{{ key | escape }} with a
+        {{ field_key | escape }} field (List of single line text). Each value becomes one bullet.
+        This empty block is hidden on the storefront.
+      </p>
+    {% endif %}
+  </section>
+{% endif %}
+
+{% stylesheet %}
+  .product-short-description {
+    width: 100%;
+    min-width: 0;
+    color: var(--color-foreground);
+    font-size: 14px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+  }
+
+  .product-short-description__heading {
+    margin: 0 0 12px;
+    font-family: var(--font-body--family);
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .product-short-description__list {
+    margin: 0;
+    padding-inline-start: 20px;
+    list-style: disc outside;
+  }
+
+  .product-short-description__list li + li { margin-block-start: 8px; }
+  .product-short-description__placeholder { margin: 0; opacity: .75; }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Short description",
+  "tag": null,
+  "settings": [
+    {"type":"text","id":"heading","label":"Heading","default":"About this item"},
+    {"type":"header","content":"Metaobject source"},
+    {"type":"text","id":"metafield_namespace","label":"Product metafield namespace","default":"custom"},
+    {"type":"text","id":"metafield_key","label":"Product metafield key","default":"short_description","info":"A product metafield referencing one metaobject. The same entry can be assigned to multiple products."},
+    {"type":"text","id":"bullets_field","label":"Bullet points field key","default":"bullet_points","info":"A metaobject field of type List of single line text. Each value is displayed as one bullet."}
+  ],
+  "presets": [{"name":"Short description","category":"t:categories.product"}]
+}
+{% endschema %}
