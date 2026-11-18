@@ -1,0 +1,14 @@
+<script>
+  (() => {
+    const previous = window.teeinblue?.onItemAdded;
+    window.teeinblue = {
+      ...(window.teeinblue || {}),
+      onItemAdded: async function (...args) {
+        const detail = { item: args[0], promises: [] };
+        document.dispatchEvent(new CustomEvent('customversal:tee-item-added', { detail }));
+        await Promise.allSettled(detail.promises);
+        if (typeof previous === 'function') return previous.apply(this, args);
+      },
+    };
+  })();
+</script>

@@ -390,6 +390,18 @@
                     "heading": "About this item"
                   },
                   "blocks": {}
+                },
+                "product_addon": {
+                  "type": "product-addon",
+                  "name": "Add-on product",
+                  "settings": {
+                    "heading": "Add-on gift service",
+                    "description": "Make your gift extra special.",
+                    "checkbox_label": "Choose to buy",
+                    "metafield_namespace": "custom",
+                    "metafield_key": "add_on_product"
+                  },
+                  "blocks": {}
                 }
               },
               "block_order": [
@@ -399,7 +411,8 @@
                 "divider_VJhene",
                 "variant_picker_R3rGDr",
                 "size_guide",
-                "text_aEtTtq"
+                "text_aEtTtq",
+                "product_addon"
               ]
             },
             "purchase_box": {

@@ -46,6 +46,7 @@
       {%- render 'theme-editor' -%}
     {% endif %}
 
+    {% if request.page_type == 'product' %}{% render 'product-addon-tee-hook' %}{% endif %}
     {{ content_for_header }}
   </head>
 

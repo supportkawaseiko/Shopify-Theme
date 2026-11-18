@@ -1,0 +1,103 @@
+{% liquid
+  assign source_namespace = block.settings.metafield_namespace | default: 'custom' | strip
+  assign source_key = block.settings.metafield_key | default: 'add_on_product' | strip
+  assign addon = closest.product.metafields[source_namespace][source_key].value | default: block.settings.addon_product
+  assign variant = addon.selected_or_first_available_variant
+  assign can_offer = false
+  if addon != blank and addon.id != closest.product.id and variant.available and addon.requires_selling_plan != true
+    assign can_offer = true
+  endif
+%}
+{% if can_offer %}
+  <script src="{{ 'product-addon.js' | asset_url }}" type="module"></script>
+  <product-addon class="product-addon" data-product-id="{{ closest.product.id }}" {{ block.shopify_attributes }}>
+    {% if block.settings.heading != blank %}<h3 class="product-addon__heading">{{ block.settings.heading | escape }}</h3>{% endif %}
+    <div class="product-addon__row">
+      {% if addon.featured_image %}
+        {{ addon.featured_image | image_url: width: 240 | image_tag: widths: '80, 160, 240', sizes: '80px', loading: 'lazy', class: 'product-addon__image' }}
+      {% endif %}
+      <div class="product-addon__body">
+        <a href="{{ addon.url }}" class="product-addon__title">{{ addon.title | escape }}</a>
+        <p><strong data-addon-price>{{ variant.price | money_with_currency }}</strong> / each</p>
+        {% if block.settings.description != blank %}<p>{{ block.settings.description | escape }}</p>{% endif %}
+        <label class="product-addon__variant" {% if addon.has_only_default_variant %}hidden{% endif %}>
+          <span>Option</span>
+          <select data-addon-variant>
+            {% for option in addon.variants %}
+              {% liquid
+                assign maximum = option.quantity_rule.max
+                if option.inventory_management and option.inventory_policy == 'deny'
+                  assign maximum = option.inventory_quantity | at_least: 0
+                  if option.quantity_rule.max
+                    assign maximum = maximum | at_most: option.quantity_rule.max
+                  endif
+                endif
+              %}
+              <option value="{{ option.id }}" {% if option.id == variant.id %}selected{% endif %} {% unless option.available %}disabled{% endunless %}
+                data-price="{{ option.price | money_with_currency | escape }}"
+                data-min="{{ option.quantity_rule.min | default: 1 }}" data-step="{{ option.quantity_rule.increment | default: 1 }}"
+                data-max="{{ maximum }}">
+                {{ option.title | escape }} — {{ option.price | money_with_currency }}{% unless option.available %} (Sold out){% endunless %}
+              </option>
+            {% endfor %}
+          </select>
+        </label>
+        <div class="product-addon__controls">
+          <label class="product-addon__choice"><input type="checkbox" data-addon-check disabled> <span>{{ block.settings.checkbox_label | escape }}</span></label>
+          <div class="product-addon__quantity">
+            <button type="button" data-addon-step="-1" aria-label="Decrease add-on quantity" disabled>−</button>
+            <input type="number" value="{{ variant.quantity_rule.min | default: 1 }}" min="{{ variant.quantity_rule.min | default: 1 }}" step="{{ variant.quantity_rule.increment | default: 1 }}" aria-label="Add-on quantity" data-addon-quantity disabled>
+            <button type="button" data-addon-step="1" aria-label="Increase add-on quantity" disabled>+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p data-addon-status role="status" aria-live="polite"></p>
+    <noscript><p>Open <a href="{{ addon.url }}">{{ addon.title | escape }}</a> to add this item to your cart.</p></noscript>
+  </product-addon>
+{% elsif request.design_mode %}
+  <div class="product-addon" {{ block.shopify_attributes }}><strong>{{ block.settings.heading | escape }}</strong><p>Select a default add-on product, or set {{ source_namespace | escape }}.{{ source_key | escape }} on this product. Choose an available product different from the main item. This empty block is hidden on the storefront.</p></div>
+{% endif %}
+
+{% stylesheet %}
+  .product-addon { display: block; width: 100%; min-width: 0; padding: 16px; border-radius: 8px; background: rgb(var(--color-foreground-rgb) / .045); font-size: 14px; line-height: 1.5; }
+  .product-addon__heading { margin: 0 0 8px; font: inherit; font-weight: 600; }
+  .product-addon__row { display: flex; gap: 16px; align-items: start; }
+  .product-addon__image { width: 80px; height: 80px; flex: 0 0 80px; object-fit: contain; background: white; border-radius: 6px; }
+  .product-addon__body { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+  .product-addon__title { color: inherit; text-underline-offset: 3px; font-weight: 600; }
+  .product-addon p { margin: 4px 0; }
+  .product-addon__controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; margin-top: 8px; }
+  .product-addon__choice { display: flex; align-items: center; gap: 6px; cursor: pointer; font-weight: 600; }
+  .product-addon__choice input { width: 20px; height: 20px; accent-color: var(--color-primary); }
+  .product-addon__quantity { display: flex; align-items: center; border: 1px solid rgb(var(--color-foreground-rgb) / .15); border-radius: 24px; }
+  .product-addon__quantity button { width: 36px; height: 36px; padding: 0; border: 0; color: inherit; background: transparent; font: inherit; font-size: 20px; cursor: pointer; }
+  .product-addon__quantity input { width: 44px; padding: 0; border: 0; background: transparent; color: inherit; text-align: center; font: inherit; appearance: textfield; }
+  .product-addon__quantity input::-webkit-inner-spin-button, .product-addon__quantity input::-webkit-outer-spin-button { appearance: none; margin: 0; }
+  .product-addon__variant { display: grid; gap: 4px; margin-top: 8px; }
+  .product-addon__variant[hidden] { display: none; }
+  .product-addon select { width: 100%; min-width: 0; padding: 6px; color: inherit; background: var(--color-background); border: 1px solid rgb(var(--color-foreground-rgb) / .2); border-radius: 4px; }
+  .product-addon [data-addon-status]:empty { display: none; }
+  .product-addon [data-addon-status] { margin-top: 8px; }
+  .product-addon[data-error] [data-addon-status] { color: #a51d35; }
+  .product-details:has(product-addon[data-selected]) .shopify-payment-button,
+  .product-details:has(product-addon[data-selected]) #teeBuynowButton,
+  .product-details:has(product-addon[data-selected]) [data-tee-action='buy'] { display: none !important; }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Add-on product", "tag": null,
+  "settings": [
+    {"type":"text","id":"heading","label":"Heading","default":"Add-on gift service"},
+    {"type":"product","id":"addon_product","label":"Default add-on product"},
+    {"type":"text","id":"description","label":"Description","default":"Make your gift extra special."},
+    {"type":"text","id":"checkbox_label","label":"Checkbox label","default":"Choose to buy"},
+    {"type":"header","content":"Product-specific add-on"},
+    {"type":"text","id":"metafield_namespace","label":"Metafield namespace","default":"custom"},
+    {"type":"text","id":"metafield_key","label":"Metafield key","default":"add_on_product","info":"A product reference metafield. A product-specific selection takes priority over the default above."},
+    {"type":"paragraph","content":"When selected, the add-on is added after the main product succeeds. Use Add to cart to include both items; express checkout is hidden while an add-on is selected."}
+  ],
+  "presets": [{"name":"Add-on product","category":"t:categories.product"}]
+}
+{% endschema %}
