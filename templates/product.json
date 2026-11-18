@@ -525,31 +525,6 @@
         "padding-block-end": 0
       }
     },
-    "product_metaobject_details": {
-      "type": "product-metaobject-details",
-      "settings": {
-        "metafield_namespace": "custom",
-        "metafield_key": "product_details",
-        "image_field": "image",
-        "title_field": "title",
-        "body_field": "description",
-        "spec_1_label": "Material",
-        "spec_1_field": "material",
-        "spec_2_label": "Size",
-        "spec_2_field": "size",
-        "spec_3_label": "",
-        "spec_3_field": "",
-        "spec_4_label": "",
-        "spec_4_field": "",
-        "section_width": "page-width",
-        "image_position": "left",
-        "background_color": "",
-        "border_color": "",
-        "border_radius": 8,
-        "padding-block-start": 48,
-        "padding-block-end": 48
-      }
-    },
     "customization_steps": {
       "type": "customization-steps",
       "blocks": {
@@ -602,26 +577,6 @@
         "section_width": "page-width",
         "background_color": "#fbf6f0",
         "card_background_color": "#ffffff",
-        "border_color": "#e3d8cc",
-        "border_radius": 8,
-        "padding-block-start": 48,
-        "padding-block-end": 48
-      }
-    },
-    "product_features": {
-      "type": "product-features",
-      "settings": {
-        "heading": "Product features",
-        "subheading": "<p>Explore the details that make this product easy to personalize, wear and gift.</p>",
-        "metafield_namespace": "custom",
-        "metafield_key": "product_features",
-        "image_field": "image",
-        "title_field": "title",
-        "body_field": "details",
-        "max_items": 4,
-        "section_width": "page-width",
-        "background_color": "#ffffff",
-        "card_background_color": "#fbf6f0",
         "border_color": "#e3d8cc",
         "border_radius": 8,
         "padding-block-start": 48,
@@ -948,9 +903,7 @@
   },
   "order": [
     "main",
-    "product_metaobject_details",
     "customization_steps",
-    "product_features",
     "product_recommendations_qggXJq",
     "17870405177eb26d93",
     "1787121188cf99014f",
