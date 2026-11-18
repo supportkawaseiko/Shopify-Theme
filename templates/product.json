@@ -352,10 +352,6 @@
             "purchase_box": {
               "type": "product-buy-box",
               "settings": {
-                "delivery_heading": "Delivery information",
-                "delivery_text": "Review production and delivery estimates before ordering. Shipping is calculated at checkout.",
-                "delivery_link": "/pages/delivery",
-                "delivery_link_label": "View delivery details",
                 "show_membership": true,
                 "member_heading": "Customversal Club",
                 "member_text": "Get freeship with Customversal Club",
@@ -364,7 +360,9 @@
                 "member_shipping_benefit": "Fast, Free Shipping",
                 "free_shipping_active": false,
                 "support_link": "/pages/faqs",
-                "support_label": "Questions about your order?"
+                "support_label": "Questions about your order?",
+                "default_eta_min_days": 4,
+                "default_eta_max_days": 12
               },
               "blocks": {
                 "buy_buttons_eYQEYi": {

@@ -1,0 +1,17 @@
+{%- liquid
+  assign country_field = eta[country_key] | default: eta.country_codes | default: eta.country_code
+  if country_field.type contains 'list.'
+    for code in country_field.value
+      assign normalized_code = code | strip | upcase
+      if normalized_code == country_code
+        echo 'true'
+        break
+      endif
+    endfor
+  else
+    assign normalized_code = country_field.value | default: country_field | strip | upcase
+    if normalized_code != blank and normalized_code == country_code
+      echo 'true'
+    endif
+  endif
+-%}

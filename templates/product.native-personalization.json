@@ -390,18 +390,6 @@
             "purchase_box": {
               "type": "product-buy-box",
               "settings": {
-                "delivery_heading": "Delivery information",
-                "delivery_text": "Review production and delivery estimates before ordering. Shipping is calculated at checkout.",
-                "delivery_link": "/pages/delivery",
-                "delivery_link_label": "View delivery details",
-                "eta_us_ca_au": "4–12 business days",
-                "eta_uk": "10–17 business days",
-                "eta_days_us_ca_au": 12,
-                "eta_days_uk": 17,
-                "eta_min_us_ca_au": 4,
-                "eta_min_uk": 10,
-                "eta_other": "See delivery details for your destination",
-                "eta_note": "Includes 1–3 business days of processing. Delivery times are estimates, not guarantees.",
                 "show_returns": true,
                 "returns_text": "30-day returns on eligible items",
                 "returns_link": "",
@@ -413,7 +401,9 @@
                 "member_shipping_benefit": "Fast, Free Shipping",
                 "free_shipping_active": true,
                 "support_link": "/pages/faqs",
-                "support_label": "Questions about your order?"
+                "support_label": "Questions about your order?",
+                "default_eta_min_days": 4,
+                "default_eta_max_days": 12
               },
               "blocks": {
                 "shipping_eta": {
