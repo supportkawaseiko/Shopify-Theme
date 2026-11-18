@@ -18,6 +18,7 @@ class ProductCustomProperty extends Component {
 
   #updateCharacterCount() {
     const { characterCount, textInput } = this.refs;
+    if (!characterCount || !textInput) return;
     const currentLength = textInput.value.length;
     const maxLength = textInput.maxLength;
 

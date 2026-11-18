@@ -1,0 +1,87 @@
+<section
+  class="product-personalization"
+  {% if block.settings.heading != blank %}aria-labelledby="PersonalizeHeading-{{ block.id }}"{% endif %}
+  style="--personalize-heading-background: {{ block.settings.heading_background }};"
+  {{ block.shopify_attributes }}
+>
+  {% if block.settings.heading != blank %}
+    <h2 class="product-personalization__heading" id="PersonalizeHeading-{{ block.id }}">
+      {{ block.settings.heading | escape }}
+    </h2>
+  {% endif %}
+  <div class="product-personalization__fields">{% content_for 'blocks' %}</div>
+</section>
+
+{% stylesheet %}
+  .product-personalization {
+    width: 100%;
+    min-width: 0;
+    border: 1px solid rgb(var(--color-foreground-rgb) / .18);
+    border-radius: 8px;
+    background: var(--color-background);
+  }
+
+  .product-personalization__heading {
+    margin: 0;
+    padding: 16px;
+    border-radius: 7px 7px 0 0;
+    background: var(--personalize-heading-background);
+    color: var(--color-foreground);
+    font-family: var(--font-body--family);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.5;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .product-personalization__fields {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    min-width: 0;
+    padding: 16px;
+  }
+
+  .product-personalization .__heading {
+    display: block;
+    font-weight: 600;
+  }
+
+  .product-personalization input[type='file'] {
+    max-width: 100%;
+    font-size: 14px;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Personalize",
+  "tag": null,
+  "blocks": [{ "type": "product-custom-property" }],
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Personalize" },
+    { "type": "color", "id": "heading_background", "label": "Heading background", "default": "#f3e9ed" }
+  ],
+  "presets": [{
+    "name": "Personalize",
+    "category": "t:categories.product",
+    "blocks": [
+      {
+        "type": "product-custom-property",
+        "settings": {
+          "property_heading": "Custom name", "property_key": "Custom name",
+          "input_type": "text", "max_length": 45, "placeholder": "Emily", "required": true
+        }
+      },
+      {
+        "type": "product-custom-property",
+        "settings": {
+          "property_heading": "Custom photo", "property_key": "Custom photo",
+          "property_description": "Upload the photo for your order.", "input_type": "photo", "required": true
+        }
+      }
+    ]
+  }]
+}
+{% endschema %}

@@ -313,45 +313,59 @@
                   },
                   "blocks": {}
                 },
-                "native_custom_name": {
-                  "type": "product-custom-property",
-                  "name": "Custom name",
+                "native_personalization": {
+                  "type": "product-personalization",
+                  "name": "Personalize",
                   "settings": {
-                    "property_heading": "Custom name",
-                    "property_description": "Please enter your name",
-                    "property_key": "Custom name",
-                    "input_type": "text",
-                    "max_length": 45,
-                    "checkbox_label": "Include gift wrapping",
-                    "required": true,
-                    "placeholder": "Emily",
-                    "placeholder_textarea": "Enter your special instructions",
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
+                    "heading": "Personalize",
+                    "heading_background": "#f3e9ed"
                   },
-                  "blocks": {}
-                },
-                "native_custom_photo": {
-                  "type": "product-custom-property",
-                  "name": "Custom photo",
-                  "settings": {
-                    "property_heading": "Custom photo",
-                    "property_description": "Upload the photo for your order.",
-                    "property_key": "Custom photo",
-                    "input_type": "photo",
-                    "max_length": 100,
-                    "checkbox_label": "Include gift wrapping",
-                    "required": true,
-                    "placeholder": "Enter your special instructions",
-                    "placeholder_textarea": "Enter your special instructions",
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
+                  "blocks": {
+                    "native_custom_name": {
+                      "type": "product-custom-property",
+                      "name": "Custom name",
+                      "settings": {
+                        "property_heading": "Custom name",
+                        "property_description": "Please enter your name",
+                        "property_key": "Custom name",
+                        "input_type": "text",
+                        "max_length": 45,
+                        "checkbox_label": "Include gift wrapping",
+                        "required": true,
+                        "placeholder": "Emily",
+                        "placeholder_textarea": "Enter your special instructions",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    },
+                    "native_custom_photo": {
+                      "type": "product-custom-property",
+                      "name": "Custom photo",
+                      "settings": {
+                        "property_heading": "Custom photo",
+                        "property_description": "Upload the photo for your order.",
+                        "property_key": "Custom photo",
+                        "input_type": "photo",
+                        "max_length": 100,
+                        "checkbox_label": "Include gift wrapping",
+                        "required": true,
+                        "placeholder": "Enter your special instructions",
+                        "placeholder_textarea": "Enter your special instructions",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    }
                   },
-                  "blocks": {}
+                  "block_order": [
+                    "native_custom_name",
+                    "native_custom_photo"
+                  ]
                 },
                 "text_aEtTtq": {
                   "type": "text",
@@ -388,8 +402,7 @@
                 "divider_VJhene",
                 "variant_picker_R3rGDr",
                 "size_guide",
-                "native_custom_name",
-                "native_custom_photo",
+                "native_personalization",
                 "text_aEtTtq"
               ]
             },

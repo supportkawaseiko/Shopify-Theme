@@ -27,11 +27,12 @@
   {{ block.shopify_attributes }}
 >
   {% if block_settings.property_heading != blank %}
-    <p
+    <label
       class="__heading"
+      for="{{ element_id }}"
     >
       {{ block_settings.property_heading | escape }}
-    </p>
+    </label>
   {% endif %}
 
   {% if block_settings.property_description != blank %}
