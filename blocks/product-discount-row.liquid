@@ -1,0 +1,30 @@
+{% if block.settings.spend != blank or block.settings.benefit != blank or block.settings.code != blank %}
+  <tr {{ block.shopify_attributes }}>
+    <td>{{ block.settings.spend | escape }}</td>
+    <td>{{ block.settings.benefit | escape }}</td>
+    <td>
+      {% if block.settings.code != blank %}
+        <discount-code data-code="{{ block.settings.code | escape }}">
+          <button type="button" class="product-discount__copy" aria-label="Copy code {{ block.settings.code | escape }}">
+            <span data-code-label>{{ block.settings.code | escape }}</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="7" y="7" width="13" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h2"/></svg>
+          </button>
+          <span class="visually-hidden" role="status" data-copy-status></span>
+        </discount-code>
+      {% endif %}
+    </td>
+  </tr>
+{% elsif request.design_mode %}
+  <tr {{ block.shopify_attributes }}><td colspan="3" class="product-discount__placeholder">Select this offer row to enter its purchase condition, discount and code.</td></tr>
+{% endif %}
+{% schema %}
+{
+  "name": "Offer row", "tag": null,
+  "settings": [
+    {"type":"text","id":"spend","label":"Spend / purchase condition","info":"For example: Buy 2 items."},
+    {"type":"text","id":"benefit","label":"Get / discount","info":"For example: 10% off."},
+    {"type":"text","id":"code","label":"Discount code","info":"Use an existing code configured in Shopify Discounts. This row only displays and copies the code."}
+  ],
+  "presets": [{"name":"Offer row"}]
+}
+{% endschema %}

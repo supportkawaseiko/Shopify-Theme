@@ -227,7 +227,31 @@
                     "offer_link": "",
                     "link_label": "View offer"
                   },
-                  "blocks": {}
+                  "blocks": {
+                    "offer_1": {
+                      "type": "product-discount-row",
+                      "name": "Offer 1",
+                      "settings": {},
+                      "blocks": {}
+                    },
+                    "offer_2": {
+                      "type": "product-discount-row",
+                      "name": "Offer 2",
+                      "settings": {},
+                      "blocks": {}
+                    },
+                    "offer_3": {
+                      "type": "product-discount-row",
+                      "name": "Offer 3",
+                      "settings": {},
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "offer_1",
+                    "offer_2",
+                    "offer_3"
+                  ]
                 },
                 "divider_VJhene": {
                   "type": "_divider",

@@ -3,13 +3,22 @@
   if block.settings.offer_text != blank or block.settings.discount_code != blank
     assign has_offer = true
   endif
+  capture offer_rows
+    content_for 'blocks'
+  endcapture
+  assign has_rows = false
+  if offer_rows contains '<tr'
+    assign has_rows = true
+  endif
 %}
-{% if has_offer or request.design_mode %}
-  <div class="product-essentials product-discount" {{ block.shopify_attributes }}>
+{% if has_offer or has_rows or request.design_mode %}
+  <script src="{{ 'discount-code.js' | asset_url }}" type="module"></script>
+  <div class="product-essentials product-discount" style="--discount-header-background: {{ block.settings.header_background | default: '#88283f' }};" {{ block.shopify_attributes }}>
     {% if block.settings.heading != blank %}
       <p class="product-discount__heading">{{ block.settings.heading | escape }}</p>
     {% endif %}
     {% if has_offer %}
+      <div class="product-discount__legacy">
       {% if block.settings.offer_text != blank %}<div class="product-discount__text rte">{{ block.settings.offer_text }}</div>{% endif %}
       {% if block.settings.discount_code != blank %}
         <p class="product-discount__code">Use code: <strong>{{ block.settings.discount_code | escape }}</strong></p>
@@ -18,14 +27,35 @@
       {% if block.settings.offer_link != blank and block.settings.link_label != blank %}
         <a class="product-discount__link" href="{{ block.settings.offer_link }}">{{ block.settings.link_label | escape }} <span aria-hidden="true">→</span></a>
       {% endif %}
-    {% else %}
-      <p class="product-discount__text">Add your discount message or code in this block's settings. This empty block is hidden on the storefront.</p>
+      </div>
+    {% endif %}
+    {% if has_rows %}
+      <div class="product-discount__table-wrapper">
+        <table class="product-discount__table">
+          <caption class="visually-hidden">{{ block.settings.heading | default: 'Discount offers' | escape }}</caption>
+          <thead><tr><th scope="col">{{ block.settings.spend_label | default: 'Spend' | escape }}</th><th scope="col">{{ block.settings.benefit_label | default: 'Get' | escape }}</th><th scope="col">{{ block.settings.code_label | default: 'Code' | escape }}</th></tr></thead>
+          <tbody>{{ offer_rows }}</tbody>
+        </table>
+      </div>
+    {% elsif request.design_mode and has_offer == false %}
+      <p class="product-discount__text">Add Offer row blocks to display multiple discounts. Empty offers are hidden on the storefront.</p>
     {% endif %}
   </div>
 {% endif %}
 {% stylesheet %}
-  .product-discount { width: 100%; padding: 14px 16px; border: 1px solid rgb(var(--color-foreground-rgb) / .15); border-inline-start: 3px solid #88283f; border-radius: 10px; background: rgb(var(--color-foreground-rgb) / .025); font-size: 14px; line-height: 1.5; }
-  .product-discount__heading { margin: 0 0 6px; font-weight: 600; }
+  .product-discount { width: 100%; min-width: 0; font-size: 14px; line-height: 1.5; }
+  .product-discount__heading { margin: 0 0 12px; font-size: 18px; font-weight: 600; }
+  .product-discount__legacy { margin-bottom: 12px; padding: 14px 16px; border: 1px solid rgb(var(--color-foreground-rgb) / .15); border-inline-start: 3px solid #88283f; border-radius: 8px; background: rgb(var(--color-foreground-rgb) / .025); }
+  .product-discount__table-wrapper { border: 1px solid rgb(var(--color-foreground-rgb) / .15); border-radius: 8px; overflow: hidden; }
+  .product-discount__table { width: 100%; table-layout: fixed; border-collapse: collapse; background: var(--color-background); }
+  .product-discount__table th, .product-discount__table td { padding: 12px; text-align: start; vertical-align: middle; overflow-wrap: anywhere; border: 0; border-inline-end: 1px solid rgb(var(--color-foreground-rgb) / .15); }
+  .product-discount__table th:last-child, .product-discount__table td:last-child { border-inline-end: 0; }
+  .product-discount__table th { background: var(--discount-header-background); color: #fff; font-size: 13px; font-weight: 700; }
+  .product-discount__table tbody tr + tr { border-top: 1px solid rgb(var(--color-foreground-rgb) / .15); }
+  .product-discount__copy { display: flex; justify-content: space-between; align-items: center; gap: 8px; width: 100%; padding: 8px; border: 1px solid rgb(var(--color-foreground-rgb) / .12); border-radius: 4px; background: rgb(var(--color-foreground-rgb) / .025); color: inherit; font: inherit; font-size: 12px; cursor: pointer; }
+  .product-discount__copy svg { flex-shrink: 0; }
+  .product-discount__placeholder { font-size: 12px; opacity: .75; }
+  @media (max-width: 749px) { .product-discount__table th, .product-discount__table td { padding: 10px 8px; font-size: 12px; } .product-discount__copy { padding: 6px; gap: 4px; font-size: 11px; } }
   .product-discount__text p { margin: 0; }
   .product-discount__code { display: inline-block; margin: 10px 0 0; padding: 5px 10px; border: 1px dashed currentColor; border-radius: 5px; overflow-wrap: anywhere; }
   .product-discount__conditions { margin: 8px 0 0; font-size: 12px; }
@@ -36,15 +66,22 @@
 {% schema %}
 {
   "name": "Product discount", "tag": null,
+  "blocks": [{"type":"product-discount-row"}],
   "settings": [
     {"type":"text","id":"heading","label":"Heading","default":"Discounts & offers"},
+    {"type":"color","id":"header_background","label":"Table header background","default":"#88283f"},
+    {"type":"text","id":"spend_label","label":"Purchase column heading","default":"Spend"},
+    {"type":"text","id":"benefit_label","label":"Discount column heading","default":"Get"},
+    {"type":"text","id":"code_label","label":"Code column heading","default":"Code"},
+    {"type":"paragraph","content":"Add one Offer row block per discount tier. Create the matching discounts separately in Shopify Discounts."},
+    {"type":"header","content":"Optional introductory offer"},
     {"type":"richtext","id":"offer_text","label":"Discount message"},
     {"type":"text","id":"discount_code","label":"Discount code","info":"Display only. Create and configure the actual discount in Shopify Discounts."},
     {"type":"textarea","id":"conditions","label":"Offer conditions"},
     {"type":"url","id":"offer_link","label":"Offer link"},
     {"type":"text","id":"link_label","label":"Link label","default":"View offer"},
-    {"type":"paragraph","content":"An empty discount block is visible only in the Theme Editor. Add an offer message or a code to display it to customers."}
+    {"type":"paragraph","content":"Existing offer text and code are preserved above the table. Empty blocks are shown only in the Theme Editor."}
   ],
-  "presets": [{"name":"Product discount"}]
+  "presets": [{"name":"Product discount","blocks":[{"type":"product-discount-row"},{"type":"product-discount-row"},{"type":"product-discount-row"}]}]
 }
 {% endschema %}
