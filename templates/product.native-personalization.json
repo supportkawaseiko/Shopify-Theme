@@ -12,25 +12,6 @@
     "main": {
       "type": "product-information",
       "blocks": {
-        "disclosures_g9mWze": {
-          "type": "disclosures",
-          "name": "t:names.disclosures",
-          "settings": {
-            "heading": "Disclosures",
-            "heading_preset": "h5",
-            "open_by_default": false,
-            "icon": "caret",
-            "disclosure_heading_preset": "h6",
-            "text_color": "",
-            "dividers": true,
-            "divider_color": "{{ settings.color_palette.color2 }}",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
         "media-gallery": {
           "type": "_product-media-gallery",
           "static": true,
@@ -430,7 +411,7 @@
                 "member_link": "/pages/club",
                 "member_link_label": "Explore the Club",
                 "member_shipping_benefit": "Fast, Free Shipping",
-                "free_shipping_active": false,
+                "free_shipping_active": true,
                 "support_link": "/pages/faqs",
                 "support_label": "Questions about your order?"
               },
@@ -564,9 +545,6 @@
           ]
         }
       },
-      "block_order": [
-        "disclosures_g9mWze"
-      ],
       "custom_css": [
         ".quantity-row {align-items: center; display: flex; flex-wrap: wrap; gap: var(--gap-sm);}",
         ".product-form-buttons--stacked > .quantity-row {flex-basis: 100%;}",
