@@ -1,16 +1,17 @@
 {% liquid
+  assign main_product = product | default: closest.product
   assign source_namespace = block.settings.metafield_namespace | default: 'custom' | strip
   assign source_key = block.settings.metafield_key | default: 'add_on_product' | strip
-  assign addon = closest.product.metafields[source_namespace][source_key].value | default: block.settings.addon_product
+  assign addon = main_product.metafields[source_namespace][source_key].value | default: block.settings.addon_product
   assign variant = addon.selected_or_first_available_variant
   assign can_offer = false
-  if addon != blank and addon.id != closest.product.id and variant.available and addon.requires_selling_plan != true
+  if addon != blank and addon.id != main_product.id and variant.available and addon.requires_selling_plan != true
     assign can_offer = true
   endif
 %}
 {% if can_offer %}
   <script src="{{ 'product-addon.js' | asset_url }}" type="module"></script>
-  <product-addon class="product-addon" data-product-id="{{ closest.product.id }}" {{ block.shopify_attributes }}>
+  <product-addon class="product-addon" data-product-id="{{ main_product.id }}" {{ block.shopify_attributes }}>
     {% if block.settings.heading != blank %}<h3 class="product-addon__heading">{{ block.settings.heading | escape }}</h3>{% endif %}
     <div class="product-addon__row">
       {% if addon.featured_image %}
