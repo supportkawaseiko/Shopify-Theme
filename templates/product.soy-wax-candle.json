@@ -387,10 +387,7 @@
                   "type": "product-short-description",
                   "name": "Short description",
                   "settings": {
-                    "heading": "About this item",
-                    "metafield_namespace": "custom",
-                    "metafield_key": "short_description",
-                    "bullets_field": "bullet_points"
+                    "heading": "About this item"
                   },
                   "blocks": {}
                 }
