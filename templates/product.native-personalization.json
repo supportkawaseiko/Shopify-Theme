@@ -65,6 +65,7 @@
           "static": true,
           "settings": {
             "sidebar_buy_box": true,
+            "teeinblue_sidebar": false,
             "width": "fill",
             "custom_width": 100,
             "width_mobile": "fill",
@@ -93,9 +94,35 @@
               "name": "Product options & personalization",
               "settings": {
                 "content_direction": "column",
+                "vertical_on_mobile": true,
+                "horizontal_alignment": "flex-start",
+                "vertical_alignment": "center",
+                "align_baseline": false,
+                "horizontal_alignment_flex_direction_column": "flex-start",
+                "vertical_alignment_flex_direction_column": "center",
                 "gap": 18,
                 "width": "fill",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
                 "height": "fit",
+                "custom_height": 100,
+                "background_media": "none",
+                "background_color": "",
+                "video_position": "cover",
+                "background_image_position": "cover",
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "overlay_style": "solid",
+                "gradient_direction": "to top",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_color": "",
+                "border_radius": 0,
+                "link": "",
+                "open_in_new_tab": false,
+                "placeholder": "",
                 "padding-block-start": 0,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
@@ -173,6 +200,18 @@
                       },
                       "blocks": {}
                     },
+                    "product_rating": {
+                      "type": "review",
+                      "settings": {
+                        "stars_style": "shaded",
+                        "show_number": true,
+                        "text_color": "#88283f",
+                        "type_preset": "paragraph",
+                        "width": "fit-content",
+                        "alignment": "left"
+                      },
+                      "blocks": {}
+                    },
                     "price_tVjtKg": {
                       "type": "price",
                       "settings": {
@@ -192,18 +231,6 @@
                         "padding-block-end": 0,
                         "padding-inline-start": 0,
                         "padding-inline-end": 0
-                      },
-                      "blocks": {}
-                    },
-                    "product_rating": {
-                      "type": "review",
-                      "settings": {
-                        "stars_style": "shaded",
-                        "show_number": true,
-                        "text_color": "#88283f",
-                        "type_preset": "paragraph",
-                        "width": "fit-content",
-                        "alignment": "left"
                       },
                       "blocks": {}
                     }
@@ -242,6 +269,7 @@
                 "variant_picker_R3rGDr": {
                   "type": "variant-picker",
                   "settings": {
+                    "show_option_prices": true,
                     "variant_style": "buttons",
                     "show_swatches": true,
                     "option_label_text_color": "",
@@ -308,7 +336,6 @@
                 "native_custom_photo": {
                   "type": "product-custom-property",
                   "name": "Custom photo",
-                  "disabled": true,
                   "settings": {
                     "property_heading": "Custom photo",
                     "property_description": "Upload the photo for your order.",
@@ -373,16 +400,68 @@
                 "delivery_text": "Review production and delivery estimates before ordering. Shipping is calculated at checkout.",
                 "delivery_link": "/pages/delivery",
                 "delivery_link_label": "View delivery details",
+                "eta_us_ca_au": "4–12 business days",
+                "eta_uk": "10–17 business days",
+                "eta_days_us_ca_au": 12,
+                "eta_days_uk": 17,
+                "eta_min_us_ca_au": 4,
+                "eta_min_uk": 10,
+                "eta_other": "See delivery details for your destination",
+                "eta_note": "Includes 1–3 business days of processing. Delivery times are estimates, not guarantees.",
+                "show_returns": true,
+                "returns_text": "30-day returns on eligible items",
+                "returns_link": "",
                 "show_membership": true,
                 "member_heading": "Customversal Club",
                 "member_text": "Discover member-only offers and benefits.",
                 "member_link": "/pages/club",
                 "member_link_label": "Explore the Club",
+                "member_shipping_benefit": "Fast, Free Shipping",
                 "free_shipping_active": false,
                 "support_link": "/pages/faqs",
                 "support_label": "Questions about your order?"
               },
               "blocks": {
+                "shipping_eta": {
+                  "type": "shipping-eta",
+                  "name": "Shipping ETA",
+                  "settings": {
+                    "dates_in_buy_box": true,
+                    "metafield_namespace": "custom",
+                    "metafield_key": "shipping_eta",
+                    "country_code_field": "country_code",
+                    "use_shopify_countries": true,
+                    "country_name_field": "country_name",
+                    "flag_field": "flag",
+                    "processing_min_field": "processing_min_days",
+                    "processing_max_field": "processing_max_days",
+                    "transit_min_field": "transit_min_days",
+                    "transit_max_field": "transit_max_days",
+                    "express_processing_min_field": "express_processing_min_days",
+                    "express_processing_max_field": "express_processing_max_days",
+                    "express_transit_min_field": "express_transit_min_days",
+                    "express_transit_max_field": "express_transit_max_days",
+                    "note_field": "note",
+                    "destination_label": "Deliver to:",
+                    "lead_text": "Order today, get it as early as:",
+                    "standard_method_label": "Standard Shipping",
+                    "express_method_label": "Express Shipping",
+                    "delivery_modal_heading": "Delivery Method",
+                    "order_label": "Order placed",
+                    "ship_label": "Order ships",
+                    "arrival_label": "Estimated arrival",
+                    "delivered_label": "Delivered",
+                    "accessibility_label": "Delivery methods",
+                    "background_color": "#f8f3ea",
+                    "border_color": "#e4d8c7",
+                    "border_radius": 8,
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                },
                 "buy_buttons_eYQEYi": {
                   "type": "buy-buttons",
                   "settings": {
@@ -443,49 +522,19 @@
                   },
                   "block_order": []
                 },
-                "shipping_eta": {
-                  "type": "shipping-eta",
-                  "name": "Shipping ETA",
-                  "settings": {
-                    "dates_in_buy_box": true,
-                    "metafield_namespace": "custom",
-                    "metafield_key": "shipping_eta",
-                    "country_code_field": "country_code",
-                    "use_shopify_countries": true,
-                    "country_name_field": "country_name",
-                    "flag_field": "flag",
-                    "processing_min_field": "processing_min_days",
-                    "processing_max_field": "processing_max_days",
-                    "transit_min_field": "transit_min_days",
-                    "transit_max_field": "transit_max_days",
-                    "express_processing_min_field": "express_processing_min_days",
-                    "express_processing_max_field": "express_processing_max_days",
-                    "express_transit_min_field": "express_transit_min_days",
-                    "express_transit_max_field": "express_transit_max_days",
-                    "note_field": "note",
-                    "destination_label": "Deliver to:",
-                    "lead_text": "Order today, get it as early as:",
-                    "standard_method_label": "Standard Shipping",
-                    "express_method_label": "Express Shipping",
-                    "delivery_modal_heading": "Delivery Method",
-                    "order_label": "Order placed",
-                    "ship_label": "Order ships",
-                    "arrival_label": "Estimated arrival",
-                    "delivered_label": "Delivered",
-                    "accessibility_label": "Delivery methods",
-                    "background_color": "#f8f3ea",
-                    "border_color": "#e4d8c7",
-                    "border_radius": 8,
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
-                  },
-                  "blocks": {}
-                },
                 "ai_gen_block_0558575_EUwxiw": {
                   "type": "trust-signals",
-                  "settings": {},
+                  "settings": {
+                    "customer_text": "Trusted By Over 500,000 Customers",
+                    "rating_text": "4.8-Star Rating On",
+                    "trustpilot_text": "Trustpilot",
+                    "payment_text": "Secure Payment",
+                    "guarantee_text": "30-Day Money-Back Guarantee",
+                    "background_color": "#f7f8fa",
+                    "text_color": "#10233f",
+                    "icon_color": "#7a8798",
+                    "trustpilot_color": "#00b67a"
+                  },
                   "blocks": {}
                 }
               },
@@ -521,6 +570,85 @@
         "background_color": "{{ settings.color_palette.background }}",
         "padding-block-start": 24,
         "padding-block-end": 0
+      }
+    },
+    "product_buying_guide": {
+      "type": "product-buying-guide",
+      "blocks": {
+        "apparel": {
+          "type": "guide",
+          "settings": {
+            "group": "apparel",
+            "title": "Find your fit. Make it yours.",
+            "ordering": "<p>Choose the garment, color and size shown for this design. Compare the size chart with a garment you already own, and check the available personalization fields before ordering.</p>",
+            "care": "<p>Follow the care instructions for your selected garment. For printed apparel, avoid ironing directly over the design and check the recommended washing and drying method.</p>"
+          }
+        },
+        "ornaments": {
+          "type": "guide",
+          "settings": {
+            "group": "ornaments",
+            "title": "A closer look at your ornament",
+            "ordering": "<p>Check the selected material, dimensions and design options. Ceramic, acrylic and glass versions can differ, so refer to the details for this exact product. If personalizing, review names, dates and photo placement.</p>",
+            "care": "<p>Handle your ornament gently and follow its material-specific care instructions. Protect delicate pieces from knocks and store them carefully between seasons. Check the product details for any included hanging accessories.</p>"
+          }
+        },
+        "drinkware": {
+          "type": "guide",
+          "settings": {
+            "group": "drinkware",
+            "title": "Choose your everyday favorite",
+            "ordering": "<p>Check the capacity, material and available print options. Review the personalization fields and the placement shown in the product images before placing your order.</p>",
+            "care": "<p>Use the cleaning instructions for this exact item. Dishwasher and microwave suitability varies by material and finish; check the product details before use.</p>"
+          }
+        },
+        "home": {
+          "type": "guide",
+          "settings": {
+            "group": "home",
+            "title": "A thoughtful detail for your space",
+            "ordering": "<p>Measure the intended space and check this product’s dimensions, material and finish. Use the product images to review the design and any available personalization.</p>",
+            "care": "<p>Follow the care instructions for the selected material. Check whether the item is intended for indoor or outdoor use, and place fragile pieces on a stable surface.</p>"
+          }
+        },
+        "candles": {
+          "type": "guide",
+          "settings": {
+            "group": "candles",
+            "title": "The details behind your candle",
+            "ordering": "<p>Review the scent, vessel, size and available label or personalization options. Refer to this product’s description for its specific contents and features.</p>",
+            "care": "<p>Follow the safety and burning instructions supplied with your candle. Never leave a burning candle unattended, and keep it away from children, pets and flammable materials.</p>"
+          }
+        },
+        "general": {
+          "type": "guide",
+          "settings": {
+            "group": "general",
+            "title": "Details that matter",
+            "ordering": "<p>Review the selected options, dimensions and product description. If personalization is available, check your uploaded image, spelling and design choices before checkout.</p>",
+            "care": "<p>Follow the care and use instructions for this exact product. If you need help with materials, sizing or personalization, contact us before placing your order.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "apparel",
+        "ornaments",
+        "drinkware",
+        "home",
+        "candles",
+        "general"
+      ],
+      "settings": {
+        "eyebrow": "A closer look",
+        "heading": "Details that matter",
+        "ordering_heading": "Choose with confidence",
+        "care_heading": "Care & everyday use",
+        "show_description": true,
+        "description_heading": "Product details",
+        "delivery_link": "/pages/delivery",
+        "delivery_label": "Production & delivery",
+        "help_link": "/pages/faqs",
+        "help_label": "Questions? We’re here to help"
       }
     },
     "product_metaobject_details": {
@@ -856,85 +984,6 @@
         "border_radius": 0,
         "padding-block-start": 0,
         "padding-block-end": 0
-      }
-    },
-    "product_buying_guide": {
-      "type": "product-buying-guide",
-      "blocks": {
-        "apparel": {
-          "type": "guide",
-          "settings": {
-            "group": "apparel",
-            "title": "Find your fit. Make it yours.",
-            "ordering": "<p>Choose the garment, color and size shown for this design. Compare the size chart with a garment you already own, and check the available personalization fields before ordering.</p>",
-            "care": "<p>Follow the care instructions for your selected garment. For printed apparel, avoid ironing directly over the design and check the recommended washing and drying method.</p>"
-          }
-        },
-        "ornaments": {
-          "type": "guide",
-          "settings": {
-            "group": "ornaments",
-            "title": "A closer look at your ornament",
-            "ordering": "<p>Check the selected material, dimensions and design options. Ceramic, acrylic and glass versions can differ, so refer to the details for this exact product. If personalizing, review names, dates and photo placement.</p>",
-            "care": "<p>Handle your ornament gently and follow its material-specific care instructions. Protect delicate pieces from knocks and store them carefully between seasons. Check the product details for any included hanging accessories.</p>"
-          }
-        },
-        "drinkware": {
-          "type": "guide",
-          "settings": {
-            "group": "drinkware",
-            "title": "Choose your everyday favorite",
-            "ordering": "<p>Check the capacity, material and available print options. Review the personalization fields and the placement shown in the product images before placing your order.</p>",
-            "care": "<p>Use the cleaning instructions for this exact item. Dishwasher and microwave suitability varies by material and finish; check the product details before use.</p>"
-          }
-        },
-        "home": {
-          "type": "guide",
-          "settings": {
-            "group": "home",
-            "title": "A thoughtful detail for your space",
-            "ordering": "<p>Measure the intended space and check this product’s dimensions, material and finish. Use the product images to review the design and any available personalization.</p>",
-            "care": "<p>Follow the care instructions for the selected material. Check whether the item is intended for indoor or outdoor use, and place fragile pieces on a stable surface.</p>"
-          }
-        },
-        "candles": {
-          "type": "guide",
-          "settings": {
-            "group": "candles",
-            "title": "The details behind your candle",
-            "ordering": "<p>Review the scent, vessel, size and available label or personalization options. Refer to this product’s description for its specific contents and features.</p>",
-            "care": "<p>Follow the safety and burning instructions supplied with your candle. Never leave a burning candle unattended, and keep it away from children, pets and flammable materials.</p>"
-          }
-        },
-        "general": {
-          "type": "guide",
-          "settings": {
-            "group": "general",
-            "title": "Details that matter",
-            "ordering": "<p>Review the selected options, dimensions and product description. If personalization is available, check your uploaded image, spelling and design choices before checkout.</p>",
-            "care": "<p>Follow the care and use instructions for this exact product. If you need help with materials, sizing or personalization, contact us before placing your order.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "apparel",
-        "ornaments",
-        "drinkware",
-        "home",
-        "candles",
-        "general"
-      ],
-      "settings": {
-        "eyebrow": "A closer look",
-        "heading": "Details that matter",
-        "ordering_heading": "Choose with confidence",
-        "care_heading": "Care & everyday use",
-        "show_description": true,
-        "description_heading": "Product details",
-        "delivery_link": "/pages/delivery",
-        "delivery_label": "Production & delivery",
-        "help_link": "/pages/faqs",
-        "help_label": "Questions? We’re here to help"
       }
     }
   },
