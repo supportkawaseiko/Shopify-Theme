@@ -220,7 +220,11 @@
                 "product_essentials": {
                   "type": "product-discount",
                   "settings": {
-                    "heading": "Discounts & offers",
+                    "heading": "",
+                    "header_background": "#88283f",
+                    "spend_label": "Buy",
+                    "benefit_label": "Discount",
+                    "code_label": "Code",
                     "offer_text": "",
                     "discount_code": "",
                     "conditions": "",
@@ -231,19 +235,31 @@
                     "offer_1": {
                       "type": "product-discount-row",
                       "name": "Offer 1",
-                      "settings": {},
+                      "settings": {
+                        "spend": "Buy 2 items",
+                        "benefit": "10% Off",
+                        "code": "SMPL10"
+                      },
                       "blocks": {}
                     },
                     "offer_2": {
                       "type": "product-discount-row",
                       "name": "Offer 2",
-                      "settings": {},
+                      "settings": {
+                        "spend": "Buy 3+ items",
+                        "benefit": "15% Off",
+                        "code": "SMPL15"
+                      },
                       "blocks": {}
                     },
                     "offer_3": {
                       "type": "product-discount-row",
                       "name": "Offer 3",
-                      "settings": {},
+                      "settings": {
+                        "spend": "Buy 5+ items",
+                        "benefit": "20% Off",
+                        "code": "SMPL20"
+                      },
                       "blocks": {}
                     }
                   },
@@ -288,6 +304,58 @@
                     "padding-inline-end": 0
                   },
                   "blocks": {}
+                },
+                "product_personalization_igqUk9": {
+                  "type": "product-personalization",
+                  "name": "Personalize",
+                  "settings": {
+                    "heading": "Personalize",
+                    "heading_background": "#f3e9ed"
+                  },
+                  "blocks": {
+                    "product_custom_property_3CfdDT": {
+                      "type": "product-custom-property",
+                      "settings": {
+                        "property_heading": "Custom name",
+                        "property_description": "",
+                        "property_key": "Custom name",
+                        "input_type": "text",
+                        "max_length": 45,
+                        "checkbox_label": "Include gift wrapping",
+                        "required": true,
+                        "placeholder": "Emily",
+                        "placeholder_textarea": "Enter your special instructions",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    },
+                    "product_custom_property_8aqkHi": {
+                      "type": "product-custom-property",
+                      "settings": {
+                        "property_heading": "Custom photo",
+                        "property_description": "Upload the photo for your order.",
+                        "property_key": "Custom photo",
+                        "input_type": "photo",
+                        "max_length": 100,
+                        "checkbox_label": "Include gift wrapping",
+                        "required": true,
+                        "placeholder": "Enter your special instructions",
+                        "placeholder_textarea": "Enter your special instructions",
+                        "padding-block-start": 0,
+                        "padding-block-end": 0,
+                        "padding-inline-start": 0,
+                        "padding-inline-end": 0
+                      },
+                      "blocks": {}
+                    }
+                  },
+                  "block_order": [
+                    "product_custom_property_3CfdDT",
+                    "product_custom_property_8aqkHi"
+                  ]
                 },
                 "short_description": {
                   "type": "product-short-description",
@@ -353,8 +421,10 @@
                 "product_addon": {
                   "type": "product-addon",
                   "name": "Add-on product",
+                  "disabled": true,
                   "settings": {
                     "heading": "Add-on gift service",
+                    "addon_product": "",
                     "description": "Make your gift extra special.",
                     "checkbox_label": "Choose to buy",
                     "metafield_namespace": "custom",
@@ -368,6 +438,7 @@
                 "product_essentials",
                 "divider_VJhene",
                 "variant_picker_R3rGDr",
+                "product_personalization_igqUk9",
                 "short_description",
                 "size_guide",
                 "text_aEtTtq",
