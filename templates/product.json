@@ -598,7 +598,8 @@
         ".quantity-row {align-items: center; display: flex; flex-wrap: wrap; gap: var(--gap-sm);}",
         ".product-form-buttons--stacked > .quantity-row {flex-basis: 100%;}",
         ".quantity-row .quantity-selector-wrapper {flex: 0 1 auto; max-width: calc(var(--buy-button-preferred-width, 185px) / 4); min-width: 9.5rem;}",
-        ".quantity-label {flex: 0 0 auto; font-size: var(--font-size--sm); margin: 0;}"
+        ".quantity-label {flex: 0 0 auto; font-size: var(--font-size--sm); margin: 0;}",
+        "@media (min-width: 750px) {media-gallery {width: 90%; margin-inline: auto;}}"
       ],
       "settings": {
         "content_width": "content-center-aligned",
