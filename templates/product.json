@@ -158,9 +158,9 @@
                         "width": "100%",
                         "max_width": "normal",
                         "alignment": "left",
-                        "type_preset": "custom",
-                        "font": "var(--font-heading--family)",
-                        "font_size": "1.5rem",
+                        "type_preset": "h3",
+                        "font": "var(--font-body--family)",
+                        "font_size": "1rem",
                         "line_height": "normal",
                         "letter_spacing": "normal",
                         "case": "none",
@@ -599,7 +599,8 @@
         ".product-form-buttons--stacked > .quantity-row {flex-basis: 100%;}",
         ".quantity-row .quantity-selector-wrapper {flex: 0 1 auto; max-width: calc(var(--buy-button-preferred-width, 185px) / 4); min-width: 9.5rem;}",
         ".quantity-label {flex: 0 0 auto; font-size: var(--font-size--sm); margin: 0;}",
-        "@media (min-width: 750px) {media-gallery {width: 90%; margin-inline: auto;}}"
+        "@media (min-width: 750px) {media-gallery {width: 90%; margin-inline: auto;}}",
+        "h1 {font-size: 24px !important;}"
       ],
       "settings": {
         "content_width": "content-center-aligned",
